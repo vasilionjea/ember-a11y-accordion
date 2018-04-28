@@ -1,0 +1,10 @@
+{{yield (hash
+  isExpanded=(readonly isExpanded)
+  header=(component 'accordion-header'
+    isCollapsible=(readonly isCollapsible)
+    isExpanded=(readonly isExpanded)
+  )
+  panel=(component 'accordion-panel'
+    isExpanded=(readonly isExpanded)
+  )
+)}}

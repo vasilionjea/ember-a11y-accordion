@@ -1,3 +1,74 @@
-<h2 id="title">Welcome to Ember</h2>
+<h3>Accordion</h3>
+{{#accordion-list classNames='my-accordion' as |accordion|}}
+  {{#accordion.item expandOnInit=true as |item|}}
+    {{#item.header}}Lorem Ipsum{{/item.header}}
+    {{#item.panel}}
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur <a href="#">numquam</a> optio quidem impedit tempora perspiciatis, aliquam modi quaerat, porro quasi in, officia rem libero dicta ratione eum ut nisi dolorem!</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur numquam optio quidem!</p>
+    {{/item.panel}}
+  {{/accordion.item}}
 
-{{outlet}}
+  {{#accordion.item as |item|}}
+    {{#item.header}}Dolor Sit{{/item.header}}
+    {{#item.panel}}
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur <a href="#">numquam</a> optio quidem impedit tempora perspiciatis, aliquam modi quaerat, porro quasi in, officia rem libero dicta ratione eum ut nisi dolorem!</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur numquam optio quidem!</p>
+    {{/item.panel}}
+  {{/accordion.item}}
+
+  {{#accordion.item as |item|}}
+    {{#item.header}}Amet{{/item.header}}
+    {{#item.panel}}
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur <a href="#">numquam</a> optio quidem impedit tempora perspiciatis, aliquam modi quaerat, porro quasi in, officia rem libero dicta ratione eum ut nisi dolorem!</p>
+    {{/item.panel}}
+  {{/accordion.item}}
+
+  {{#accordion.item as |item|}}
+    {{#item.header}}Consectetur{{/item.header}}
+    {{#item.panel}}
+      <p>Aspernatur <a href="#">numquam</a> optio quidem impedit tempora perspiciatis, aliquam modi quaerat, porro quasi in, officia rem libero dicta ratione eum ut nisi dolorem!</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+    {{/item.panel}}
+  {{/accordion.item}}
+{{/accordion-list}}
+
+<br>
+
+<h3>Collapsible</h3>
+{{#accordion-list
+  isCollapsible=true
+  classNames='my-accordion' as |accordion|
+}}
+  {{#accordion.item expandOnInit=true as |item|}}
+    {{#item.header}}Lorem Ipsum{{/item.header}}
+    {{#item.panel}}
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur <a href="#">numquam</a> optio quidem impedit tempora perspiciatis, aliquam modi quaerat, porro quasi in, officia rem libero dicta ratione eum ut nisi dolorem!</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur numquam optio quidem!</p>
+    {{/item.panel}}
+  {{/accordion.item}}
+
+  {{#accordion.item as |item|}}
+    {{#item.header}}Dolor Sit{{/item.header}}
+    {{#item.panel}}
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur <a href="#">numquam</a> optio quidem impedit tempora perspiciatis, aliquam modi quaerat, porro quasi in, officia rem libero dicta ratione eum ut nisi dolorem!</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur numquam optio quidem!</p>
+    {{/item.panel}}
+  {{/accordion.item}}
+
+  {{#accordion.item as |item|}}
+    {{#item.header}}Amet{{/item.header}}
+    {{#item.panel}}
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur <a href="#">numquam</a> optio quidem impedit tempora perspiciatis, aliquam modi quaerat, porro quasi in, officia rem libero dicta ratione eum ut nisi dolorem!</p>
+    {{/item.panel}}
+  {{/accordion.item}}
+
+  {{#accordion.item as |item|}}
+    {{#item.header}}Consectetur{{/item.header}}
+    {{#item.panel}}
+      <p>Aspernatur <a href="#">numquam</a> optio quidem impedit tempora perspiciatis, aliquam modi quaerat, porro quasi in, officia rem libero dicta ratione eum ut nisi dolorem!</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+    {{/item.panel}}
+  {{/accordion.item}}
+{{/accordion-list}}

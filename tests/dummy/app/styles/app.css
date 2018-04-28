@@ -1,0 +1,11 @@
+p {
+  margin: 0;
+}
+
+.accordion-item__panel {
+  display: none;
+}
+
+.accordion-item--is-expanded .accordion-item__panel {
+  display: block;
+}

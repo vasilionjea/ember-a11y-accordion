@@ -3,7 +3,12 @@
   "version": "0.0.0",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "ember-a11y-accordion",
+    "accordion",
+    "accessibility",
+    "a11y",
+    "wai-aria"
   ],
   "license": "MIT",
   "author": "",
@@ -19,7 +24,8 @@
     "test": "ember try:each"
   },
   "dependencies": {
-    "ember-cli-babel": "^6.6.0"
+    "ember-cli-babel": "^6.6.0",
+    "ember-cli-htmlbars": "^2.0.1"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
