@@ -1,0 +1,24 @@
+.a11y-accordion-list,
+.a11y-accordion-panel {
+  margin: 0;
+}
+
+.a11y-accordion-header__trigger {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  font-family: inherit;
+  font-size: 100%;
+  text-align: left;
+  overflow: visible;
+  text-transform: none;
+  background: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.a11y-accordion-header__trigger:active {
+  color: inherit;
+}

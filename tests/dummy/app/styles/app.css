@@ -1,5 +1,7 @@
-p {
-  margin: 0;
+p { margin: 0; }
+
+.a11y-accordion-header {
+
 }
 
 .a11y-accordion-panel {
