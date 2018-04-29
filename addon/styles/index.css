@@ -1,5 +1,6 @@
 .a11y-accordion-item {
   overflow: hidden;
+  transition: height 400ms ease-in-out;
 }
 
 .a11y-accordion-header__trigger {
