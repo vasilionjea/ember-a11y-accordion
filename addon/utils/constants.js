@@ -1,9 +1,8 @@
 const CLASS_NAMES = {
-  list: 'accordion-list',
-  item: 'accordion-item',
-  itemExpanded: 'accordion-item--is-expanded',
-  header: 'accordion-item__header',
-  panel: 'accordion-item__panel',
+  list: 'a11y-accordion-list',
+  header: 'a11y-accordion-header',
+  panel: 'a11y-accordion-panel',
+  isExpanded: 'a11y-accordion-is-expanded',
 };
 
 export { CLASS_NAMES };

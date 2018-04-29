@@ -1,74 +1,52 @@
-<h3>Accordion</h3>
-{{#accordion-list classNames='my-accordion' as |accordion|}}
+<h2>Accordion</h2>
+{{#accordion-list as |accordion|}}
   {{#accordion.item expandOnInit=true as |item|}}
-    {{#item.header}}Lorem Ipsum{{/item.header}}
+    {{#item.header}}Personal Information{{/item.header}}
     {{#item.panel}}
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur <a href="#">numquam</a> optio quidem impedit tempora perspiciatis, aliquam modi quaerat, porro quasi in, officia rem libero dicta ratione eum ut nisi dolorem!</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur numquam optio quidem!</p>
+      <p>Personal Information goes here.</p>
     {{/item.panel}}
   {{/accordion.item}}
 
   {{#accordion.item as |item|}}
-    {{#item.header}}Dolor Sit{{/item.header}}
+    {{#item.header}}Billing Address{{/item.header}}
     {{#item.panel}}
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur <a href="#">numquam</a> optio quidem impedit tempora perspiciatis, aliquam modi quaerat, porro quasi in, officia rem libero dicta ratione eum ut nisi dolorem!</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur numquam optio quidem!</p>
+      <p>Billing address information goes here.</p>
     {{/item.panel}}
   {{/accordion.item}}
 
   {{#accordion.item as |item|}}
-    {{#item.header}}Amet{{/item.header}}
+    {{#item.header}}Shipping Address{{/item.header}}
     {{#item.panel}}
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur <a href="#">numquam</a> optio quidem impedit tempora perspiciatis, aliquam modi quaerat, porro quasi in, officia rem libero dicta ratione eum ut nisi dolorem!</p>
-    {{/item.panel}}
-  {{/accordion.item}}
-
-  {{#accordion.item as |item|}}
-    {{#item.header}}Consectetur{{/item.header}}
-    {{#item.panel}}
-      <p>Aspernatur <a href="#">numquam</a> optio quidem impedit tempora perspiciatis, aliquam modi quaerat, porro quasi in, officia rem libero dicta ratione eum ut nisi dolorem!</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+      <p>Shipping address information goes here.</p>
     {{/item.panel}}
   {{/accordion.item}}
 {{/accordion-list}}
 
 <br>
 
-<h3>Collapsible</h3>
+<h2>Collapsible</h2>
 {{#accordion-list
   isCollapsible=true
   classNames='my-accordion' as |accordion|
 }}
+  {{#accordion.item as |item|}}
+    {{#item.header}}Personal Information{{/item.header}}
+    {{#item.panel}}
+      <p>Personal Information goes here.</p>
+    {{/item.panel}}
+  {{/accordion.item}}
+
   {{#accordion.item expandOnInit=true as |item|}}
-    {{#item.header}}Lorem Ipsum{{/item.header}}
+    {{#item.header}}Billing Address{{/item.header}}
     {{#item.panel}}
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur <a href="#">numquam</a> optio quidem impedit tempora perspiciatis, aliquam modi quaerat, porro quasi in, officia rem libero dicta ratione eum ut nisi dolorem!</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur numquam optio quidem!</p>
+      <p>Billing address information goes here.</p>
     {{/item.panel}}
   {{/accordion.item}}
 
   {{#accordion.item as |item|}}
-    {{#item.header}}Dolor Sit{{/item.header}}
+    {{#item.header}}Shipping Address{{/item.header}}
     {{#item.panel}}
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur <a href="#">numquam</a> optio quidem impedit tempora perspiciatis, aliquam modi quaerat, porro quasi in, officia rem libero dicta ratione eum ut nisi dolorem!</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur numquam optio quidem!</p>
-    {{/item.panel}}
-  {{/accordion.item}}
-
-  {{#accordion.item as |item|}}
-    {{#item.header}}Amet{{/item.header}}
-    {{#item.panel}}
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur <a href="#">numquam</a> optio quidem impedit tempora perspiciatis, aliquam modi quaerat, porro quasi in, officia rem libero dicta ratione eum ut nisi dolorem!</p>
-    {{/item.panel}}
-  {{/accordion.item}}
-
-  {{#accordion.item as |item|}}
-    {{#item.header}}Consectetur{{/item.header}}
-    {{#item.panel}}
-      <p>Aspernatur <a href="#">numquam</a> optio quidem impedit tempora perspiciatis, aliquam modi quaerat, porro quasi in, officia rem libero dicta ratione eum ut nisi dolorem!</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+      <p>Shipping address information goes here.</p>
     {{/item.panel}}
   {{/accordion.item}}
 {{/accordion-list}}

@@ -1,10 +1,18 @@
 {{yield (hash
   isExpanded=(readonly isExpanded)
   header=(component 'accordion-header'
+    id=sharedState.headerId
+    triggerId=sharedState.triggerId
+    panelId=sharedState.panelId
     isCollapsible=(readonly isCollapsible)
     isExpanded=(readonly isExpanded)
+    toggle=(action toggle sharedState)
   )
   panel=(component 'accordion-panel'
+    id=sharedState.panelId
+    headerId=sharedState.headerId
+    triggerId=sharedState.triggerId
     isExpanded=(readonly isExpanded)
+    isCollapsible=(readonly isCollapsible)
   )
 )}}

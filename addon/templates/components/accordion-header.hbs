@@ -1,1 +1,9 @@
-{{yield}}
+{{#if isCollapsible}}
+  <button type="button" id="{{triggerId}}" aria-controls="{{panelId}}" aria-expanded="{{isExpanded}}">
+    {{yield}}
+  </button>
+{{else}}
+  <button type="button" id="{{triggerId}}" aria-controls="{{panelId}}" aria-expanded="{{isExpanded}}" aria-disabled="{{isExpanded}}">
+    {{yield}}
+  </button>
+{{/if}}

@@ -1,43 +1,35 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { CLASS_NAMES } from '../utils/constants';
 import layout from '../templates/components/accordion-header';
 
+const DEFAULT_ARIAL_LEVEL = '3';
+
+/**
+ * The accordion-header receives the toggle action and handles expanding
+ * or collapsing the respective panel component.
+ *
+ * @param {String} [aria-level] The ARIA heading level (defaults to "3")
+ */
 export default Component.extend({
   layout,
-  tagName: 'button',
-  type: 'button',
-
+  tagName: 'dt',
+  role: 'heading',
   classNames: [CLASS_NAMES.header],
-
-  attributeBindings: [
-    'type',
-    'aria-expanded',
-    'aria-controls',
-    'aria-disabled',
-  ],
-
-  'aria-expanded': computed('isExpanded', function() {
-    return this.get('isExpanded') ? 'true' : 'false';
-  }),
-
-  'aria-disabled': computed('isExpanded', function() {
-    if (this.get('isCollapsible')) {
-      // Never disable when in collapsible mode
-      return 'false';
-    }
-
-    return this.get('isExpanded') ? 'true' : 'false';
-  }),
+  classNameBindings: [`isExpanded:${CLASS_NAMES.isExpanded}`],
+  attributeBindings: ['role', 'aria-level'],
 
   /**
    * @override
    */
-  didInsertElement() {
-    const panel = this.element.nextElementSibling;
+  init() {
+    this._super(...arguments);
+    this.set('aria-level', this.getWithDefault('aria-level', DEFAULT_ARIAL_LEVEL));
+  },
 
-    if (panel) {
-      this.set('aria-controls', panel.getAttribute('id'));
-    }
+  /**
+   * @override
+   */
+  click() {
+    this.get('toggle')();
   },
 });

@@ -2,10 +2,10 @@ p {
   margin: 0;
 }
 
-.accordion-item__panel {
+.a11y-accordion-panel {
   display: none;
 }
 
-.accordion-item--is-expanded .accordion-item__panel {
+.a11y-accordion-is-expanded.a11y-accordion-panel {
   display: block;
 }

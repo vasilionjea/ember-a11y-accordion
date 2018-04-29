@@ -1,6 +1,6 @@
 # ember-a11y-accordion
 
-This README outlines the details of collaborating on this Ember addon.
+An ember accordion component with accessibility being a first class citizen.
 
 ## Installation
 

@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
 moduleForComponent('accordion-header', 'Integration | Component | accordion header', {
-  integration: true
+  integration: true,
 });
 
 test('it renders', function(assert) {

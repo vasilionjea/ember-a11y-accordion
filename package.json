@@ -1,14 +1,14 @@
 {
   "name": "ember-a11y-accordion",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.2.0",
+  "description": "An ember accordion component with accessibility being a first class citizen.",
   "keywords": [
     "ember-addon",
     "ember-a11y-accordion",
     "accordion",
     "accessibility",
     "a11y",
-    "wai-aria"
+    "aria"
   ],
   "license": "MIT",
   "author": "",
