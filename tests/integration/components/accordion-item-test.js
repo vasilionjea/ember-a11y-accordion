@@ -7,7 +7,7 @@ moduleForComponent('accordion-item', 'Integration | Component | accordion item',
 });
 
 test('it renders', function(assert) {
-  assert.expect(3);
+  assert.expect(4);
 
   this.render(hbs`
     {{#accordion-list as |accordion|}}
@@ -19,12 +19,13 @@ test('it renders', function(assert) {
   `);
 
   assert.equal(this.$(`.${CLASS_NAMES.list}`).length, 1);
+  assert.equal(this.$(`.${CLASS_NAMES.item}`).length, 1);
   assert.equal(this.$(`.${CLASS_NAMES.header}`).length, 1);
   assert.equal(this.$(`.${CLASS_NAMES.panel}`).length, 1);
 });
 
 test('it has appropriate attributes on init', function(assert) {
-  assert.expect(10);
+  assert.expect(9);
 
   this.render(hbs`
     {{#accordion-list as |accordion|}}
@@ -41,7 +42,6 @@ test('it has appropriate attributes on init', function(assert) {
   const $trigger = $header.find('button');
   const $panel = this.$(`.${CLASS_NAMES.panel}`);
 
-  assert.equal($list.attr('role'), 'presentation', 'The list has an ARIA role of "presentation"');
   assert.equal($header.attr('role'), 'heading', 'The header has an ARIA role of "heading"');
   assert.equal($header.attr('aria-level'), '3', 'The header aria-level is 3 by default');
   assert.equal($trigger.attr('type'), 'button', 'The trigger is of type "button"');

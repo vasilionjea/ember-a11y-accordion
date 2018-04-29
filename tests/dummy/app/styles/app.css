@@ -1,13 +1,21 @@
-p { margin: 0; }
+.a11y-accordion-list {
+  width: 33.33333%;
+  box-sizing: border-box;
+  border-left: 1px solid #bfbfbf;
+  border-right: 1px solid #bfbfbf;
+  box-shadow: 0 1px 3px #bfbfbf;
+}
 
-.a11y-accordion-header {
+.a11y-accordion-item {
+  transition: height 400ms ease-in-out;
+}
 
+.a11y-accordion-header__trigger {
+  border-top: 1px solid #bfbfbf;
+  border-bottom: 1px solid #bfbfbf;
+  padding: 1em 1.25em;
 }
 
 .a11y-accordion-panel {
-  display: none;
-}
-
-.a11y-accordion-is-expanded.a11y-accordion-panel {
-  display: block;
+  padding: 1.5em;
 }

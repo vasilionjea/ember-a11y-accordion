@@ -21,10 +21,7 @@ import layout from '../templates/components/accordion-list';
  */
 export default Component.extend({
   layout,
-  tagName: 'dl',
-  role: 'presentation',
   classNames: [CLASS_NAMES.list],
-  attributeBindings: ['role'],
 
   /**
    * When `true` the component acts like a collapsible, and multiple
@@ -43,22 +40,41 @@ export default Component.extend({
   },
 
   /**
+   * Handles showing an item.
+   *
+   * @param {Object} item
+   * @private
+   */
+  _showItem(item) {
+    item.set('isExpanded', true);
+    item.element.style.height = `${item.height}px`;
+  },
+
+  /**
+   * Handles hiding an item.
+   *
+   * @param {Object} item
+   * @private
+   */
+  _hideItem(item) {
+    item.set('isExpanded', false);
+    item.element.style.height = `${item.header.height}px`;
+  },
+
+  /**
    * Handles toggling for collapsibles.
    *
    * @param {Object} item
    * @private
    */
   _toggleCollapsible(item) {
-    const onShow = this.get('onShow');
-    const onHide = this.get('onHide');
-
-    item.toggleProperty('isExpanded');
-
-    if (item.get('isExpanded') === true) {
-      isPresent(onShow) && onShow();
+    if (item.get('isExpanded')) {
+      this._hideItem(item);
     } else {
-      isPresent(onHide) && onHide();
+      this._showItem(item);
     }
+
+    this._onToggle(item.get('isExpanded'));
   },
 
   /**
@@ -73,18 +89,31 @@ export default Component.extend({
       return;
     }
 
-    const onShow = this.get('onShow');
-
     // Hide all other items
     this.get('items').forEach(item => {
       if (item !== itemToShow) {
-        item.set('isExpanded', false);
+        this._hideItem(item);
       }
     });
 
     // Show this one
-    itemToShow.set('isExpanded', true);
-    isPresent(onShow) && onShow();
+    this._showItem(itemToShow);
+    this._onToggle(itemToShow.get('isExpanded'));
+  },
+
+  /**
+   * Notifies the passed in actions.
+   * @param {Boolean} wasShown True if the item was shown
+   */
+  _onToggle(wasShown) {
+    const onShow = this.get('onShow');
+    const onHide = this.get('onHide');
+
+    if (wasShown) {
+      isPresent(onShow) && onShow();
+    } else {
+      isPresent(onHide) && onHide();
+    }
   },
 
   actions: {
@@ -97,6 +126,12 @@ export default Component.extend({
     registerItem(item) {
       if (isPresent(item)) {
         this.get('items').pushObject(item);
+
+        if (item.get('isExpanded')) {
+          this._showItem(item);
+        } else {
+          this._hideItem(item);
+        }
       }
     },
 

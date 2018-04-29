@@ -12,10 +12,9 @@ const DEFAULT_ARIAL_LEVEL = '3';
  */
 export default Component.extend({
   layout,
-  tagName: 'dt',
+  tagName: 'header',
   role: 'heading',
   classNames: [CLASS_NAMES.header],
-  classNameBindings: [`isExpanded:${CLASS_NAMES.isExpanded}`],
   attributeBindings: ['role', 'aria-level'],
 
   /**

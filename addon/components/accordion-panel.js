@@ -9,10 +9,9 @@ import layout from '../templates/components/accordion-panel';
  */
 export default Component.extend({
   layout,
-  tagName: 'dd',
+  tagName: 'section',
   role: 'region',
   classNames: [CLASS_NAMES.panel],
-  classNameBindings: [`isExpanded:${CLASS_NAMES.isExpanded}`],
   attributeBindings: ['role', 'aria-labelledby', 'aria-hidden'],
 
   'aria-hidden': computed('isExpanded', function() {

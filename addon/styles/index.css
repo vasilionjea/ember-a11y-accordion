@@ -1,6 +1,5 @@
-.a11y-accordion-list,
-.a11y-accordion-panel {
-  margin: 0;
+.a11y-accordion-item {
+  overflow: hidden;
 }
 
 .a11y-accordion-header__trigger {
@@ -21,4 +20,13 @@
 
 .a11y-accordion-header__trigger:active {
   color: inherit;
+}
+
+.a11y-accordion-panel {
+  visibility: hidden;
+  transition: visibility 400ms linear;
+}
+
+.a11y-accordion-item--is-expanded .a11y-accordion-panel {
+  visibility: visible;
 }
