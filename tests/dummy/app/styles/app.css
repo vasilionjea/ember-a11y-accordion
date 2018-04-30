@@ -1,17 +1,67 @@
-.a11y-accordion-list {
-  width: 33.33333%;
-  box-sizing: border-box;
-  border-left: 1px solid #bfbfbf;
-  border-right: 1px solid #bfbfbf;
-  box-shadow: 0 1px 3px #bfbfbf;
+body { box-sizing: border-box; font-family: sans-serif; line-height: 1.4; margin: 0; }
+main { max-width: 1500px; padding: 0 10%; }
+p { margin: 0; margin-bottom: .875em;}
+a { color: #8d6ce6; }
+a:hover { color: #7758cc; }
+.nav {
+  display: flex;
+  flex-flow: row;
+  margin: 0;
+  padding: 0 10%;
+  list-style: none;
+  box-shadow: 0 1px 2px 0 rgba(53,36,71,0.2);
+  background: #8D3FE2;
+  background-image: -webkit-linear-gradient(45deg, #8d3fe2 66%, #b223d6 100%);
+  background-image: -moz-linear-gradient(45deg, #8d3fe2 66%, #b223d6 100%);
+  background-image: -o-linear-gradient(45deg, #8d3fe2 66%, #b223d6 100%);
+  background-image: linear-gradient(45deg, #8d3fe2 66%, #b223d6 100%);
+}
+.nav a {
+  display: inline-block;
+  padding: 1rem 1.25rem;
+  font-size: 20px;
+  font-family: cursive;
+  color: snow;
+  text-decoration: none;
+}
+.nav a:hover { color: #ebd4f8; }
+.nav li:first-child a { padding-left: 0; }
+.page-title { margin: 2rem 0; border-bottom: 1px dashed #c7c7c7; padding-bottom: 1rem; }
+
+/**
+ * Home
+ */
+.home-accordion-list .a11y-accordion-header__trigger,
+.home-accordion-list .a11y-accordion-panel {
+  border-bottom: 1px solid rgba(144,115,173,0.2);
+  padding: .75em .875em;
+  padding-left: 0;
+}
+.home-accordion-list .a11y-accordion-header__trigger {
+  font-size: 22px;
+  outline: none;
+  cursor: pointer;
 }
 
-.a11y-accordion-header__trigger {
-  border-top: 1px solid #bfbfbf;
-  border-bottom: 1px solid #bfbfbf;
+/**
+ * Accordion & Collapsible
+ */
+.my-accordion-list {
+  width: 50%;
+  box-sizing: border-box;
+  border: 1px solid #d0d0d0;
+  border-top: none;
+  box-shadow: 0 1px 3px #e0e0e0;
+}
+.my-accordion-list .a11y-accordion-header__trigger {
+  border-top: 1px solid #d0d0d0;
+  border-bottom: 1px solid #d0d0d0;
   padding: 1em 1.25em;
 }
-
-.a11y-accordion-panel {
+.my-accordion-list .a11y-accordion-panel {
   padding: 1.5em;
+}
+
+.a11y-accordion-item--is-disabled .a11y-accordion-header__trigger {
+  color: gray;
 }

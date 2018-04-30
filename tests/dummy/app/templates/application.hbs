@@ -1,55 +1,9 @@
-<h2>Accordion</h2>
-{{#accordion-list as |accordion|}}
-  {{#accordion.item expandOnInit=true as |item|}}
-    {{#item.header}}Personal Information{{/item.header}}
-    {{#item.panel}}
-      <p>Personal Information goes here.</p>
-      <p>Lorem <a href="#">ipsum</a> dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    {{/item.panel}}
-  {{/accordion.item}}
+<ul class="nav">
+  <li>{{#link-to 'index'}}Home{{/link-to}}</li>
+  <li>{{#link-to 'accordion'}}Accordion{{/link-to}}</li>
+  <li>{{#link-to 'collapsible'}}Collapsible{{/link-to}}</li>
+</ul>
 
-  {{#accordion.item as |item|}}
-    {{#item.header}}Billing Address{{/item.header}}
-    {{#item.panel}}
-      <p>Billing address information goes here.</p>
-      <p>Lorem <a href="#">ipsum</a> dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    {{/item.panel}}
-  {{/accordion.item}}
-
-  {{#accordion.item as |item|}}
-    {{#item.header}}Shipping Address{{/item.header}}
-    {{#item.panel}}
-      <p>Shipping address information goes here.</p>
-      <p>Lorem <a href="#">ipsum</a> dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    {{/item.panel}}
-  {{/accordion.item}}
-{{/accordion-list}}
-
-<br>
-
-<h2>Collapsible</h2>
-{{#accordion-list
-  isCollapsible=true
-  classNames='my-accordion' as |accordion|
-}}
-  {{#accordion.item as |item|}}
-    {{#item.header}}Personal Information{{/item.header}}
-    {{#item.panel}}
-      <p>Personal Information goes here.</p>
-    {{/item.panel}}
-  {{/accordion.item}}
-
-  {{#accordion.item expandOnInit=true as |item|}}
-    {{#item.header}}Billing Address{{/item.header}}
-    {{#item.panel}}
-      <p>Billing address information goes here.</p>
-    {{/item.panel}}
-  {{/accordion.item}}
-
-  {{#accordion.item as |item|}}
-    {{#item.header}}Shipping Address{{/item.header}}
-    {{#item.panel}}
-      <p>Shipping address information goes here.</p>
-    {{/item.panel}}
-  {{/accordion.item}}
-{{/accordion-list}}
+<main>
+  {{outlet}}
+</main>

@@ -7,6 +7,8 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
+  this.route('collapsible');
+  this.route('accordion');
 });
 
 export default Router;
