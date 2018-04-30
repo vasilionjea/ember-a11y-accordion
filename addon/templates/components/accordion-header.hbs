@@ -4,7 +4,8 @@
     id="{{triggerId}}"
     class="a11y-accordion-header__trigger"
     aria-controls="{{panelId}}"
-    aria-expanded="{{isExpanded}}">
+    aria-expanded="{{isExpanded}}"
+    aria-disabled="{{isDisabled}}">
     {{yield}}
   </button>
 {{else}}
@@ -14,7 +15,7 @@
     class="a11y-accordion-header__trigger"
     aria-controls="{{panelId}}"
     aria-expanded="{{isExpanded}}"
-    aria-disabled="{{isExpanded}}">
+    aria-disabled="{{if isDisabled isDisabled isExpanded}}">
     {{yield}}
   </button>
 {{/if}}

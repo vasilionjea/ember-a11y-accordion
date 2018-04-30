@@ -116,6 +116,13 @@ export default Component.extend({
     }
   },
 
+  /**
+   * @override
+   */
+  willDestroyElement() {
+    this.set('items', null);
+  },
+
   actions: {
     /**
      * Action for item components to register themselves.
@@ -142,7 +149,7 @@ export default Component.extend({
      * @public
      */
     toggleItem(item) {
-      if (!isPresent(item)) {
+      if (!isPresent(item) || item.get('isDisabled') === true) {
         return;
       }
 

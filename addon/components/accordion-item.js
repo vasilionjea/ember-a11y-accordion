@@ -10,6 +10,7 @@ import layout from '../templates/components/accordion-item';
  * create an item header and panel.
  *
  * @param {Boolean} [expandOnInit] Whether or not to expand this item on init
+ * @param {Boolean} [isDisabled] Whether or not this item should be disabled (user will not be able to expand it)
  * @example
  * {{#accordion-list as |accordion|}}
  *   {{#accordion.item expandOnInit=true as |item|}}
@@ -22,9 +23,13 @@ export default Component.extend({
   layout,
   tagName: 'section',
   classNames: [CLASS_NAMES.item],
-  classNameBindings: [`isExpanded:${CLASS_NAMES.itemExpanded}`],
+  classNameBindings: [
+    `isExpanded:${CLASS_NAMES.itemExpanded}`,
+    `isDisabled:${CLASS_NAMES.itemDisabled}`,
+  ],
   isExpanded: computed.oneWay('sharedState.isExpanded'),
   expandOnInit: false,
+  isDisabled: false,
 
   /**
    * @override
@@ -37,6 +42,7 @@ export default Component.extend({
       triggerId: guidFor({}),
       panelId: guidFor({}),
       isExpanded: this.get('expandOnInit'),
+      isDisabled: this.get('isDisabled'),
     });
 
     this.set('sharedState', sharedState);
@@ -59,5 +65,12 @@ export default Component.extend({
     });
 
     this.get('register')(sharedState);
+  },
+
+  /**
+   * @override
+   */
+  willDestroyElement() {
+    this.set('sharedState', null);
   },
 });
