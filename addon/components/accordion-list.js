@@ -11,6 +11,8 @@ import layout from '../templates/components/accordion-list';
  * @param {Boolean} [isCollapsible] If this accordion should be a collapsible
  * @param {Function} [onShow] Action to execute when a panel is expanded (executed for both accordions & collapsibles)
  * @param {Function} [onHide] Action to execute when a panel is collapsed (executed only for collapsibles)
+ * @param {String} [classNames] Any CSS classes to be added to the component's element
+ *
  * @example
  * {{#accordion-list isCollapsible=true as |accordion|}}
  *   {{#accordion.item as |item|}}

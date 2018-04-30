@@ -11,6 +11,8 @@ import layout from '../templates/components/accordion-item';
  *
  * @param {Boolean} [expandOnInit] Whether or not to expand this item on init
  * @param {Boolean} [isDisabled] Whether or not this item should be disabled (user will not be able to expand it)
+ * @param {String} [classNames] Any CSS classes to be added to the component's element
+ *
  * @example
  * {{#accordion-list as |accordion|}}
  *   {{#accordion.item expandOnInit=true as |item|}}
