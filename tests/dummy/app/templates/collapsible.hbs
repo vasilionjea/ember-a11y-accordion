@@ -2,6 +2,8 @@
 
 {{#accordion-list
   isCollapsible=true
+  onShow=(action "onCollapsibleShow")
+  onHide=(action "onCollapsibleHide")
   classNames='my-accordion-list' as |accordion|
 }}
   {{#accordion.item as |item|}}

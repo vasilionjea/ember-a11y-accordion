@@ -1,6 +1,8 @@
 <h1 class="page-title">Accordion</h1>
 
-{{#accordion-list classNames="my-accordion-list" as |accordion|}}
+{{#accordion-list
+  classNames="my-accordion-list"
+  onShow=(action "onAccordionShow") as |accordion|}}
   {{#accordion.item expandOnInit=true as |item|}}
     {{#item.header}}Lorem ipsum{{/item.header}}
     {{#item.panel}}
