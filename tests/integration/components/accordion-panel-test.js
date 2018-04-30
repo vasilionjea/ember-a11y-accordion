@@ -6,7 +6,7 @@ moduleForComponent('accordion-panel', 'Integration | Component | accordion panel
   integration: true,
 });
 
-test('it renders', function(assert) {
+test('(accordion) it renders', function(assert) {
   assert.expect(1);
 
   this.render(hbs`

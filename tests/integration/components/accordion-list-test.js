@@ -6,7 +6,7 @@ moduleForComponent('accordion-list', 'Integration | Component | accordion list',
   integration: true,
 });
 
-test('it renders', function(assert) {
+test('(accordion) it renders', function(assert) {
   assert.expect(4);
 
   this.render(hbs`

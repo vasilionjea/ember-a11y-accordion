@@ -63,5 +63,5 @@ a:hover { color: #7758cc; }
 }
 
 .a11y-accordion-item--is-disabled .a11y-accordion-header__trigger {
-  color: gray;
+  opacity: 0.4;
 }

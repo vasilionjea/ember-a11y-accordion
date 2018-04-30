@@ -6,7 +6,7 @@ moduleForComponent('accordion-header', 'Integration | Component | accordion head
   integration: true,
 });
 
-test('it renders', function(assert) {
+test('(accordion) it renders', function(assert) {
   assert.expect(1);
 
   this.render(hbs`

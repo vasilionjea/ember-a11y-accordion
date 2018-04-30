@@ -6,7 +6,7 @@ moduleForComponent('accordion-item', 'Integration | Component | accordion item',
   integration: true,
 });
 
-test('it renders', function(assert) {
+test('(accordion) it renders', function(assert) {
   assert.expect(4);
 
   this.render(hbs`
@@ -24,7 +24,7 @@ test('it renders', function(assert) {
   assert.equal(this.$(`.${CLASS_NAMES.panel}`).length, 1);
 });
 
-test('it has appropriate attributes on init', function(assert) {
+test('(accordion) it has appropriate attributes on init', function(assert) {
   assert.expect(9);
 
   this.render(hbs`
@@ -53,7 +53,7 @@ test('it has appropriate attributes on init', function(assert) {
   assert.equal($panel.attr('aria-labelledby'), $trigger.attr('id'), 'The panel is labelled by the correct trigger via aria-labelledby');
 });
 
-test('it does not have the aria-disabled attribute for collapsibles', function(assert) {
+test('(collapsible) it has the aria-disabled attribute set to false when the item is expanded', function(assert) {
   assert.expect(1);
 
   this.render(hbs`
@@ -69,5 +69,5 @@ test('it does not have the aria-disabled attribute for collapsibles', function(a
   const $header = this.$(`.${CLASS_NAMES.header}`);
   const $trigger = $header.find('button');
 
-  assert.equal($trigger.attr('aria-disabled'), undefined, 'The trigger does not have an aria-disabled attribute');
+  assert.equal($trigger.attr('aria-disabled'), 'false', 'The trigger does not have an aria-disabled attribute');
 });
