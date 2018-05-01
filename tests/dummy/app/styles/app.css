@@ -47,7 +47,7 @@ a:hover { color: #7758cc; }
  * Accordion & Collapsible
  */
 .my-accordion-list {
-  width: 50%;
+  /* width: 50%; */
   box-sizing: border-box;
   border: 1px solid #d0d0d0;
   border-top: none;

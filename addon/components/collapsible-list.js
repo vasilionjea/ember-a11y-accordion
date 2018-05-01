@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { run } from '@ember/runloop';
 import { A } from '@ember/array';
 import { isPresent } from '@ember/utils';
-import layout from '../templates/components/accordion-list';
+import layout from '../templates/components/collapsible-list';
 import {
   CLASS_NAMES,
   setOpenHeight,
@@ -11,19 +11,20 @@ import {
 } from '../utils/dom';
 
 /**
- * The accordion-list component is the top-most component and is responsible
- * for registering accordion items and toggling their panels.
+ * The collapsible-list component is the top-most component and is responsible
+ * for registering collapsible items and toggling their panels.
  *
  * @param {Function} [onShow] Action to execute when a panel is expanded
+ * @param {Function} [onHide] Action to execute when a panel is collapsed
  * @param {String} [classNames] Any CSS classes to be added to the component's element
  *
  * @example
- * {{#accordion-list as |accordion|}}
- *   {{#accordion.item as |item|}}
+ * {{#collapsible-list as |collapsible|}}
+ *   {{#collapsible.item as |item|}}
  *     {{#item.header}}Lorem Ipsum{{/item.header}}
  *     {{#item.panel}}Lorem ipsum dolor{{/item.panel}}
- *   {{/accordion.item}}
- * {{/accordion-list}}
+ *   {{/collapsible.item}}
+ * {{/collapsible-list}}
  */
 export default Component.extend({
   layout,
@@ -34,10 +35,7 @@ export default Component.extend({
    */
   init() {
     this._super(...arguments);
-    this.setProperties({
-      items: A(),
-      activeItem: null,
-    });
+    this.set('items', A());
   },
 
   /**
@@ -75,13 +73,8 @@ export default Component.extend({
    * @private
    */
   hideItem(item) {
-    if (this.activeItem) {
-      // From open height
-      setOpenHeight(this.activeItem);
-    }
-
-    // To close height
-    setClosedHeight(item);
+    setOpenHeight(item); // from open height
+    setClosedHeight(item); // to close height
     item.set('isExpanded', false);
   },
 
@@ -109,7 +102,8 @@ export default Component.extend({
 
   actions: {
     /**
-     * Action for item components to register themselves.
+     * Action for item components to register themselves. Registration
+     * has to happen when the item is inserted in the DOM.
      *
      * @param {Object} item
      * @public
@@ -121,36 +115,28 @@ export default Component.extend({
 
       this.get('items').pushObject(item);
 
-      // At register time set the closed heights
-      if (item.get('isExpanded')) {
-        this.activeItem = item;
-      } else {
+      // At register time set the item's element height
+      if (!item.get('isExpanded')) {
         setClosedHeight(item);
       }
     },
 
     /**
-     * Action to toggle accordion items.
+     * Action to toggle collapsible items.
      *
      * @param {Object} item
      * @public
      */
     toggleItem(item) {
-      if (
-        !isPresent(item) ||
-        item.get('isDisabled') ||
-        item.get('isExpanded')
-      ) {
+      if (!isPresent(item) || item.get('isDisabled')) {
         return;
       }
 
-      if (this.activeItem) {
-        this.hideItem(this.activeItem);
+      if (item.get('isExpanded')) {
+        this.hideItem(item);
+      } else {
+        this.showItem(item);
       }
-
-      // Show this one
-      this.showItem(item);
-      this.activeItem = item;
 
       this._onToggle(item.get('isExpanded'));
     },

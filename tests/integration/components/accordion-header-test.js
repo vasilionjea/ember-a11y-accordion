@@ -1,12 +1,12 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { CLASS_NAMES } from 'ember-a11y-accordion/utils/constants';
+import { CLASS_NAMES } from 'ember-a11y-accordion/utils/dom';
 
 moduleForComponent('accordion-header', 'Integration | Component | accordion header', {
   integration: true,
 });
 
-test('(accordion) it renders', function(assert) {
+test('it renders', function(assert) {
   assert.expect(1);
 
   this.render(hbs`

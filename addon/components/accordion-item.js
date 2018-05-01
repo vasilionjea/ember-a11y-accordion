@@ -1,25 +1,17 @@
 import Component from '@ember/component';
 import EmberObject, { computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import { CLASS_NAMES } from '../utils/constants';
 import layout from '../templates/components/accordion-item';
+import { CLASS_NAMES } from '../utils/dom';
 
 /**
- * The accordion-item component is responsible for creating state and sharing
- * it with the accordion-list. This component provides the primary API to
- * create an item header and panel.
+ * The accordion-item component is responsible for creating state and sharing it with the
+ * accordion-list or collapsible-list. This component provides the primary API to
+ * create a header and panel component.
  *
  * @param {Boolean} [expandOnInit] Whether or not to expand this item on init
  * @param {Boolean} [isDisabled] Whether or not this item should be disabled (user will not be able to expand it)
  * @param {String} [classNames] Any CSS classes to be added to the component's element
- *
- * @example
- * {{#accordion-list as |accordion|}}
- *   {{#accordion.item expandOnInit=true as |item|}}
- *     {{#item.header}}Lorem Ipsum{{/item.header}}
- *     {{#item.panel}}Lorem ipsum dolor{{/item.panel}}
- *   {{/accordion.item}}
- * {{/accordion-list}}
  */
 export default Component.extend({
   layout,
@@ -55,15 +47,10 @@ export default Component.extend({
    */
   didInsertElement() {
     const sharedState = this.get('sharedState');
-    const headerElement = this.element.querySelector(`.${CLASS_NAMES.header}`);
-
     sharedState.setProperties({
       element: this.element,
-      height: this.element.getBoundingClientRect().height,
-      header: {
-        element: headerElement,
-        height: headerElement.getBoundingClientRect().height,
-      },
+      headerElement: this.element.querySelector(`.${CLASS_NAMES.header}`),
+      panelElement: this.element.querySelector(`.${CLASS_NAMES.panel}`),
     });
 
     this.get('register')(sharedState);

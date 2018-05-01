@@ -1,6 +1,6 @@
 import Component from '@ember/component';
-import { CLASS_NAMES } from '../utils/constants';
 import layout from '../templates/components/accordion-header';
+import { CLASS_NAMES } from '../utils/dom';
 
 const DEFAULT_ARIAL_LEVEL = '3';
 

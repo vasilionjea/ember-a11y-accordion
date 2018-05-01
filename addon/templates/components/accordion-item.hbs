@@ -4,7 +4,7 @@
     id=sharedState.headerId
     triggerId=sharedState.triggerId
     panelId=sharedState.panelId
-    isCollapsible=(readonly isCollapsible)
+    isCollapsible=isCollapsible
     isExpanded=(readonly isExpanded)
     isDisabled=(readonly isDisabled)
     toggle=(action toggle sharedState)
@@ -12,7 +12,7 @@
   panel=(component 'accordion-panel'
     id=sharedState.panelId
     triggerId=sharedState.triggerId
+    isCollapsible=isCollapsible
     isExpanded=(readonly isExpanded)
-    isCollapsible=(readonly isCollapsible)
   )
 )}}

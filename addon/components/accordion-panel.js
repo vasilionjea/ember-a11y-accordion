@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { CLASS_NAMES } from '../utils/constants';
 import layout from '../templates/components/accordion-panel';
+import { CLASS_NAMES } from '../utils/dom';
 
 /**
  * The accordion-panel component contains the contents to be shown at any
