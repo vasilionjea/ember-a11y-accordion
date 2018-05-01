@@ -1,54 +1,45 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { find } from 'ember-native-dom-helpers';
 import { CLASS_NAMES } from 'ember-a11y-accordion/utils/dom';
+
+const SELECTORS = {
+  header: `.${CLASS_NAMES.header}`,
+  trigger: `.${CLASS_NAMES.trigger}`,
+  panel: `.${CLASS_NAMES.panel}`,
+};
 
 moduleForComponent('accordion-item', 'Integration | Component | accordion item', {
   integration: true,
 });
 
-test('it renders', function(assert) {
-  assert.expect(4);
-
-  this.render(hbs`
-    {{#accordion-list as |accordion|}}
-      {{#accordion.item expandOnInit=true as |item|}}
-        {{#item.header}}header here...{{/item.header}}
-        {{#item.panel}}panel here...{{/item.panel}}
-      {{/accordion.item}}
-    {{/accordion-list}}
-  `);
-
-  assert.equal(this.$(`.${CLASS_NAMES.list}`).length, 1);
-  assert.equal(this.$(`.${CLASS_NAMES.item}`).length, 1);
-  assert.equal(this.$(`.${CLASS_NAMES.header}`).length, 1);
-  assert.equal(this.$(`.${CLASS_NAMES.panel}`).length, 1);
-});
-
-test('it has appropriate attributes on init', function(assert) {
+test('it has ARIA and DOM attributes on init', function(assert) {
   assert.expect(9);
 
   this.render(hbs`
     {{#accordion-list as |accordion|}}
       {{#accordion.item expandOnInit=true as |item|}}
-        {{#item.header}}header here...{{/item.header}}
-        {{#item.panel}}panel here...{{/item.panel}}
+        {{#item.header}}First header{{/item.header}}
+        {{#item.panel}}First panel{{/item.panel}}
       {{/accordion.item}}
     {{/accordion-list}}
   `);
 
-  // Elements
-  const $list = this.$(`.${CLASS_NAMES.list}`);
-  const $header = this.$(`.${CLASS_NAMES.header}`);
-  const $trigger = $header.find('button');
-  const $panel = this.$(`.${CLASS_NAMES.panel}`);
+  // Item header
+  const assertHeader = assert.dom(SELECTORS.header);
+  assertHeader.hasAttribute('role', 'heading', 'The item header has an ARIA role of "heading"');
+  assertHeader.hasAttribute('aria-level', '3', 'The item header has an aria-level of "3" by default');
 
-  assert.equal($header.attr('role'), 'heading', 'The header has an ARIA role of "heading"');
-  assert.equal($header.attr('aria-level'), '3', 'The header aria-level is 3 by default');
-  assert.equal($trigger.attr('type'), 'button', 'The trigger is of type "button"');
-  assert.equal($trigger.attr('aria-expanded'), 'true', 'The trigger aria-expanded value is "true" when expandOnInit is set to true');
-  assert.equal($trigger.attr('aria-disabled'), 'true', 'The trigger aria-disabled value is "true" when expandOnInit is set to true');
-  assert.equal($trigger.attr('aria-controls'), $panel.attr('id'), 'The trigger controls the correct panel via aria-controls');
-  assert.equal($panel.attr('role'), 'region', 'The panel has an ARIA role of "region"');
-  assert.equal($panel.attr('aria-hidden'), 'false', 'The panel aria-hidden value is "false" when expandOnInit is set to true');
-  assert.equal($panel.attr('aria-labelledby'), $trigger.attr('id'), 'The panel is labelled by the correct trigger via aria-labelledby');
+  // Header trigger
+  const assertTrigger = assert.dom(SELECTORS.trigger);
+  assertTrigger.hasAttribute('type', 'button', 'The trigger is of type "button"');
+  assertTrigger.hasAttribute('aria-expanded', 'true', 'The trigger has an aria-expanded value of "true" when expandOnInit is set to true');
+  assertTrigger.hasAttribute('aria-disabled', 'true', 'The trigger has an aria-disabled value of "true" when expandOnInit is set to true');
+  assertTrigger.hasAttribute('aria-controls', find(SELECTORS.panel).getAttribute('id'), 'The trigger controls the correct panel via aria-controls');
+
+  // Item panel
+  const assertPanel = assert.dom(SELECTORS.panel);
+  assertPanel.hasAttribute('role', 'region', 'The panel has an ARIA role of "region"');
+  assertPanel.hasAttribute('aria-hidden', 'false', 'The panel aria-hidden value is "false" when expandOnInit is set to true');
+  assertPanel.hasAttribute('aria-labelledby', find(SELECTORS.trigger).getAttribute('id'), 'The panel is labelled by the correct trigger via aria-labelledby');
 });

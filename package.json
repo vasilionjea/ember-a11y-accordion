@@ -1,6 +1,6 @@
 {
   "name": "ember-a11y-accordion",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An ember accordion component with accessibility being a first class citizen.",
   "keywords": [
     "ember-addon",
@@ -43,11 +43,13 @@
     "ember-disable-prototype-extensions": "^1.1.2",
     "ember-export-application-global": "^2.0.0",
     "ember-load-initializers": "^1.0.0",
+    "ember-native-dom-helpers": "^0.6.2",
     "ember-resolver": "^4.0.0",
     "ember-source": "~2.18.0",
     "eslint-plugin-ember": "^5.0.0",
     "eslint-plugin-node": "^5.2.1",
-    "loader.js": "^4.2.3"
+    "loader.js": "^4.2.3",
+    "qunit-dom": "^0.6.2"
   },
   "engines": {
     "node": "^4.5 || 6.* || >= 7.*"
