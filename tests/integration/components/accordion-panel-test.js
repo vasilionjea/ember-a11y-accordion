@@ -3,7 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import { CLASS_NAMES } from 'ember-a11y-accordion/utils/dom';
 
 const SELECTORS = {
-  panel: `.${CLASS_NAMES.panel}`,
+  panelWrapper: `.${CLASS_NAMES.panelWrapper}`,
 };
 
 moduleForComponent('accordion-panel', 'Integration | Component | accordion panel', {
@@ -22,5 +22,5 @@ test('it renders', function(assert) {
     {{/accordion-list}}
   `);
 
-  assert.dom(SELECTORS.panel).exists({ count: 1 });
+  assert.dom(SELECTORS.panelWrapper).exists({ count: 1 });
 });

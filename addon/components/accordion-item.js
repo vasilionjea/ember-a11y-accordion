@@ -47,10 +47,11 @@ export default Component.extend({
    */
   didInsertElement() {
     const sharedState = this.get('sharedState');
+    const panelWrapper = this.element.querySelector(`.${CLASS_NAMES.panelWrapper}`);
+
     sharedState.setProperties({
-      element: this.element,
-      headerElement: this.element.querySelector(`.${CLASS_NAMES.header}`),
-      panelElement: this.element.querySelector(`.${CLASS_NAMES.panel}`),
+      panelWrapper,
+      panelContent: panelWrapper.querySelector(`.${CLASS_NAMES.panelContent}`),
     });
 
     this.get('register')(sharedState);

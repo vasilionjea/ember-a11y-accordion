@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { run } from '@ember/runloop';
+import { next } from '@ember/runloop';
 import { A } from '@ember/array';
 import { isPresent } from '@ember/utils';
 import layout from '../templates/components/accordion-list';
@@ -7,7 +7,7 @@ import {
   CLASS_NAMES,
   setOpenHeight,
   setClosedHeight,
-  addEventListenerOnce
+  addEventListenerOnce,
 } from '../utils/dom';
 
 /**
@@ -43,7 +43,7 @@ export default Component.extend({
   /**
    * Handles showing an item.
    *
-   * When the CSS transition has ended, we remove the inline height so the
+   * When the CSS transition has ended, we clear the inline height so the
    * component's contents don't get cutt off in responsive layouts.
    *
    * @param {Object} item
@@ -51,17 +51,19 @@ export default Component.extend({
    */
   showItem(item) {
     setOpenHeight(item);
-
     item.set('isExpanded', true);
 
-    addEventListenerOnce(item.element, 'transitionend', () => {
-      run(() => {
-        // Remove the inline height so contents can be resizable
-        if (item.get('isExpanded')) {
-          item.element.style.height = null;
-        }
-      });
+    // Remove the inline height after the transition so contents don't
+    // get cut off when resizing the browser window.
+    addEventListenerOnce(item.panelWrapper, 'transitionend', () => {
+      if (item.get('isExpanded')) {
+        item.panelWrapper.style.height = null;
+      }
     });
+
+    if (this.get('onShow')) {
+      this.get('onShow')();
+    }
   },
 
   /**
@@ -80,24 +82,11 @@ export default Component.extend({
       setOpenHeight(this.activeItem);
     }
 
-    // To close height
-    setClosedHeight(item);
-    item.set('isExpanded', false);
-  },
-
-  /**
-   * Notifies the passed in actions.
-   * @param {Boolean} wasShown True if the item was shown
-   */
-  _onToggle(wasShown) {
-    const onShow = this.get('onShow');
-    const onHide = this.get('onHide');
-
-    if (wasShown) {
-      isPresent(onShow) && onShow();
-    } else {
-      isPresent(onHide) && onHide();
-    }
+    // Set close height
+    next(() => {
+      setClosedHeight(item);
+      item.set('isExpanded', false);
+    });
   },
 
   /**
@@ -121,7 +110,7 @@ export default Component.extend({
 
       this.get('items').pushObject(item);
 
-      // At register time set the closed heights
+      // At register time close respective items
       if (item.get('isExpanded')) {
         this.activeItem = item;
       } else {
@@ -144,6 +133,8 @@ export default Component.extend({
         return;
       }
 
+      // If no items have expandOnInit, then there
+      // isn't an active one yet.
       if (this.activeItem) {
         this.hideItem(this.activeItem);
       }
@@ -151,8 +142,6 @@ export default Component.extend({
       // Show this one
       this.showItem(item);
       this.activeItem = item;
-
-      this._onToggle(item.get('isExpanded'));
     },
   },
 });

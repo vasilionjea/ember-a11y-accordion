@@ -1,7 +1,7 @@
 <h1 class="page-title">Collapsible</h1>
 
 {{#collapsible-list
-  classNames="my-accordion-list"
+  classNames="my-accordion"
   onShow=(action "onCollapsibleShow")
   onHide=(action "onCollapsibleHide") as |collapsible|}}
   {{#collapsible.item as |item|}}
@@ -28,7 +28,7 @@
     {{/item.panel}}
   {{/collapsible.item}}
 
-  {{#collapsible.item expandOnInit=true as |item|}}
+  {{#collapsible.item as |item|}}
     {{#item.header}}Consectetur{{/item.header}}
     {{#item.panel}}
       <h4>Consectetur</h4>

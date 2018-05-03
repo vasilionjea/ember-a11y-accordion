@@ -6,7 +6,7 @@ import { CLASS_NAMES } from 'ember-a11y-accordion/utils/dom';
 const SELECTORS = {
   header: `.${CLASS_NAMES.header}`,
   trigger: `.${CLASS_NAMES.trigger}`,
-  panel: `.${CLASS_NAMES.panel}`,
+  panelWrapper: `.${CLASS_NAMES.panelWrapper}`,
 };
 
 moduleForComponent('accordion-item', 'Integration | Component | accordion item', {
@@ -35,10 +35,10 @@ test('it has ARIA and DOM attributes on init', function(assert) {
   assertTrigger.hasAttribute('type', 'button', 'The trigger is of type "button"');
   assertTrigger.hasAttribute('aria-expanded', 'true', 'The trigger has an aria-expanded value of "true" when expandOnInit is set to true');
   assertTrigger.hasAttribute('aria-disabled', 'true', 'The trigger has an aria-disabled value of "true" when expandOnInit is set to true');
-  assertTrigger.hasAttribute('aria-controls', find(SELECTORS.panel).getAttribute('id'), 'The trigger controls the correct panel via aria-controls');
+  assertTrigger.hasAttribute('aria-controls', find(SELECTORS.panelWrapper).getAttribute('id'), 'The trigger controls the correct panel via aria-controls');
 
   // Item panel
-  const assertPanel = assert.dom(SELECTORS.panel);
+  const assertPanel = assert.dom(SELECTORS.panelWrapper);
   assertPanel.hasAttribute('role', 'region', 'The panel has an ARIA role of "region"');
   assertPanel.hasAttribute('aria-hidden', 'false', 'The panel aria-hidden value is "false" when expandOnInit is set to true');
   assertPanel.hasAttribute('aria-labelledby', find(SELECTORS.trigger).getAttribute('id'), 'The panel is labelled by the correct trigger via aria-labelledby');

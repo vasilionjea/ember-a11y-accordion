@@ -1,8 +1,6 @@
-.a11y-accordion-item {
-  overflow: hidden;
-  transition: height 400ms ease-in-out;
-}
-
+/**
+ * Normalize button trigger styles.
+ */
 .a11y-accordion-header__trigger {
   width: 100%;
   padding: 0;
@@ -23,11 +21,16 @@
   color: inherit;
 }
 
-.a11y-accordion-panel {
+/**
+ * Default CSS transition (can be overriden).
+ */
+.a11y-accordion-panel-wrapper {
+  overflow: hidden;
   visibility: hidden;
-  transition: visibility 400ms linear;
+  will-change: height;
+  transition: height 500ms ease-in-out, visibility 500ms ease-in-out;
 }
 
-.a11y-accordion-item--is-expanded .a11y-accordion-panel {
+.a11y-accordion-item--is-expanded .a11y-accordion-panel-wrapper {
   visibility: visible;
 }

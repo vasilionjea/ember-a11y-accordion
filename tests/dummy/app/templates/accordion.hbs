@@ -1,7 +1,7 @@
 <h1 class="page-title">Accordion</h1>
 
 {{#accordion-list
-  classNames="my-accordion-list"
+  classNames="my-accordion"
   onShow=(action "onAccordionShow") as |accordion|}}
   {{#accordion.item expandOnInit=true as |item|}}
     {{#item.header}}Lorem ipsum{{/item.header}}
@@ -15,7 +15,8 @@
     {{#item.header}}Dolor Sit{{/item.header}}
     {{#item.panel}}
       <h4>Dolor Sit</h4>
-      <p>Lorem <a href="#">ipsum</a> dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p>Lorem <a href="#">ipsum</a> dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+      <p>Lorem <a href="#">ipsum</a> dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
     {{/item.panel}}
   {{/accordion.item}}
 

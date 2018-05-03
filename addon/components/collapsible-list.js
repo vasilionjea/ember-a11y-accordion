@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { run } from '@ember/runloop';
+import { later } from '@ember/runloop';
 import { A } from '@ember/array';
 import { isPresent } from '@ember/utils';
 import layout from '../templates/components/collapsible-list';
@@ -7,8 +7,16 @@ import {
   CLASS_NAMES,
   setOpenHeight,
   setClosedHeight,
-  addEventListenerOnce
+  addEventListenerOnce,
 } from '../utils/dom';
+
+/**
+ * This slight delay is used when hiding an item. Because a visible panel
+ * doesn't have an inline height (for responsive reasons it's removed),
+ * first we insert its computed height inline, then after this delay we
+ * reset the inline height to 0px so the CSS transition will kick off.
+ */
+const INLINE_HEIGHT_DELAY = 50;
 
 /**
  * The collapsible-list component is the top-most component and is responsible
@@ -41,7 +49,7 @@ export default Component.extend({
   /**
    * Handles showing an item.
    *
-   * When the CSS transition has ended, we remove the inline height so the
+   * When the CSS transition has ended, we clear the inline height so the
    * component's contents don't get cutt off in responsive layouts.
    *
    * @param {Object} item
@@ -49,17 +57,19 @@ export default Component.extend({
    */
   showItem(item) {
     setOpenHeight(item);
-
     item.set('isExpanded', true);
 
-    addEventListenerOnce(item.element, 'transitionend', () => {
-      run(() => {
-        // Remove the inline height so contents can be resizable
-        if (item.get('isExpanded')) {
-          item.element.style.height = null;
-        }
-      });
+    // Remove the inline height after the transition so contents don't
+    // get cut off when resizing the browser window.
+    addEventListenerOnce(item.panelWrapper, 'transitionend', () => {
+      if (item.get('isExpanded') && !this._isHiding) {
+        item.panelWrapper.style.height = null;
+      }
     });
+
+    if (this.get('onShow')) {
+      this.get('onShow')();
+    }
   },
 
   /**
@@ -73,24 +83,22 @@ export default Component.extend({
    * @private
    */
   hideItem(item) {
-    setOpenHeight(item); // from open height
-    setClosedHeight(item); // to close height
-    item.set('isExpanded', false);
-  },
+    this._isHiding = true;
 
-  /**
-   * Notifies the passed in actions.
-   * @param {Boolean} wasShown True if the item was shown
-   */
-  _onToggle(wasShown) {
-    const onShow = this.get('onShow');
-    const onHide = this.get('onHide');
+    // From open height
+    setOpenHeight(item);
 
-    if (wasShown) {
-      isPresent(onShow) && onShow();
-    } else {
-      isPresent(onHide) && onHide();
-    }
+    // Set close height
+    later(() => {
+      setClosedHeight(item);
+      item.set('isExpanded', false);
+
+      if (this.get('onHide')) {
+        this.get('onHide')();
+      }
+
+      this._isHiding = false;
+    }, INLINE_HEIGHT_DELAY);
   },
 
   /**
@@ -115,7 +123,7 @@ export default Component.extend({
 
       this.get('items').pushObject(item);
 
-      // At register time set the item's element height
+      // At register time close respective items
       if (!item.get('isExpanded')) {
         setClosedHeight(item);
       }
@@ -137,8 +145,6 @@ export default Component.extend({
       } else {
         this.showItem(item);
       }
-
-      this._onToggle(item.get('isExpanded'));
     },
   },
 });

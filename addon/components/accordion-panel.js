@@ -13,7 +13,7 @@ export default Component.extend({
   layout,
   tagName: 'section',
   role: 'region',
-  classNames: [CLASS_NAMES.panel],
+  classNames: [CLASS_NAMES.panelWrapper],
   attributeBindings: ['role', 'aria-labelledby', 'aria-hidden'],
 
   'aria-hidden': computed('isExpanded', function() {

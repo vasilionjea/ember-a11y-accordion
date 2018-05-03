@@ -9,7 +9,7 @@ const SELECTORS = {
   itemExpanded: `.${CLASS_NAMES.itemExpanded}`,
   itemDisabled: `.${CLASS_NAMES.itemDisabled}`,
   header: `.${CLASS_NAMES.header}`,
-  panel: `.${CLASS_NAMES.panel}`,
+  panelWrapper: `.${CLASS_NAMES.panelWrapper}`,
 };
 
 moduleForComponent('collapsible-list', 'Integration | Component | collapsible list', {
@@ -31,7 +31,7 @@ test('it should render', function(assert) {
   assert.dom(SELECTORS.list).exists({ count: 1 });
   assert.dom(SELECTORS.item).exists({ count: 1 });
   assert.dom(SELECTORS.header).exists({ count: 1 });
-  assert.dom(SELECTORS.panel).exists({ count: 1 });
+  assert.dom(SELECTORS.panelWrapper).exists({ count: 1 });
 });
 
 test('it should render items in the expanded state when "expandOnInit" is set to true', function(assert) {
@@ -124,7 +124,7 @@ test('it should execute the onShow action when one is provided', function(assert
     {{/collapsible-list}}
   `);
 
-  click(SELECTORS.header);
+  return click(SELECTORS.header);
 });
 
 test('it should execute the onHide action when one is provided', function(assert) {
@@ -143,5 +143,5 @@ test('it should execute the onHide action when one is provided', function(assert
     {{/collapsible-list}}
   `);
 
-  click(SELECTORS.header);
+  return click(SELECTORS.header);
 });

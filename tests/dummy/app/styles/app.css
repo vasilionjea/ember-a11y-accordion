@@ -18,9 +18,9 @@ a:hover { color: #7758cc; }
 }
 .nav a {
   display: inline-block;
-  padding: 1rem 1.25rem;
-  font-size: 20px;
-  font-family: cursive;
+  padding: 1.125rem 1.25rem;
+  font-size: 18px;
+  font-weight: 300;
   color: snow;
   text-decoration: none;
 }
@@ -31,37 +31,36 @@ a:hover { color: #7758cc; }
 /**
  * Home
  */
-.home-accordion-list .a11y-accordion-header__trigger,
-.home-accordion-list .a11y-accordion-panel {
+.home-accordion .a11y-accordion-header__trigger,
+.home-accordion .a11y-accordion-panel-content {
   border-bottom: 1px solid rgba(144,115,173,0.2);
   padding: .75em .875em;
   padding-left: 0;
 }
-.home-accordion-list .a11y-accordion-header__trigger {
+.home-accordion .a11y-accordion-header__trigger {
   font-size: 22px;
   outline: none;
   cursor: pointer;
 }
+.home-accordion p { margin-bottom: 0; }
 
 /**
  * Accordion & Collapsible
  */
-.my-accordion-list {
-  /* width: 50%; */
+.my-accordion {
   box-sizing: border-box;
   border: 1px solid #d0d0d0;
   border-top: none;
   box-shadow: 0 1px 3px #e0e0e0;
 }
-.my-accordion-list .a11y-accordion-header__trigger {
+.my-accordion .a11y-accordion-header__trigger {
   border-top: 1px solid #d0d0d0;
   border-bottom: 1px solid #d0d0d0;
   padding: 1em 1.25em;
 }
-.my-accordion-list .a11y-accordion-panel {
+.my-accordion .a11y-accordion-panel-content {
   padding: 1.5em;
 }
-
 .a11y-accordion-item--is-disabled .a11y-accordion-header__trigger {
   opacity: 0.4;
 }

@@ -1,3 +1,8 @@
+import { run } from '@ember/runloop';
+
+/**
+ * All addon selectos.
+ */
 const CLASS_NAMES = {
   list: 'a11y-accordion-list',
   item: 'a11y-accordion-item',
@@ -5,7 +10,8 @@ const CLASS_NAMES = {
   itemDisabled: 'a11y-accordion-item--is-disabled',
   header: 'a11y-accordion-header',
   trigger: 'a11y-accordion-header__trigger',
-  panel: 'a11y-accordion-panel',
+  panelWrapper: 'a11y-accordion-panel-wrapper',
+  panelContent: 'a11y-accordion-panel-content',
 };
 
 /**
@@ -14,10 +20,9 @@ const CLASS_NAMES = {
  * @param {Object} item
  * @public
  */
-function setOpenHeight({ element, headerElement, panelElement }) {
-  const header = headerElement.getBoundingClientRect();
-  const panel = panelElement.getBoundingClientRect();
-  element.style.height = `${(header.height + panel.height)}px`;
+function setOpenHeight({ panelWrapper, panelContent }) {
+  let height = panelContent.getBoundingClientRect().height;
+  panelWrapper.style.height = `${height}px`;
 }
 
 /**
@@ -26,9 +31,8 @@ function setOpenHeight({ element, headerElement, panelElement }) {
  * @param {Object} item
  * @public
  */
-function setClosedHeight({ element, headerElement }) {
-  const header = headerElement.getBoundingClientRect();
-  element.style.height = `${header.height}px`;
+function setClosedHeight({ panelWrapper }) {
+  panelWrapper.style.height = `0px`;
 }
 
 /**
@@ -41,9 +45,11 @@ function setClosedHeight({ element, headerElement }) {
  * @public
  */
 function addEventListenerOnce(element, eventName, callback) {
-  element.addEventListener(eventName, function onTransitionEnd(e) {
-    element.removeEventListener(eventName, onTransitionEnd);
-    callback && callback(e);
+  element.addEventListener(eventName, function handler(e) {
+    run(() => {
+      element.removeEventListener(eventName, handler);
+      callback && callback(e);
+    });
   });
 }
 
