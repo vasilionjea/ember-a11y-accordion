@@ -50,6 +50,22 @@ test('it should render items in the expanded state when "expandOnInit" is set to
   assert.dom(SELECTORS.item).hasClass(CLASS_NAMES.itemExpanded);
 });
 
+test('it should render items in the expanded state when "expandOnInit" is set to true and animation is set to false', function(assert) {
+  assert.expect(2);
+
+  this.render(hbs`
+    {{#accordion-list animation=false as |accordion|}}
+      {{#accordion.item expandOnInit=true as |item|}}
+        {{#item.header}}First header{{/item.header}}
+        {{#item.panel}}First panel{{/item.panel}}
+      {{/accordion.item}}
+    {{/accordion-list}}
+  `);
+
+  assert.dom(SELECTORS.itemExpanded).exists({ count: 1 });
+  assert.dom(SELECTORS.item).hasClass(CLASS_NAMES.itemExpanded);
+});
+
 test('it should render items in the disabled state when "isDisabled" is set to true', function(assert) {
   assert.expect(2);
 
@@ -108,6 +124,38 @@ test('it should expand the item when its header is clicked', function(assert) {
   });
 });
 
+test('it should expand the item when its header is clicked and animation is set to false', function(assert) {
+  assert.expect(2);
+
+  this.render(hbs`
+    {{#accordion-list animation=false as |accordion|}}
+      {{#accordion.item as |item|}}
+        {{#item.header}}header here...{{/item.header}}
+        {{#item.panel}}panel here...{{/item.panel}}
+      {{/accordion.item}}
+
+      {{#accordion.item expandOnInit=true as |item|}}
+        {{#item.header}}header here...{{/item.header}}
+        {{#item.panel}}panel here...{{/item.panel}}
+      {{/accordion.item}}
+
+      {{#accordion.item as |item|}}
+        {{#item.header}}header here...{{/item.header}}
+        {{#item.panel}}panel here...{{/item.panel}}
+      {{/accordion.item}}
+    {{/accordion-list}}
+  `);
+
+  // Click the first item's header
+  click(find(SELECTORS.header));
+
+  // Item is expanded
+  assert.dom(SELECTORS.item).hasClass(CLASS_NAMES.itemExpanded);
+
+  // Only one is expanded
+  assert.dom(SELECTORS.itemExpanded).exists({ count: 1 });
+});
+
 test('it should execute the onShow action when one is provided', function(assert) {
   assert.expect(1);
 
@@ -117,6 +165,25 @@ test('it should execute the onShow action when one is provided', function(assert
 
   this.render(hbs`
     {{#accordion-list onShow=(action doSomething) as |accordion|}}
+      {{#accordion.item as |item|}}
+        {{#item.header}}header here...{{/item.header}}
+        {{#item.panel}}panel here...{{/item.panel}}
+      {{/accordion.item}}
+    {{/accordion-list}}
+  `);
+
+  click(SELECTORS.header);
+});
+
+test('it should execute the onShow action when one is provided and animation is set to false', function(assert) {
+  assert.expect(1);
+
+  this.set('doSomething', () => {
+    assert.ok(true);
+  });
+
+  this.render(hbs`
+    {{#accordion-list animation=false onShow=(action doSomething) as |accordion|}}
       {{#accordion.item as |item|}}
         {{#item.header}}header here...{{/item.header}}
         {{#item.panel}}panel here...{{/item.panel}}

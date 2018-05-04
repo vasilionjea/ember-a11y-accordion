@@ -44,10 +44,22 @@ a:hover { color: #7758cc; }
 }
 .home-accordion p { margin-bottom: 0; }
 
+.container {
+  display: flex;
+}
+.space-between {
+  width: 32px;
+}
+.pull-right {
+  float: right;
+}
+
 /**
  * Accordion & Collapsible
  */
 .my-accordion {
+  width: 50%;
+  height: 100%;
   box-sizing: border-box;
   border: 1px solid #d0d0d0;
   border-top: none;
