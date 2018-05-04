@@ -16,6 +16,7 @@ import {
  *
  * @param {Function} [onShow] Action to execute when a panel is expanded
  * @param {String} [classNames] Any CSS classes to be added to the component's element
+ * @param {Boolean} [animation] Whether or not it should animate items
  *
  * @example
  * {{#accordion-list as |accordion|}}
@@ -30,6 +31,11 @@ export default Component.extend({
   classNames: [CLASS_NAMES.list],
 
   /**
+   * Whether or not CSS transition is used.
+   */
+  animation: true,
+
+  /**
    * @override
    */
   init() {
@@ -41,7 +47,20 @@ export default Component.extend({
   },
 
   /**
-   * Handles showing an item.
+   * Handles showing an item without animation.
+   *
+   * @param {Object} item
+   * @private
+   */
+  simpleShow(item) {
+    item.setProperties({
+      isExpanded: true,
+      'panelWrapper.style.display': null,
+    });
+  },
+
+  /**
+   * Handles showing an item with animation.
    *
    * When the CSS transition has ended, we clear the inline height so the
    * component's contents don't get cutt off in responsive layouts.
@@ -49,7 +68,7 @@ export default Component.extend({
    * @param {Object} item
    * @private
    */
-  showItem(item) {
+  animatedShow(item) {
     setOpenHeight(item);
     item.set('isExpanded', true);
 
@@ -60,14 +79,23 @@ export default Component.extend({
         item.panelWrapper.style.height = null;
       }
     });
-
-    if (this.get('onShow')) {
-      this.get('onShow')();
-    }
   },
 
   /**
-   * Handles hiding an item.
+   * Handles hiding an item without animation.
+   *
+   * @param {Object} item
+   * @private
+   */
+  simpleHide(item) {
+    item.setProperties({
+      isExpanded: false,
+      'panelWrapper.style.display': 'none',
+    });
+  },
+
+  /**
+   * Handles hiding an item with animation.
    *
    * CSS transitions don't transition from "no value" to a value, so
    * before we set the element's height to close it, first we
@@ -76,7 +104,7 @@ export default Component.extend({
    * @param {Object} item
    * @private
    */
-  hideItem(item) {
+  animatedHide(item) {
     if (this.activeItem) {
       // From open height
       setOpenHeight(this.activeItem);
@@ -114,7 +142,9 @@ export default Component.extend({
       if (item.get('isExpanded')) {
         this.activeItem = item;
       } else {
-        setClosedHeight(item);
+        this.get('animation')
+          ? setClosedHeight(item)
+          : this.simpleHide(item);
       }
     },
 
@@ -133,15 +163,21 @@ export default Component.extend({
         return;
       }
 
-      // If no items have expandOnInit, then there
-      // isn't an active one yet.
+      // If no items have expandOnInit, then there isn't an active one yet.
       if (this.activeItem) {
-        this.hideItem(this.activeItem);
+        // Hide active item
+        this.get('animation')
+          ? this.animatedHide(this.activeItem)
+          : this.simpleHide(this.activeItem);
       }
 
       // Show this one
-      this.showItem(item);
+      this.get('animation')
+        ? this.animatedShow(item)
+        : this.simpleShow(item);
+
       this.activeItem = item;
+      this.get('onShow') && this.get('onShow')();
     },
   },
 });

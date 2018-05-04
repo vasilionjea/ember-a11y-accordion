@@ -11,10 +11,10 @@ import {
 } from '../utils/dom';
 
 /**
- * This slight delay is used when hiding an item. Because a visible panel
- * doesn't have an inline height (for responsive reasons it's removed),
- * first we insert its computed height inline, then after this delay we
- * reset the inline height to 0px so the CSS transition will kick off.
+ * This slight delay is used when hiding an item with CSS transitions. Because a visible
+ * panel doesn't have an inline height (for responsive reasons it's removed), first we
+ * insert its computed height inline, then after this delay we reset the inline height
+ * to 0px so the CSS transition will kick off.
  */
 const INLINE_HEIGHT_DELAY = 50;
 
@@ -25,6 +25,7 @@ const INLINE_HEIGHT_DELAY = 50;
  * @param {Function} [onShow] Action to execute when a panel is expanded
  * @param {Function} [onHide] Action to execute when a panel is collapsed
  * @param {String} [classNames] Any CSS classes to be added to the component's element
+ * @param {Boolean} [animation] Whether or not it should animate items
  *
  * @example
  * {{#collapsible-list as |collapsible|}}
@@ -39,6 +40,11 @@ export default Component.extend({
   classNames: [CLASS_NAMES.list],
 
   /**
+   * Whether or not CSS transition is used.
+   */
+  animation: true,
+
+  /**
    * @override
    */
   init() {
@@ -47,7 +53,20 @@ export default Component.extend({
   },
 
   /**
-   * Handles showing an item.
+   * Handles showing an item without animation.
+   *
+   * @param {Object} item
+   * @private
+   */
+  simpleShow(item) {
+    item.setProperties({
+      isExpanded: true,
+      'panelWrapper.style.display': null,
+    });
+  },
+
+  /**
+   * Handles showing an item with animation.
    *
    * When the CSS transition has ended, we clear the inline height so the
    * component's contents don't get cutt off in responsive layouts.
@@ -55,7 +74,7 @@ export default Component.extend({
    * @param {Object} item
    * @private
    */
-  showItem(item) {
+  animatedShow(item) {
     setOpenHeight(item);
     item.set('isExpanded', true);
 
@@ -66,14 +85,28 @@ export default Component.extend({
         item.panelWrapper.style.height = null;
       }
     });
+  },
 
-    if (this.get('onShow')) {
-      this.get('onShow')();
+  /**
+   * Handles hiding an item without animation.
+   *
+   * @param {Object} item
+   * @param {Boolean} silent
+   * @private
+   */
+  simpleHide(item, silent) {
+    item.setProperties({
+      isExpanded: false,
+      'panelWrapper.style.display': 'none',
+    });
+
+    if (!silent) {
+      this.get('onHide') && this.get('onHide')();
     }
   },
 
   /**
-   * Handles hiding an item.
+   * Handles hiding an item with animation.
    *
    * CSS transitions don't transition from "no value" to a value, so
    * before we set the element's height to close it, first we
@@ -82,7 +115,7 @@ export default Component.extend({
    * @param {Object} item
    * @private
    */
-  hideItem(item) {
+  animatedHide(item) {
     this._isHiding = true;
 
     // From open height
@@ -92,12 +125,9 @@ export default Component.extend({
     later(() => {
       setClosedHeight(item);
       item.set('isExpanded', false);
-
-      if (this.get('onHide')) {
-        this.get('onHide')();
-      }
-
       this._isHiding = false;
+
+      this.get('onHide') && this.get('onHide')();
     }, INLINE_HEIGHT_DELAY);
   },
 
@@ -125,7 +155,9 @@ export default Component.extend({
 
       // At register time close respective items
       if (!item.get('isExpanded')) {
-        setClosedHeight(item);
+        this.get('animation')
+          ? setClosedHeight(item)
+          : this.simpleHide(item, true);
       }
     },
 
@@ -141,9 +173,15 @@ export default Component.extend({
       }
 
       if (item.get('isExpanded')) {
-        this.hideItem(item);
+        this.get('animation')
+          ? this.animatedHide(item)
+          : this.simpleHide(item);
       } else {
-        this.showItem(item);
+        this.get('animation')
+          ? this.animatedShow(item)
+          : this.simpleShow(item);
+
+        this.get('onShow') && this.get('onShow')();
       }
     },
   },
