@@ -3,7 +3,7 @@
 <div class="container">
   {{! Accordion with animation }}
   {{#accordion-list
-    classNames="my-accordion"
+    class="my-accordion"
     onShow=(action "onAccordionShow") as |accordion|}}
     {{#accordion.item expandOnInit=true as |item|}}
       {{#item.header}}Lorem ipsum <span class="pull-right">(animated)</span>{{/item.header}}
@@ -42,7 +42,7 @@
 
   {{! Accordion without animation }}
   {{#accordion-list
-    classNames="my-accordion"
+    class="my-accordion"
     animation=false
     onShow=(action "onAccordionShow") as |accordion|}}
     {{#accordion.item expandOnInit=true as |item|}}

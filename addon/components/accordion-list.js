@@ -15,7 +15,7 @@ import {
  * for registering accordion items and toggling their panels.
  *
  * @param {Function} [onShow] Action to execute when a panel is expanded
- * @param {String} [classNames] Any CSS classes to be added to the component's element
+ * @param {String} [class] Any CSS classes to be added to the component's element
  * @param {Boolean} [animation] Whether or not it should animate items
  *
  * @example

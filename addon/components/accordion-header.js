@@ -9,7 +9,7 @@ const DEFAULT_ARIAL_LEVEL = '3';
  * or collapsing the respective panel component.
  *
  * @param {String} [aria-level] The ARIA heading level (defaults to "3")
- * @param {String} [classNames] Any CSS classes to be added to the component's element
+ * @param {String} [class] Any CSS classes to be added to the component's element
  */
 export default Component.extend({
   layout,

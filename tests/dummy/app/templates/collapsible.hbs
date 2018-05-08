@@ -3,7 +3,7 @@
 <div class="container">
   {{! Collapsible with animation }}
   {{#collapsible-list
-    classNames="my-accordion"
+    class="my-accordion"
     onShow=(action "onCollapsibleShow")
     onHide=(action "onCollapsibleHide") as |collapsible|}}
     {{#collapsible.item as |item|}}
@@ -42,7 +42,7 @@
 
   {{! Collapsible with animation }}
   {{#collapsible-list
-    classNames="my-accordion"
+    class="my-accordion"
     animation=false
     onShow=(action "onCollapsibleShow")
     onHide=(action "onCollapsibleHide") as |collapsible|}}

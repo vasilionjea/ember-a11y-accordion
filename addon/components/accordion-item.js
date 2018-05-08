@@ -11,7 +11,7 @@ import { CLASS_NAMES } from '../utils/dom';
  *
  * @param {Boolean} [expandOnInit] Whether or not to expand this item on init
  * @param {Boolean} [isDisabled] Whether or not this item should be disabled (user will not be able to expand it)
- * @param {String} [classNames] Any CSS classes to be added to the component's element
+ * @param {String} [class] Any CSS classes to be added to the component's element
  */
 export default Component.extend({
   layout,

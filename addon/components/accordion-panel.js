@@ -7,7 +7,7 @@ import { CLASS_NAMES } from '../utils/dom';
  * The accordion-panel component contains the contents to be shown at any
  * given point. This component is toggled by the accordion-header.
  *
- * @param {String} [classNames] Any CSS classes to be added to the component's element
+ * @param {String} [class] Any CSS classes to be added to the component's element
  */
 export default Component.extend({
   layout,
