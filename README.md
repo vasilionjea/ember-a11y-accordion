@@ -18,7 +18,7 @@ An ember accordion component that treats accessibility as a first class citizen.
     <tr>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
-      <td>`div`</td>
+      <td><code>div</code></td>
       <td>`.a11y-accordion-list`</td>
       <td>Simply used as a container and doesn't have any semantic meaning.</td>
     </tr>
