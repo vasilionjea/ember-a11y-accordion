@@ -73,7 +73,7 @@ An ember accordion component that treats accessibility as a first class citizen.
       <td>&nbsp;</td>
       <td><code>section</code></td>
       <td><code>.a11y-accordion-panel-wrapper</code></td>
-      <td>This is the accordion panel which the trigger controls. The <code>region</code> role is helpful to the perception of structure by screen reader users when panels contain heading elements or a nested accordion. **Note** that you should never style this element.</td>
+      <td><p>This is the accordion panel which the trigger controls. The <code>region</code> role is helpful to the perception of structure by screen reader users when panels contain heading elements or a nested accordion.</p><p><strong>Note</strong> that you should never style this element.</p></td>
     </tr>
     <tr>
       <td>&nbsp;</td>
