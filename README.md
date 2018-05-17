@@ -2,7 +2,8 @@
 
 An ember accordion component that treats accessibility as a first class citizen. This addon is based on the [W3C's ARIA](https://www.w3.org/TR/wai-aria-practices/#accordion) best practices for accordions.
 
-### Usage
+
+## Usage
 ```mustache
 {{#accordion-list
   class="my-accordion"
@@ -31,7 +32,10 @@ An ember accordion component that treats accessibility as a first class citizen.
 {{/accordion-list}}
 ```
 
-### Roles, States, Attributes, and Classes
+There is an additional collapsible component called `collapsible-list` and all the options are exactly the same as the accordion list component. The only difference is that accordions expand one item at a time, whereas collapsibles can have multiple items expanded at any point in time. Also the `collapsible-list` component accepts an `onHide` action in addition to the `onShow` action.
+
+
+## Roles, States, Attributes, and Classes
 
 <table>
   <col style="">
@@ -132,6 +136,7 @@ An ember accordion component that treats accessibility as a first class citizen.
     </tr>
   </tbody>
 </table>
+
 
 ## Contribute
 
