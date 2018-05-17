@@ -5,6 +5,11 @@ An ember accordion component that treats accessibility as a first class citizen.
 ### Roles, States, Attributes, and Classes
 
 <table>
+  <col style="">
+  <col style="width:20%">
+  <col style="">
+  <col style="width:33%">
+  <col style="width:43%">
   <thead>
     <tr>
       <th>Role</th>
