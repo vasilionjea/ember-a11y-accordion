@@ -2,6 +2,35 @@
 
 An ember accordion component that treats accessibility as a first class citizen. This addon is based on the [W3C's ARIA](https://www.w3.org/TR/wai-aria-practices/#accordion) best practices for accordions.
 
+### Usage
+```mustache
+{{#accordion-list
+  class="my-accordion"
+  animation=false
+  onShow=(action "onAccordionShow") as |accordion|}}
+  {{#accordion.item expandOnInit=true as |item|}}
+    {{#item.header class="first-header" aria-level="4"}}Lorem ipsum{{/item.header}}
+    {{#item.panel class="first-panel"}}
+      <p>Lorem <a href="#">ipsum</a> dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    {{/item.panel}}
+  {{/accordion.item}}
+
+  {{#accordion.item as |item|}}
+    {{#item.header aria-level="4"}}Dolor Sit{{/item.header}}
+    {{#item.panel}}
+      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+    {{/item.panel}}
+  {{/accordion.item}}
+
+  {{#accordion.item isDisabled=true as |item|}}
+    {{#item.header aria-level="4"}}This is disabled{{/item.header}}
+    {{#item.panel}}
+      <p>User cannot interact with this item.</p>
+    {{/item.panel}}
+  {{/accordion.item}}
+{{/accordion-list}}
+```
+
 ### Roles, States, Attributes, and Classes
 
 <table>
