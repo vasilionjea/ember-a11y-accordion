@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { later } from '@ember/runloop';
+import { later, cancel } from '@ember/runloop';
 import { A } from '@ember/array';
 import { isPresent } from '@ember/utils';
 import layout from '../templates/components/collapsible-list';
@@ -49,6 +49,10 @@ export default Component.extend({
    */
   init() {
     this._super(...arguments);
+
+    // Timeout for the animated hide
+    this._currentHideTimeout = null;
+
     this.set('items', A());
   },
 
@@ -121,8 +125,10 @@ export default Component.extend({
     // From open height
     setOpenHeight(item);
 
+    cancel(this._currentHideTimeout);
+
     // Set close height
-    later(() => {
+    this._currentHideTimeout = later(() => {
       setClosedHeight(item);
       item.set('isExpanded', false);
       this._isHiding = false;
@@ -135,6 +141,7 @@ export default Component.extend({
    * @override
    */
   willDestroyElement() {
+    cancel(this._currentHideTimeout);
     this.set('items', null);
   },
 

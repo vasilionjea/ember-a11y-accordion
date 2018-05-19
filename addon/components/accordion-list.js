@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { next } from '@ember/runloop';
+import { next, cancel } from '@ember/runloop';
 import { A } from '@ember/array';
 import { isPresent } from '@ember/utils';
 import layout from '../templates/components/accordion-list';
@@ -40,6 +40,10 @@ export default Component.extend({
    */
   init() {
     this._super(...arguments);
+
+    // Timeout for the animated hide
+    this._currentHideTimeout = null;
+
     this.setProperties({
       items: A(),
       activeItem: null,
@@ -110,8 +114,10 @@ export default Component.extend({
       setOpenHeight(this.activeItem);
     }
 
+    cancel(this._currentHideTimeout);
+
     // Set close height
-    next(() => {
+    this._currentHideTimeout = next(() => {
       setClosedHeight(item);
       item.set('isExpanded', false);
     });
@@ -121,6 +127,7 @@ export default Component.extend({
    * @override
    */
   willDestroyElement() {
+    cancel(this._currentHideTimeout);
     this.set('items', null);
   },
 
