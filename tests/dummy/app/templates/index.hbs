@@ -1,0 +1,24 @@
+<h1 class="page-title">Ember A11y Accordion</h1>
+
+{{#accordion-list classNames="home-accordion" as |accordion|}}
+  {{#accordion.item expandOnInit=true as |item|}}
+    {{#item.header}}About{{/item.header}}
+    {{#item.panel}}
+      <p>An ember accordion component that treats accessibility like a first class citizen. This addon is based on the W3C's ARIA best practices. For more information visit: <a href="https://www.w3.org/TR/wai-aria-practices/#accordion">https://www.w3.org/TR/wai-aria-practices/#accordion</a></p>
+    {{/item.panel}}
+  {{/accordion.item}}
+
+  {{#accordion.item as |item|}}
+    {{#item.header}}ARIA{{/item.header}}
+    {{#item.panel}}
+      <p>About ARIA here...</p>
+    {{/item.panel}}
+  {{/accordion.item}}
+
+  {{#accordion.item as |item|}}
+    {{#item.header}}Install{{/item.header}}
+    {{#item.panel}}
+      <p>About install here...</p>
+    {{/item.panel}}
+  {{/accordion.item}}
+{{/accordion-list}}

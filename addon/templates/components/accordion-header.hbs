@@ -1,0 +1,21 @@
+{{#if isCollapsible}}
+  <button
+    type="button"
+    id="{{triggerId}}"
+    class="a11y-accordion-header__trigger"
+    aria-controls="{{panelId}}"
+    aria-expanded="{{isExpanded}}"
+    aria-disabled="{{isDisabled}}">
+    {{yield}}
+  </button>
+{{else}}
+  <button
+    type="button"
+    id="{{triggerId}}"
+    class="a11y-accordion-header__trigger"
+    aria-controls="{{panelId}}"
+    aria-expanded="{{isExpanded}}"
+    aria-disabled="{{if isDisabled isDisabled isExpanded}}">
+    {{yield}}
+  </button>
+{{/if}}
