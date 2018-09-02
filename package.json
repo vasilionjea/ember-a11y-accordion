@@ -58,6 +58,6 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
-    "demoURL": "https://vasilionjea.github.io/ember-a11y-accordion/accordion"
+    "demoURL": "https://vasilionjea.github.io/ember-a11y-accordion/"
   }
 }
