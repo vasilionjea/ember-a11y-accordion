@@ -2,6 +2,8 @@
 
 An ember accordion component that treats accessibility as a first class citizen. This addon is based on the [W3C's ARIA](https://www.w3.org/TR/wai-aria-practices/#accordion) best practices for accordions.
 
+Demo: https://vasilionjea.github.io/ember-a11y-accordion/accordion
+
 
 ## Usage
 ```mustache
