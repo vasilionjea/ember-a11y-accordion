@@ -157,15 +157,16 @@ test('it should expand the item when its header is clicked and animation is set 
 });
 
 test('it should execute the onShow action when one is provided', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
 
-  this.set('doSomethingOnShow', () => {
+  this.set('doSomethingOnShow', (item) => {
     assert.ok(true);
+    assert.equal(item.name, 'item1');
   });
 
   this.render(hbs`
     {{#collapsible-list onShow=(action doSomethingOnShow) as |collapsible|}}
-      {{#collapsible.item as |item|}}
+      {{#collapsible.item name="item1" as |item|}}
         {{#item.header}}header here...{{/item.header}}
         {{#item.panel}}panel here...{{/item.panel}}
       {{/collapsible.item}}
@@ -176,15 +177,56 @@ test('it should execute the onShow action when one is provided', function(assert
 });
 
 test('it should execute the onShow action when one is provided and animation is set to false', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
 
-  this.set('doSomethingOnShow', () => {
+  this.set('doSomethingOnShow', (item) => {
     assert.ok(true);
+    assert.equal(item.name, 'item1');
   });
 
   this.render(hbs`
     {{#collapsible-list animation=false onShow=(action doSomethingOnShow) as |collapsible|}}
-      {{#collapsible.item as |item|}}
+      {{#collapsible.item name="item1" as |item|}}
+        {{#item.header}}header here...{{/item.header}}
+        {{#item.panel}}panel here...{{/item.panel}}
+      {{/collapsible.item}}
+    {{/collapsible-list}}
+  `);
+
+  click(SELECTORS.header);
+});
+
+test('it should execute the onAfterShow action when one is provided', function(assert) {
+  assert.expect(2);
+
+  this.set('doSomethingOnAfterShow', (item) => {
+    assert.ok(true);
+    assert.equal(item.name, 'item1');
+  });
+
+  this.render(hbs`
+    {{#collapsible-list onAfterShow=(action doSomethingOnAfterShow) as |collapsible|}}
+      {{#collapsible.item name="item1" as |item|}}
+        {{#item.header}}header here...{{/item.header}}
+        {{#item.panel}}panel here...{{/item.panel}}
+      {{/collapsible.item}}
+    {{/collapsible-list}}
+  `);
+
+  return click(SELECTORS.header);
+});
+
+test('it should execute the onAfterShow action when one is provided and animation is set to false', function(assert) {
+  assert.expect(2);
+
+  this.set('doSomethingOnAfterShow', (item) => {
+    assert.ok(true);
+    assert.equal(item.name, 'item1');
+  });
+
+  this.render(hbs`
+    {{#collapsible-list animation=false onAfterShow=(action doSomethingOnAfterShow) as |collapsible|}}
+      {{#collapsible.item name="item1" as |item|}}
         {{#item.header}}header here...{{/item.header}}
         {{#item.panel}}panel here...{{/item.panel}}
       {{/collapsible.item}}
@@ -195,15 +237,16 @@ test('it should execute the onShow action when one is provided and animation is 
 });
 
 test('it should execute the onHide action when one is provided', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
 
-  this.set('doSomethingOnHide', () => {
+  this.set('doSomethingOnHide', (item) => {
     assert.ok(true);
+    assert.equal(item.name, 'item1');
   });
 
   this.render(hbs`
     {{#collapsible-list onHide=(action doSomethingOnHide) as |collapsible|}}
-      {{#collapsible.item expandOnInit=true as |item|}}
+      {{#collapsible.item name="item1" expandOnInit=true as |item|}}
         {{#item.header}}header here...{{/item.header}}
         {{#item.panel}}panel here...{{/item.panel}}
       {{/collapsible.item}}
@@ -214,15 +257,16 @@ test('it should execute the onHide action when one is provided', function(assert
 });
 
 test('it should execute the onHide action when one is provided and animation is set to false', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
 
-  this.set('doSomethingOnHide', () => {
+  this.set('doSomethingOnHide', (item) => {
     assert.ok(true);
+    assert.equal(item.name, 'item1');
   });
 
   this.render(hbs`
     {{#collapsible-list animation=false onHide=(action doSomethingOnHide) as |collapsible|}}
-      {{#collapsible.item expandOnInit=true as |item|}}
+      {{#collapsible.item name="item1" expandOnInit=true as |item|}}
         {{#item.header}}header here...{{/item.header}}
         {{#item.panel}}panel here...{{/item.panel}}
       {{/collapsible.item}}

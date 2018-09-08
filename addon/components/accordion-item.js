@@ -37,6 +37,7 @@ export default Component.extend({
       panelId: guidFor({}),
       isExpanded: this.get('expandOnInit'),
       isDisabled: this.get('isDisabled'),
+      name: this.get('name'),
     });
 
     this.set('sharedState', sharedState);
