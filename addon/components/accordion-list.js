@@ -81,6 +81,7 @@ export default Component.extend({
     addEventListenerOnce(item.panelWrapper, 'transitionend', () => {
       if (item.get('isExpanded')) {
         item.panelWrapper.style.height = null;
+        this.triggerEvent('onAfterShow', item);
       }
     });
   },
@@ -131,6 +132,19 @@ export default Component.extend({
     this.set('items', null);
   },
 
+  /**
+   * Triggers an event
+   *
+   * @param {string} eventName
+   * @param {Object} item
+   * @private
+   */
+  triggerEvent(eventName, item) {
+    this.get(eventName) && this.get(eventName)({
+      name: item.get('name'),
+    });
+  },
+
   actions: {
     /**
      * Action for item components to register themselves.
@@ -179,12 +193,16 @@ export default Component.extend({
       }
 
       // Show this one
-      this.get('animation')
-        ? this.animatedShow(item)
-        : this.simpleShow(item);
+      if (this.get('animation')) {
+        this.animatedShow(item)
+        this.triggerEvent('onShow', item);
+      } else {
+        this.simpleShow(item);
+        this.triggerEvent('onShow', item);
+        this.triggerEvent('onAfterShow', item);
+      }
 
       this.activeItem = item;
-      this.get('onShow') && this.get('onShow')();
     },
   },
 });
