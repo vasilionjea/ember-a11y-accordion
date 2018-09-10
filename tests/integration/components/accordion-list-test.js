@@ -263,7 +263,7 @@ test('it should execute the onShow and onAfterShow actions in the right order', 
 
   this.render(hbs`
     {{#accordion-list onShow=(action doSomethingOnShow) onAfterShow=(action doSomethingOnAfterShow) as |accordion|}}
-      {{#accordion.item name='item1' as |item|}}
+      {{#accordion.item name="item1" as |item|}}
         {{#item.header}}header here...{{/item.header}}
         {{#item.panel}}panel here...{{/item.panel}}
       {{/accordion.item}}
@@ -298,7 +298,7 @@ test('it should execute the onShow and onAfterShow actions in the right order wh
 
   this.render(hbs`
     {{#accordion-list animation=false onShow=(action doSomethingOnShow) onAfterShow=(action doSomethingOnAfterShow) as |accordion|}}
-      {{#accordion.item name='item1' as |item|}}
+      {{#accordion.item name="item1" as |item|}}
         {{#item.header}}header here...{{/item.header}}
         {{#item.panel}}panel here...{{/item.panel}}
       {{/accordion.item}}
