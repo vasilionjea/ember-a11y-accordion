@@ -67,7 +67,6 @@ export default Component.extend({
       isExpanded: true,
       'panelWrapper.style.display': null,
     });
-    this.triggerEvent('onAfterShow', item);
   },
 
   /**
@@ -88,8 +87,8 @@ export default Component.extend({
     addEventListenerOnce(item.panelWrapper, 'transitionend', () => {
       if (item.get('isExpanded') && !this._isHiding) {
         item.panelWrapper.style.height = null;
+        this.triggerEvent('onAfterShow', item);
       }
-      this.triggerEvent('onAfterShow', item);
     });
   },
 
@@ -199,11 +198,14 @@ export default Component.extend({
           ? this.animatedHide(item)
           : this.simpleHide(item);
       } else {
-        this.get('animation')
-          ? this.animatedShow(item)
-          : this.simpleShow(item);
-
-        this.triggerEvent('onShow', item);
+        if (this.get('animation')) {
+          this.animatedShow(item)
+          this.triggerEvent('onShow', item);
+        } else {
+          this.simpleShow(item);
+          this.triggerEvent('onShow', item);
+          this.triggerEvent('onAfterShow', item);
+        }
       }
     },
   },
