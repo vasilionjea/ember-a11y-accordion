@@ -87,6 +87,7 @@ export default Component.extend({
     addEventListenerOnce(item.panelWrapper, 'transitionend', () => {
       if (item.get('isExpanded') && !this._isHiding) {
         item.panelWrapper.style.height = null;
+        this.triggerEvent('onAfterShow', item);
       }
     });
   },
@@ -105,7 +106,7 @@ export default Component.extend({
     });
 
     if (!silent) {
-      this.get('onHide') && this.get('onHide')();
+      this.triggerEvent('onHide', item);
     }
   },
 
@@ -133,7 +134,7 @@ export default Component.extend({
       item.set('isExpanded', false);
       this._isHiding = false;
 
-      this.get('onHide') && this.get('onHide')();
+      this.triggerEvent('onHide', item);
     }, INLINE_HEIGHT_DELAY);
   },
 
@@ -143,6 +144,19 @@ export default Component.extend({
   willDestroyElement() {
     cancel(this._currentHideTimeout);
     this.set('items', null);
+  },
+
+  /**
+   * Triggers an event
+   *
+   * @param {string} eventName
+   * @param {Object} item
+   * @private
+   */
+  triggerEvent(eventName, item) {
+    this.get(eventName) && this.get(eventName)({
+      name: item.get('name'),
+    });
   },
 
   actions: {
@@ -184,11 +198,14 @@ export default Component.extend({
           ? this.animatedHide(item)
           : this.simpleHide(item);
       } else {
-        this.get('animation')
-          ? this.animatedShow(item)
-          : this.simpleShow(item);
-
-        this.get('onShow') && this.get('onShow')();
+        if (this.get('animation')) {
+          this.animatedShow(item)
+          this.triggerEvent('onShow', item);
+        } else {
+          this.simpleShow(item);
+          this.triggerEvent('onShow', item);
+          this.triggerEvent('onAfterShow', item);
+        }
       }
     },
   },

@@ -10,15 +10,16 @@ Demo: https://vasilionjea.github.io/ember-a11y-accordion/
 {{#accordion-list
   class="my-accordion"
   animation=false
-  onShow=(action "onAccordionShow") as |accordion|}}
-  {{#accordion.item expandOnInit=true as |item|}}
+  onShow=(action "onAccordionShow") 
+  onAfterShow=(action "onAccordionAfterShow") as |accordion|}}
+  {{#accordion.item name="item1" expandOnInit=true as |item|}}
     {{#item.header class="first-header" aria-level="4"}}Lorem ipsum{{/item.header}}
     {{#item.panel class="first-panel"}}
       <p>Lorem <a href="#">ipsum</a> dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
     {{/item.panel}}
   {{/accordion.item}}
 
-  {{#accordion.item as |item|}}
+  {{#accordion.item name="item2" as |item|}}
     {{#item.header aria-level="4"}}Dolor Sit{{/item.header}}
     {{#item.panel}}
       <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
@@ -35,7 +36,8 @@ Demo: https://vasilionjea.github.io/ember-a11y-accordion/
 ```
 
 There is an additional collapsible component called `collapsible-list` and all the options are exactly the same as the accordion list component. The only difference is that accordions expand one item at a time, whereas collapsibles can have multiple items expanded at any point in time. Also the `collapsible-list` component accepts an `onHide` action in addition to the `onShow` action.
-
+`onShow` is triggered when the header is clicked, `onAfterShow` is triggered once the content is visible and all animations completed.
+`onHide`, `onShow` and `onAfterShow` will receive an object as first argument with a name property containing the `name` of the `accordion-item` becoming visible and other properties.
 
 ## Roles, States, Attributes, and Classes
 
