@@ -157,15 +157,16 @@ test('it should expand the item when its header is clicked and animation is set 
 });
 
 test('it should execute the onShow action when one is provided', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
 
-  this.set('doSomething', () => {
+  this.set('doSomething', (item) => {
     assert.ok(true);
+    assert.equal(item.name, 'item1');
   });
 
   this.render(hbs`
     {{#accordion-list onShow=(action doSomething) as |accordion|}}
-      {{#accordion.item as |item|}}
+      {{#accordion.item name="item1" as |item|}}
         {{#item.header}}header here...{{/item.header}}
         {{#item.panel}}panel here...{{/item.panel}}
       {{/accordion.item}}
@@ -176,15 +177,16 @@ test('it should execute the onShow action when one is provided', function(assert
 });
 
 test('it should execute the onShow action when one is provided and animation is set to false', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
 
-  this.set('doSomething', () => {
+  this.set('doSomething', (item) => {
     assert.ok(true);
+    assert.equal(item.name, 'item1');
   });
 
   this.render(hbs`
     {{#accordion-list animation=false onShow=(action doSomething) as |accordion|}}
-      {{#accordion.item as |item|}}
+      {{#accordion.item name="item1" as |item|}}
         {{#item.header}}header here...{{/item.header}}
         {{#item.panel}}panel here...{{/item.panel}}
       {{/accordion.item}}
@@ -192,4 +194,116 @@ test('it should execute the onShow action when one is provided and animation is 
   `);
 
   click(SELECTORS.header);
+});
+
+test('it should execute the onAfterShow action when one is provided', function(assert) {
+  assert.expect(2);
+
+  const done = assert.async();
+
+  this.set('doSomething', (item) => {
+    assert.ok(true);
+    assert.equal(item.name, 'item1');
+    done();
+  });
+
+  this.render(hbs`
+    {{#accordion-list onAfterShow=(action doSomething) as |accordion|}}
+      {{#accordion.item name="item1" as |item|}}
+        {{#item.header}}header here...{{/item.header}}
+        {{#item.panel}}panel here...{{/item.panel}}
+      {{/accordion.item}}
+    {{/accordion-list}}
+  `);
+
+  click(SELECTORS.header);
+});
+
+test('it should execute the onAfterShow action when one is provided and animation is set to false', function(assert) {
+  assert.expect(2);
+
+  this.set('doSomething', (item) => {
+    assert.ok(true);
+    assert.equal(item.name, 'item1');
+  });
+
+  this.render(hbs`
+    {{#accordion-list animation=false onAfterShow=(action doSomething) as |accordion|}}
+      {{#accordion.item name='item1' as |item|}}
+        {{#item.header}}header here...{{/item.header}}
+        {{#item.panel}}panel here...{{/item.panel}}
+      {{/accordion.item}}
+    {{/accordion-list}}
+  `);
+
+  click(SELECTORS.header);
+});
+
+test('it should execute the onShow and onAfterShow actions in the right order', function(assert) {
+  assert.expect(6);
+
+  const done = assert.async();
+  let doSomethingOnShowCalled = false;
+  let doSomethingOnAfterShowCalled = false;
+
+  this.set('doSomethingOnShow', (item) => {
+    doSomethingOnShowCalled = true;
+    assert.ok(true);
+    assert.notOk(doSomethingOnAfterShowCalled);
+    assert.equal(item.name, 'item1');
+  });
+
+  this.set('doSomethingOnAfterShow', (item) => {
+    doSomethingOnAfterShowCalled = true;
+    assert.ok(true);
+    assert.ok(doSomethingOnShowCalled);
+    assert.equal(item.name, 'item1');
+    done();
+  });
+
+  this.render(hbs`
+    {{#accordion-list onShow=(action doSomethingOnShow) onAfterShow=(action doSomethingOnAfterShow) as |accordion|}}
+      {{#accordion.item name="item1" as |item|}}
+        {{#item.header}}header here...{{/item.header}}
+        {{#item.panel}}panel here...{{/item.panel}}
+      {{/accordion.item}}
+    {{/accordion-list}}
+  `);
+
+  return click(SELECTORS.header);
+});
+
+test('it should execute the onShow and onAfterShow actions in the right order when animation is set to false', function(assert) {
+  assert.expect(6);
+
+  const done = assert.async();
+
+  let doSomethingOnShowCalled = false;
+  let doSomethingOnAfterShowCalled = false;
+
+  this.set('doSomethingOnShow', (item) => {
+    doSomethingOnShowCalled = true;
+    assert.ok(true);
+    assert.notOk(doSomethingOnAfterShowCalled);
+    assert.equal(item.name, 'item1');
+  });
+
+  this.set('doSomethingOnAfterShow', (item) => {
+    doSomethingOnAfterShowCalled = true;
+    assert.ok(true);
+    assert.ok(doSomethingOnShowCalled);
+    assert.equal(item.name, 'item1');
+    done();
+  });
+
+  this.render(hbs`
+    {{#accordion-list animation=false onShow=(action doSomethingOnShow) onAfterShow=(action doSomethingOnAfterShow) as |accordion|}}
+      {{#accordion.item name="item1" as |item|}}
+        {{#item.header}}header here...{{/item.header}}
+        {{#item.panel}}panel here...{{/item.panel}}
+      {{/accordion.item}}
+    {{/accordion-list}}
+  `);
+
+  return click(SELECTORS.header);
 });
