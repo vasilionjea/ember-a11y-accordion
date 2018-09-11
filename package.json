@@ -1,6 +1,6 @@
 {
   "name": "ember-a11y-accordion",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "An ember accordion component with accessibility being a first class citizen.",
   "keywords": [
     "ember-addon",
