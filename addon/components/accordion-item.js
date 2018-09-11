@@ -12,6 +12,7 @@ import { CLASS_NAMES } from '../utils/dom';
  * @param {Boolean} [expandOnInit] Whether or not to expand this item on init
  * @param {Boolean} [isDisabled] Whether or not this item should be disabled (user will not be able to expand it)
  * @param {String} [class] Any CSS classes to be added to the component's element
+ * @param {String} [name] A canonical name to refer to an accordion-item (e.g. "item-1")
  */
 export default Component.extend({
   layout,

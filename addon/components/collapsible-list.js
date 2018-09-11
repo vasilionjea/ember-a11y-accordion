@@ -22,8 +22,9 @@ const INLINE_HEIGHT_DELAY = 50;
  * The collapsible-list component is the top-most component and is responsible
  * for registering collapsible items and toggling their panels.
  *
- * @param {Function} [onShow] Action to execute when a panel is expanded
- * @param {Function} [onHide] Action to execute when a panel is collapsed
+ * @param {Function} [onShow] Action to execute when a panel is being shown
+ * @param {Function} [onAfterShow] Action to execute when a panel is fully shown
+ * @param {Function} [onHide] Action to execute when a panel is being collapsed
  * @param {String} [class] Any CSS classes to be added to the component's element
  * @param {Boolean} [animation] Whether or not it should animate items
  *

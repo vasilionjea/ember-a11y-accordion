@@ -14,7 +14,8 @@ import {
  * The accordion-list component is the top-most component and is responsible
  * for registering accordion items and toggling their panels.
  *
- * @param {Function} [onShow] Action to execute when a panel is expanded
+ * @param {Function} [onShow] Action to execute when a panel is being shown
+ * @param {Function} [onAfterShow] Action to execute when a panel is fully shown
  * @param {String} [class] Any CSS classes to be added to the component's element
  * @param {Boolean} [animation] Whether or not it should animate items
  *
