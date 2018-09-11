@@ -36,8 +36,15 @@ Demo: https://vasilionjea.github.io/ember-a11y-accordion/
 {{/accordion-list}}
 ```
 
-There is an additional collapsible component called `collapsible-list` and all the options are exactly the same as the accordion list component. The only difference is that accordions expand one item at a time, whereas collapsibles can have multiple items expanded at any point in time. Also the `collapsible-list` component accepts an `onHide` action in addition to the `onShow` action.
-`onShow` is triggered when the header is clicked, `onAfterShow` is triggered once the content is visible and all animations completed.
+There is an additional collapsible component called `collapsible-list` and all the options are exactly the same as the accordion list component. The only difference is that accordions expand one item at a time, whereas collapsibles can have multiple items expanded at any point in time. 
+
+Both the `accordion-list` and the `collapsible-list` components accept the following actions:
+- `onShow` Triggered when the header is clicked.
+- `onAfterShow` Triggered once the content is visible and all animations completed. Without animation, it triggers after the _onShow_ action.
+
+The `collapsible-list` component additionally accepts the following actions:
+- `onHide` Triggered when the header is clicked and the panel is closing.
+
 `onHide`, `onShow` and `onAfterShow` will receive an object as first argument with a name property containing the `name` of the `accordion-item` becoming visible and other properties.
 
 ## Roles, States, Attributes, and Classes
