@@ -4,7 +4,8 @@
   {{! Accordion with animation }}
   {{#accordion-list
     class="my-accordion"
-    onShow=(action "onAccordionShow") as |accordion|}}
+    onShow=(action "onAccordionShow")
+    onAfterShow=(action "onAccordionAfterShow") as |accordion|}}
     {{#accordion.item expandOnInit=true as |item|}}
       {{#item.header}}Lorem ipsum <span class="pull-right">(animated)</span>{{/item.header}}
       {{#item.panel}}

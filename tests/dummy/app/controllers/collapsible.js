@@ -5,6 +5,9 @@ export default Controller.extend({
     onCollapsibleShow() {
       // console.log('onCollapsibleShow');
     },
+    onCollapsibleAfterShow() {
+      // console.log('onCollapsibleAfterShow');
+    },
     onCollapsibleHide() {
       // console.log('onCollapsibleHide');
     },

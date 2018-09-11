@@ -5,6 +5,7 @@
   {{#collapsible-list
     class="my-accordion"
     onShow=(action "onCollapsibleShow")
+    onAfterShow=(action "onCollapsibleAfterShow")
     onHide=(action "onCollapsibleHide") as |collapsible|}}
     {{#collapsible.item as |item|}}
       {{#item.header}}Lorem ipsum <span class="pull-right">(animated)</span>{{/item.header}}

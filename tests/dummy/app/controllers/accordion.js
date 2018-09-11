@@ -5,5 +5,8 @@ export default Controller.extend({
     onAccordionShow() {
       // console.log('onAccordionShow');
     },
+    onAccordionAfterShow() {
+      // console.log('onAccordionAfterShow');
+    },
   },
 });
