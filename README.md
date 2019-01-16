@@ -1,9 +1,9 @@
 # ember-a11y-accordion
 [![Build Status](https://travis-ci.com/vasilionjea/ember-a11y-accordion.svg?branch=master)](https://travis-ci.com/vasilionjea/ember-a11y-accordion)
 
-An ember accordion component that treats accessibility as a first class citizen. This addon is based on the [W3C's ARIA](https://www.w3.org/TR/wai-aria-practices/#accordion) best practices for accordions.
+This Ember addon is based on the [W3C's ARIA](https://www.w3.org/TR/wai-aria-practices/#accordion) best practices for accordions and treats accessibility as a first class citizen.
 
-Demo: https://vasilionjea.github.io/ember-a11y-accordion/
+Live demo: https://vasilionjea.github.io/ember-a11y-accordion/
 
 
 ## Usage
