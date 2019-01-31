@@ -5,7 +5,7 @@ This Ember addon is based on the [W3C's ARIA](https://www.w3.org/TR/wai-aria-pra
 
 ## Installation
 ```
-  npm install ember-a11y-accordion
+npm install ember-a11y-accordion
 ```
 
 
