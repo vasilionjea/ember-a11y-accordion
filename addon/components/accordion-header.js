@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import layout from '../templates/components/accordion-header';
 import { CLASS_NAMES } from '../utils/dom';
 
@@ -16,7 +17,15 @@ export default Component.extend({
   tagName: 'header',
   role: 'heading',
   classNames: [CLASS_NAMES.header],
-  attributeBindings: ['role', 'aria-level'],
+  attributeBindings: ['role', 'aria-level', 'ariaDisabled:aria-disabled', 'ariaExpanded:aria-expanded'],
+
+  ariaDisabled: computed('isDisabled', function() {
+    return this.get('isDisabled') ? 'true' : 'false';
+  }),
+
+  ariaExpanded: computed('isExpanded', function() {
+    return this.get('isExpanded') ? 'true' : 'false';
+  }),
 
   /**
    * @override

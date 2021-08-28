@@ -154,6 +154,7 @@ The `collapsible-list` component additionally accepts the following actions:
 
 
 ## Contribute
+See the [Contributing](CONTRIBUTING.md) guide for details.
 
 ### Install
 * `git clone <repository-url>` this repository
@@ -171,3 +172,6 @@ The `collapsible-list` component additionally accepts the following actions:
 
 ### Building
 * `ember build`
+
+## License
+This project is licensed under the [MIT License](LICENSE.md).
