@@ -3,9 +3,9 @@
 <div class="container">
   {{! Collapsible with animation }}
   <CollapsibleList
-    @onShow={{fn this.onCollapsibleShow}}
-    @onAfterShow={{fn this.onCollapsibleAfterShow}}
-    @onHide={{fn this.onCollapsibleHide}}
+    @onShow={{this.onCollapsibleShow}}
+    @onAfterShow={{this.onCollapsibleAfterShow}}
+    @onHide={{this.onCollapsibleHide}}
     class="my-accordion" as |collapsible|>
     <collapsible.item as |item|>
       <item.header>Lorem ipsum <span class="pull-right">(animated)</span></item.header>
@@ -44,8 +44,8 @@
   {{! Collapsible with animation }}
   <CollapsibleList
     @animation={{false}}
-    @onShow={{fn this.onCollapsibleShow}}
-    @onHide={{fn this.onCollapsibleHide}}
+    @onShow={{this.onCollapsibleShow}}
+    @onHide={{this.onCollapsibleHide}}
     class="my-accordion" as |collapsible|>
     <collapsible.item as |item|>
       <item.header>Lorem ipsum <span class="pull-right">(static)</span></item.header>

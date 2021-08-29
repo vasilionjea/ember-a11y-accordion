@@ -3,8 +3,8 @@
 <div class="container">
   {{! Accordion with animation }}
   <AccordionList
-    @onShow={{fn this.onAccordionShow}}
-    @onAfterShow={{fn this.onAccordionAfterShow}}
+    @onShow={{this.onAccordionShow}}
+    @onAfterShow={{this.onAccordionAfterShow}}
     class="my-accordion" as |accordion|>
     <accordion.item @expandOnInit={{true}} as |item|>
       <item.header>Lorem ipsum <span class="pull-right">(animated)</span></item.header>
@@ -44,7 +44,7 @@
   {{! Accordion without animation }}
   <AccordionList
     @animation={{false}}
-    @onShow={{fn this.onAccordionShow}}
+    @onShow={{this.onAccordionShow}}
     class="my-accordion" as |accordion|>
     <accordion.item @expandOnInit={{true}} as |item|>
       <item.header>Lorem ipsum <span class="pull-right">(static)</span></item.header>

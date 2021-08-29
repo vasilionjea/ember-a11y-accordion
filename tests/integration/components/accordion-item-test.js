@@ -27,21 +27,56 @@ module('Integration | Component | accordion-item', function (hooks) {
 
     // Item header
     const assertHeader = assert.dom(SELECTORS.header);
-    assertHeader.hasAttribute('role', 'heading', 'The item header has an ARIA role of "heading"');
-    assertHeader.hasAttribute('aria-level', '3', 'The item header has an aria-level of "3" by default');
+    assertHeader.hasAttribute(
+      'role',
+      'heading',
+      'The item header has an ARIA role of "heading"'
+    );
+    assertHeader.hasAttribute(
+      'aria-level',
+      '3',
+      'The item header has an aria-level of "3" by default'
+    );
 
     // Header trigger
     const assertTrigger = assert.dom(SELECTORS.trigger);
-    assertTrigger.hasAttribute('type', 'button', 'The trigger is of type "button"');
-    assertTrigger.hasAttribute('aria-expanded', 'true', 'The trigger has an aria-expanded value of "true" when expandOnInit is set to true');
-    assertTrigger.hasAttribute('aria-disabled', 'true', 'The trigger has an aria-disabled value of "true" when expandOnInit is set to true');
-    assertTrigger.hasAttribute('aria-controls', this.element.querySelector(SELECTORS.panelWrapper).getAttribute('id'), 'The trigger controls the correct panel via aria-controls');
+    assertTrigger.hasAttribute(
+      'type',
+      'button',
+      'The trigger is of type "button"'
+    );
+    assertTrigger.hasAttribute(
+      'aria-expanded',
+      'true',
+      'The trigger has an aria-expanded value of "true" when expandOnInit is set to true'
+    );
+    assertTrigger.hasAttribute(
+      'aria-disabled',
+      'true',
+      'The trigger has an aria-disabled value of "true" when expandOnInit is set to true'
+    );
+    assertTrigger.hasAttribute(
+      'aria-controls',
+      this.element.querySelector(SELECTORS.panelWrapper).getAttribute('id'),
+      'The trigger controls the correct panel via aria-controls'
+    );
 
     // Item panel
     const assertPanel = assert.dom(SELECTORS.panelWrapper);
-    assertPanel.hasAttribute('role', 'region', 'The panel has an ARIA role of "region"');
-    assertPanel.hasAttribute('aria-hidden', 'false', 'The panel aria-hidden value is "false" when expandOnInit is set to true');
-    assertPanel.hasAttribute('aria-labelledby', this.element.querySelector(SELECTORS.trigger).getAttribute('id'), 'The panel is labelled by the correct trigger via aria-labelledby');
+    assertPanel.hasAttribute(
+      'role',
+      'region',
+      'The panel has an ARIA role of "region"'
+    );
+    assertPanel.hasAttribute(
+      'aria-hidden',
+      'false',
+      'The panel aria-hidden value is "false" when expandOnInit is set to true'
+    );
+    assertPanel.hasAttribute(
+      'aria-labelledby',
+      this.element.querySelector(SELECTORS.trigger).getAttribute('id'),
+      'The panel is labelled by the correct trigger via aria-labelledby'
+    );
   });
-
 });

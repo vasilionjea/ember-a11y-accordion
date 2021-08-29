@@ -55,13 +55,16 @@ export default class AccordionItem extends Component {
     const sharedState = this.sharedState;
     const panelWrapper = element.querySelector(`.${CLASS_NAMES.panelWrapper}`);
     sharedState.panelWrapper = panelWrapper;
-    sharedState.panelContent = panelWrapper.querySelector(`.${CLASS_NAMES.panelContent}`);
+    sharedState.panelContent = panelWrapper.querySelector(
+      `.${CLASS_NAMES.panelContent}`
+    );
 
     this.args.register(sharedState);
   }
 
   @action
   willDestroy() {
+    super.willDestroy(...arguments);
     this.sharedState = null;
   }
 }

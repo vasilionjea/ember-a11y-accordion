@@ -1,4 +1,4 @@
-import { run } from '@ember/runloop';
+import { _hasScheduledTimers, run } from '@ember/runloop';
 import QUnit from 'qunit';
 
 /**
@@ -7,7 +7,7 @@ import QUnit from 'qunit';
  */
 export default function logLeakedTimers() {
   QUnit.testDone(({ module, name, runtime }) => {
-    if (run.hasScheduledTimers()) {
+    if (_hasScheduledTimers()) {
       const backburner = run.backburner;
       const leaks = {
         timers: backburner._timers,

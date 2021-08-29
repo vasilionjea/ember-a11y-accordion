@@ -1,8 +1,8 @@
 <div class={{this.className}} ...attributes>
   {{yield (hash
     item=(component "accordion-item"
-      register=(fn this.registerItem)
-      toggle=(fn this.toggleItem)
+      register=this.registerItem
+      toggle=this.toggleItem
     )
   )}}
 </div>

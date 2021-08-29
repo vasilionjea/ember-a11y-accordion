@@ -34,7 +34,7 @@ module('Integration | Component | accordion-list', function (hooks) {
     assert.dom(SELECTORS.panelWrapper).exists({ count: 1 });
   });
 
-  test('it should render items in the expanded state when "expandOnInit" is set to true', async function(assert) {
+  test('it should render items in the expanded state when "expandOnInit" is set to true', async function (assert) {
     assert.expect(2);
 
     await render(hbs`
@@ -164,7 +164,7 @@ module('Integration | Component | accordion-list', function (hooks) {
     });
 
     await render(hbs`
-      <AccordionList @onShow={{fn doSomething}} as |accordion|>
+      <AccordionList @onShow={{this.doSomething}} as |accordion|>
         <accordion.item @name="item1" as |item|>
           <item.header>header here...</item.header>
           <item.panel>panel here...</item.panel>
@@ -184,7 +184,7 @@ module('Integration | Component | accordion-list', function (hooks) {
     });
 
     await render(hbs`
-      <AccordionList @animation={{false}} @onShow={{fn doSomething}} as |accordion|>
+      <AccordionList @animation={{false}} @onShow={{this.doSomething}} as |accordion|>
         <accordion.item @name="item1" as |item|>
           <item.header>header here...</item.header>
           <item.panel>panel here...</item.panel>
@@ -207,7 +207,7 @@ module('Integration | Component | accordion-list', function (hooks) {
     });
 
     await render(hbs`
-      <AccordionList @onAfterShow={{fn doSomething}} as |accordion|>
+      <AccordionList @onAfterShow={{this.doSomething}} as |accordion|>
         <accordion.item @name="item1" as |item|>
           <item.header>header here...</item.header>
           <item.panel>panel here...</item.panel>
@@ -227,7 +227,7 @@ module('Integration | Component | accordion-list', function (hooks) {
     });
 
     await render(hbs`
-      <AccordionList @animation={{false}} @onAfterShow={{fn doSomething}} as |accordion|>
+      <AccordionList @animation={{false}} @onAfterShow={{this.doSomething}} as |accordion|>
         <accordion.item @name="item1" as |item|>
           <item.header>header here...</item.header>
           <item.panel>panel here...</item.panel>
@@ -261,7 +261,7 @@ module('Integration | Component | accordion-list', function (hooks) {
     });
 
     await render(hbs`
-      <AccordionList @onShow={{fn doSomethingOnShow}} @onAfterShow={{fn doSomethingOnAfterShow}} as |accordion|>
+      <AccordionList @onShow={{this.doSomethingOnShow}} @onAfterShow={{this.doSomethingOnAfterShow}} as |accordion|>
         <accordion.item @name="item1" as |item|>
           <item.header>header here...</item.header>
           <item.panel>panel here...</item.panel>
@@ -296,7 +296,7 @@ module('Integration | Component | accordion-list', function (hooks) {
     });
 
     await render(hbs`
-      <AccordionList @animation={{false}} @onShow={{fn doSomethingOnShow}} @onAfterShow={{fn doSomethingOnAfterShow}} as |accordion|>
+      <AccordionList @animation={{false}} @onShow={{this.doSomethingOnShow}} @onAfterShow={{this.doSomethingOnAfterShow}} as |accordion|>
         <accordion.item @name="item1" as |item|>
           <item.header>header here...</item.header>
           <item.panel>panel here...</item.panel>

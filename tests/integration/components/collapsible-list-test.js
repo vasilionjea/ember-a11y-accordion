@@ -50,7 +50,7 @@ module('Integration | Component | collapsible-list', function (hooks) {
     assert.dom(SELECTORS.item).hasClass(CLASS_NAMES.itemExpanded);
   });
 
-  test('it should render items in the expanded state when "expandOnInit" is set to true and animation is set to false', async function(assert) {
+  test('it should render items in the expanded state when "expandOnInit" is set to true and animation is set to false', async function (assert) {
     assert.expect(2);
 
     await render(hbs`
@@ -165,7 +165,7 @@ module('Integration | Component | collapsible-list', function (hooks) {
     });
 
     await render(hbs`
-      <CollapsibleList @onShow={{fn doSomethingOnShow}} as |collapsible|>
+      <CollapsibleList @onShow={{this.doSomethingOnShow}} as |collapsible|>
         <collapsible.item @name="item1" as |item|>
           <item.header>header here...</item.header>
           <item.panel>panel here...</item.panel>
@@ -185,7 +185,7 @@ module('Integration | Component | collapsible-list', function (hooks) {
     });
 
     await render(hbs`
-      <CollapsibleList @animation={{false}} @onShow={{fn doSomethingOnShow}} as |collapsible|>
+      <CollapsibleList @animation={{false}} @onShow={{this.doSomethingOnShow}} as |collapsible|>
         <collapsible.item @name="item1" as |item|>
           <item.header>header here...</item.header>
           <item.panel>panel here...</item.panel>
@@ -208,7 +208,7 @@ module('Integration | Component | collapsible-list', function (hooks) {
     });
 
     await render(hbs`
-      <CollapsibleList @onAfterShow={{fn doSomethingOnAfterShow}} as |collapsible|>
+      <CollapsibleList @onAfterShow={{this.doSomethingOnAfterShow}} as |collapsible|>
         <collapsible.item @name="item1" as |item|>
           <item.header>header here...</item.header>
           <item.panel>panel here...</item.panel>
@@ -228,7 +228,7 @@ module('Integration | Component | collapsible-list', function (hooks) {
     });
 
     await render(hbs`
-      <CollapsibleList @animation={{false}} @onAfterShow={{fn doSomethingOnAfterShow}} as |collapsible|>
+      <CollapsibleList @animation={{false}} @onAfterShow={{this.doSomethingOnAfterShow}} as |collapsible|>
         <collapsible.item @name="item1" as |item|>
           <item.header>header here...</item.header>
           <item.panel>panel here...</item.panel>
@@ -262,7 +262,7 @@ module('Integration | Component | collapsible-list', function (hooks) {
     });
 
     await render(hbs`
-      <CollapsibleList @onShow={{fn doSomethingOnShow}} @onAfterShow={{fn doSomethingOnAfterShow}} as |collapsible|>
+      <CollapsibleList @onShow={{this.doSomethingOnShow}} @onAfterShow={{this.doSomethingOnAfterShow}} as |collapsible|>
         <collapsible.item @name="item1" as |item|>
           <item.header>header here...</item.header>
           <item.panel>panel here...</item.panel>
@@ -297,7 +297,7 @@ module('Integration | Component | collapsible-list', function (hooks) {
     });
 
     await render(hbs`
-      <CollapsibleList @animation={{false}} @onShow={{fn doSomethingOnShow}} @onAfterShow={{fn doSomethingOnAfterShow}} as |collapsible|>
+      <CollapsibleList @animation={{false}} @onShow={{this.doSomethingOnShow}} @onAfterShow={{this.doSomethingOnAfterShow}} as |collapsible|>
         <collapsible.item @name="item1" as |item|>
           <item.header>header here...</item.header>
           <item.panel>panel here...</item.panel>
@@ -317,7 +317,7 @@ module('Integration | Component | collapsible-list', function (hooks) {
     });
 
     await render(hbs`
-      <CollapsibleList @onHide={{fn doSomethingOnHide}} as |collapsible|>
+      <CollapsibleList @onHide={{this.doSomethingOnHide}} as |collapsible|>
         <collapsible.item @name="item1" @expandOnInit={{true}} as |item|>
           <item.header>header here...</item.header>
           <item.panel>panel here...</item.panel>
@@ -337,7 +337,7 @@ module('Integration | Component | collapsible-list', function (hooks) {
     });
 
     await render(hbs`
-      <CollapsibleList @animation={{false}} @onHide={{fn doSomethingOnHide}} as |collapsible|>
+      <CollapsibleList @animation={{false}} @onHide={{this.doSomethingOnHide}} as |collapsible|>
         <collapsible.item @name="item1" @expandOnInit={{true}} as |item|>
           <item.header>header here...</item.header>
           <item.panel>panel here...</item.panel>

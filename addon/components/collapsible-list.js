@@ -62,9 +62,7 @@ export default class CollapsibleListComponent extends Component {
 
     // At register time close respective items
     if (!item.isExpanded) {
-      this.animation
-        ? setClosedHeight(item)
-        : this._simpleHide(item, true);
+      this.animation ? setClosedHeight(item) : this._simpleHide(item, true);
     }
   }
 
@@ -75,12 +73,10 @@ export default class CollapsibleListComponent extends Component {
     }
 
     if (item.isExpanded) {
-      this.animation
-        ? this._animatedHide(item)
-        : this._simpleHide(item);
+      this.animation ? this._animatedHide(item) : this._simpleHide(item);
     } else {
       if (this.animation) {
-        this._animatedShow(item)
+        this._animatedShow(item);
         this._triggerEvent('onShow', item);
       } else {
         this._simpleShow(item);
@@ -91,6 +87,7 @@ export default class CollapsibleListComponent extends Component {
   }
 
   willDestroy() {
+    super.willDestroy(...arguments);
     cancel(this._currentHideTimeout);
     this._items.splice(0, this._items.length);
   }
@@ -181,8 +178,9 @@ export default class CollapsibleListComponent extends Component {
    * @private
    */
   _triggerEvent(eventName, item) {
-    this.args[eventName] && this.args[eventName]({
-      name: item.name
-    });
+    this.args[eventName] &&
+      this.args[eventName]({
+        name: item.name,
+      });
   }
 }

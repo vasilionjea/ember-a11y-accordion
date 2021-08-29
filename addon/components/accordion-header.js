@@ -15,7 +15,7 @@ export default class AccordionHeaderComponent extends Component {
   className = CLASS_NAMES.header;
 
   get ariaDisabled() {
-    return this.args.isDisabled ? 'true' : 'false'
+    return this.args.isDisabled ? 'true' : 'false';
   }
 
   get ariaExpanded() {

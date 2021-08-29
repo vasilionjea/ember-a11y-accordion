@@ -1,7 +1,7 @@
 /* eslint-env node */
 'use strict';
 
-module.exports = function(deployTarget) {
+module.exports = function (deployTarget) {
   let ENV = {
     build: {},
     // include other plugin configuration that applies to all deploy targets here
@@ -20,7 +20,7 @@ module.exports = function(deployTarget) {
     ENV.git = {
       repo: 'git@github.com:vasilionjea/ember-a11y-accordion.git',
       branch: 'gh-pages',
-      commitMessage: 'Deployed %@'
+      commitMessage: 'Deployed %@',
     };
   }
 

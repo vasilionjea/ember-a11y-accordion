@@ -2,8 +2,8 @@
   {{yield (hash
     item=(component "accordion-item"
       isCollapsible=true
-      register=(fn this.registerItem)
-      toggle=(fn this.toggleItem)
+      register=this.registerItem
+      toggle=this.toggleItem
     )
   )}}
 </div>
