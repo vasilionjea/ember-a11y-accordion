@@ -1,14 +1,15 @@
-import Component from '@ember/component';
-import { later, cancel } from '@ember/runloop';
-import { A } from '@ember/array';
-import { isPresent } from '@ember/utils';
-import layout from '../templates/components/collapsible-list';
 import {
   CLASS_NAMES,
-  setOpenHeight,
-  setClosedHeight,
   addEventListenerOnce,
-} from '../utils/dom';
+  setClosedHeight,
+  setOpenHeight,
+} from 'ember-a11y-accordion/utils/dom';
+import { cancel, later } from '@ember/runloop';
+import { A } from '@ember/array';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { isPresent } from '@ember/utils';
+import { tracked } from '@glimmer/tracking';
 
 /**
  * This slight delay is used when hiding an item with CSS transitions. Because a visible
@@ -36,80 +37,63 @@ const INLINE_HEIGHT_DELAY = 50;
  *   {{/collapsible.item}}
  * {{/collapsible-list}}
  */
-export default Component.extend({
-  layout,
-  classNames: [CLASS_NAMES.list],
+export default class CollapsibleListComponent extends Component {
+  get animation() {
+    return isPresent(this.args.animation) ? this.args.animation : true;
+  }
 
-  /**
-   * Whether or not CSS transition is used.
-   */
-  animation: true,
+  className = CLASS_NAMES.list;
 
-  /**
-   * @override
-   */
-  init() {
-    this._super(...arguments);
+  @tracked
+  _currentHideTimeout = null;
 
-    // Timeout for the animated hide
-    this._currentHideTimeout = null;
+  _items = A();
 
-    this.set('items', A());
-  },
+  @tracked
+  _isHiding = false;
 
-  /**
-   * Handles showing an item without animation.
-   *
-   * @param {Object} item
-   * @private
-   */
-  simpleShow(item) {
-    item.setProperties({
-      isExpanded: true,
-      'panelWrapper.style.display': null,
-    });
-  },
-
-  /**
-   * Handles showing an item with animation.
-   *
-   * When the CSS transition has ended, we clear the inline height so the
-   * component's contents don't get cutt off in responsive layouts.
-   *
-   * @param {Object} item
-   * @private
-   */
-  animatedShow(item) {
-    setOpenHeight(item);
-    item.set('isExpanded', true);
-
-    // Remove the inline height after the transition so contents don't
-    // get cut off when resizing the browser window.
-    addEventListenerOnce(item.panelWrapper, 'transitionend', () => {
-      if (item.get('isExpanded') && !this._isHiding) {
-        item.panelWrapper.style.height = null;
-        this.triggerEvent('onAfterShow', item);
-      }
-    });
-  },
-
-  /**
-   * Handles hiding an item without animation.
-   *
-   * @param {Object} item
-   * @param {Boolean} silent
-   * @private
-   */
-  simpleHide(item, silent) {
-    item.setProperties({
-      isExpanded: false,
-      'panelWrapper.style.display': 'none',
-    });
-
-    if (!silent) {
-      this.triggerEvent('onHide', item);
+  @action
+  registerItem(item) {
+    if (!isPresent(item)) {
+      return;
     }
-  },
+
+    this._items.push(item);
+
+    // At register time close respective items
+    if (!item.isExpanded) {
+      this.animation
+        ? setClosedHeight(item)
+        : this._simpleHide(item, true);
+    }
+  }
+
+  @action
+  toggleItem(item) {
+    if (!isPresent(item) || item.isDisabled) {
+      return;
+    }
+
+    if (item.isExpanded) {
+      this.animation
+        ? this._animatedHide(item)
+        : this._simpleHide(item);
+    } else {
+      if (this.animation) {
+        this._animatedShow(item)
+        this._triggerEvent('onShow', item);
+      } else {
+        this._simpleShow(item);
+        this._triggerEvent('onShow', item);
+        this._triggerEvent('onAfterShow', item);
+      }
+    }
+  }
+
+  willDestroy() {
+    cancel(this._currentHideTimeout);
+    this._items.splice(0, this._items.length);
+  }
 
   /**
    * Handles hiding an item with animation.
@@ -121,7 +105,7 @@ export default Component.extend({
    * @param {Object} item
    * @private
    */
-  animatedHide(item) {
+  _animatedHide(item) {
     this._isHiding = true;
 
     // From open height
@@ -132,20 +116,62 @@ export default Component.extend({
     // Set close height
     this._currentHideTimeout = later(() => {
       setClosedHeight(item);
-      item.set('isExpanded', false);
+      item.isExpanded = false;
       this._isHiding = false;
 
-      this.triggerEvent('onHide', item);
+      this._triggerEvent('onHide', item);
     }, INLINE_HEIGHT_DELAY);
-  },
+  }
 
   /**
-   * @override
+   * Handles showing an item with animation.
+   *
+   * When the CSS transition has ended, we clear the inline height so the
+   * component's contents don't get cutt off in responsive layouts.
+   *
+   * @param {Object} item
+   * @private
    */
-  willDestroyElement() {
-    cancel(this._currentHideTimeout);
-    this.set('items', null);
-  },
+  _animatedShow(item) {
+    setOpenHeight(item);
+    item.isExpanded = true;
+
+    // Remove the inline height after the transition so contents don't
+    // get cut off when resizing the browser window.
+    addEventListenerOnce(item.panelWrapper, 'transitionend', () => {
+      if (item.isExpanded && !this._isHiding) {
+        item.panelWrapper.style.height = null;
+        this._triggerEvent('onAfterShow', item);
+      }
+    });
+  }
+
+  /**
+   * Handles hiding an item without animation.
+   *
+   * @param {Object} item
+   * @param {Boolean} silent
+   * @private
+   */
+  _simpleHide(item, silent) {
+    item.isExpanded = false;
+    item.panelWrapper.style.display = 'none';
+
+    if (!silent) {
+      this._triggerEvent('onHide', item);
+    }
+  }
+
+  /**
+   * Handles showing an item without animation.
+   *
+   * @param {Object} item
+   * @private
+   */
+  _simpleShow(item) {
+    item.isExpanded = true;
+    item.panelWrapper.style.display = null;
+  }
 
   /**
    * Triggers an event
@@ -154,60 +180,9 @@ export default Component.extend({
    * @param {Object} item
    * @private
    */
-  triggerEvent(eventName, item) {
-    this.get(eventName) && this.get(eventName)({
-      name: item.get('name'),
+  _triggerEvent(eventName, item) {
+    this.args[eventName] && this.args[eventName]({
+      name: item.name
     });
-  },
-
-  actions: {
-    /**
-     * Action for item components to register themselves. Registration
-     * has to happen when the item is inserted in the DOM.
-     *
-     * @param {Object} item
-     * @public
-     */
-    registerItem(item) {
-      if (!isPresent(item)) {
-        return;
-      }
-
-      this.get('items').pushObject(item);
-
-      // At register time close respective items
-      if (!item.get('isExpanded')) {
-        this.get('animation')
-          ? setClosedHeight(item)
-          : this.simpleHide(item, true);
-      }
-    },
-
-    /**
-     * Action to toggle collapsible items.
-     *
-     * @param {Object} item
-     * @public
-     */
-    toggleItem(item) {
-      if (!isPresent(item) || item.get('isDisabled')) {
-        return;
-      }
-
-      if (item.get('isExpanded')) {
-        this.get('animation')
-          ? this.animatedHide(item)
-          : this.simpleHide(item);
-      } else {
-        if (this.get('animation')) {
-          this.animatedShow(item)
-          this.triggerEvent('onShow', item);
-        } else {
-          this.simpleShow(item);
-          this.triggerEvent('onShow', item);
-          this.triggerEvent('onAfterShow', item);
-        }
-      }
-    },
-  },
-});
+  }
+}

@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { CLASS_NAMES } from 'ember-a11y-accordion/utils/dom';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
 

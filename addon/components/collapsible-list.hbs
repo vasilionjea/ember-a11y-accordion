@@ -1,0 +1,9 @@
+<div class={{this.className}} ...attributes>
+  {{yield (hash
+    item=(component "accordion-item"
+      isCollapsible=true
+      register=(fn this.registerItem)
+      toggle=(fn this.toggleItem)
+    )
+  )}}
+</div>

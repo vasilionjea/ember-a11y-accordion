@@ -1,14 +1,15 @@
-import Component from '@ember/component';
-import { next, cancel } from '@ember/runloop';
-import { A } from '@ember/array';
-import { isPresent } from '@ember/utils';
-import layout from '../templates/components/accordion-list';
 import {
   CLASS_NAMES,
-  setOpenHeight,
-  setClosedHeight,
   addEventListenerOnce,
-} from '../utils/dom';
+  setClosedHeight,
+  setOpenHeight,
+} from 'ember-a11y-accordion/utils/dom';
+import { next, cancel } from '@ember/runloop';
+import { A } from '@ember/array';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { isPresent } from '@ember/utils';
+import { tracked } from '@glimmer/tracking';
 
 /**
  * The accordion-list component is the top-most component and is responsible
@@ -27,78 +28,86 @@ import {
  *   {{/accordion.item}}
  * {{/accordion-list}}
  */
-export default Component.extend({
-  layout,
-  classNames: [CLASS_NAMES.list],
+export default class AccordionListClass extends Component {
+  get animation() {
+    return isPresent(this.args.animation) ? this.args.animation : true;
+  }
+
+  className = CLASS_NAMES.list;
+
+  @tracked
+  _activeItem;
+
+  @tracked
+  _currentHideTimeout;
+
+  _items = A();
 
   /**
-   * Whether or not CSS transition is used.
-   */
-  animation: true,
-
-  /**
-   * @override
-   */
-  init() {
-    this._super(...arguments);
-
-    // Timeout for the animated hide
-    this._currentHideTimeout = null;
-
-    this.setProperties({
-      items: A(),
-      activeItem: null,
-    });
-  },
-
-  /**
-   * Handles showing an item without animation.
+   * Action for item components to register themselves.
    *
    * @param {Object} item
-   * @private
+   * @public
    */
-  simpleShow(item) {
-    item.setProperties({
-      isExpanded: true,
-      'panelWrapper.style.display': null,
-    });
-  },
+  @action
+  registerItem(item) {
+    if (!isPresent(item)) {
+      return;
+    }
+
+    this._items.push(item);
+
+    // At register time close respective items
+    if (item.isExpanded) {
+      this._activeItem = item;
+    } else {
+      this.animation
+        ? setClosedHeight(item)
+        : this._simpleHide(item);
+    }
+  }
 
   /**
-   * Handles showing an item with animation.
-   *
-   * When the CSS transition has ended, we clear the inline height so the
-   * component's contents don't get cutt off in responsive layouts.
+   * Action to toggle accordion items.
    *
    * @param {Object} item
-   * @private
+   * @public
    */
-  animatedShow(item) {
-    setOpenHeight(item);
-    item.set('isExpanded', true);
+  @action
+  toggleItem(item) {
+    if (
+      !isPresent(item) ||
+      item.isDisabled ||
+      item.isExpanded
+    ) {
+      return;
+    }
 
-    // Remove the inline height after the transition so contents don't
-    // get cut off when resizing the browser window.
-    addEventListenerOnce(item.panelWrapper, 'transitionend', () => {
-      if (item.get('isExpanded')) {
-        item.panelWrapper.style.height = null;
-        this.triggerEvent('onAfterShow', item);
-      }
-    });
-  },
+    // If no items have expandOnInit, then there isn't an active one yet.
+    if (this._activeItem) {
+      // Hide active item
+      this.animation
+        ? this._animatedHide(this._activeItem)
+        : this._simpleHide(this._activeItem);
+    }
 
-  /**
-   * Handles hiding an item without animation.
-   *
-   * @param {Object} item
-   * @private
-   */
-  simpleHide(item) {
-    item.setProperties({
-      isExpanded: false,
-      'panelWrapper.style.display': 'none',
-    });
-  },
+    // Show this one
+    if (this.animation) {
+      this._animatedShow(item)
+      this._triggerEvent('onShow', item);
+    } else {
+      this._simpleShow(item);
+      this._triggerEvent('onShow', item);
+      this._triggerEvent('onAfterShow', item);
+    }
+
+    this._activeItem = item;
+  }
+
+  willDestroy() {
+    cancel(this._currentHideTimeout);
+    this._items.splice(0, this._items.length);
+  }
 
   /**
    * Handles hiding an item with animation.
@@ -110,10 +119,10 @@ export default Component.extend({
    * @param {Object} item
    * @private
    */
-  animatedHide(item) {
-    if (this.activeItem) {
+  _animatedHide(item) {
+    if (this._activeItem) {
       // From open height
-      setOpenHeight(this.activeItem);
+      setOpenHeight(this._activeItem);
     }
 
     cancel(this._currentHideTimeout);
@@ -121,17 +130,54 @@ export default Component.extend({
     // Set close height
     this._currentHideTimeout = next(() => {
       setClosedHeight(item);
-      item.set('isExpanded', false);
+      item.isExpanded = false;
     });
-  },
+  }
 
   /**
-   * @override
+   * Handles showing an item with animation.
+   *
+   * When the CSS transition has ended, we clear the inline height so the
+   * component's contents don't get cutt off in responsive layouts.
+   *
+   * @param {Object} item
+   * @private
    */
-  willDestroyElement() {
-    cancel(this._currentHideTimeout);
-    this.set('items', null);
-  },
+  _animatedShow(item) {
+    setOpenHeight(item);
+    item.isExpanded = true;
+
+    // Remove the inline height after the transition so contents don't
+    // get cut off when resizing the browser window.
+    addEventListenerOnce(item.panelWrapper, 'transitionend', () => {
+      if (item.isExpanded) {
+        item.panelWrapper.style.height = null;
+        this._triggerEvent('onAfterShow', item);
+      }
+    });
+  }
+
+  /**
+   * Handles hiding an item without animation.
+   *
+   * @param {Object} item
+   * @private
+   */
+  _simpleHide(item) {
+    item.isExpanded = false;
+    item.panelWrapper.style.display = 'none';
+  }
+
+  /**
+   * Handles showing an item without animation.
+   *
+   * @param {Object} item
+   * @private
+   */
+  _simpleShow(item) {
+    item.isExpanded = true;
+    item.panelWrapper.style.display = null;
+  }
 
   /**
    * Triggers an event
@@ -140,70 +186,9 @@ export default Component.extend({
    * @param {Object} item
    * @private
    */
-  triggerEvent(eventName, item) {
-    this.get(eventName) && this.get(eventName)({
-      name: item.get('name'),
+  _triggerEvent(eventName, item) {
+    this.args[eventName] && this.args[eventName]({
+      name: item.name
     });
-  },
-
-  actions: {
-    /**
-     * Action for item components to register themselves.
-     *
-     * @param {Object} item
-     * @public
-     */
-    registerItem(item) {
-      if (!isPresent(item)) {
-        return;
-      }
-
-      this.get('items').pushObject(item);
-
-      // At register time close respective items
-      if (item.get('isExpanded')) {
-        this.activeItem = item;
-      } else {
-        this.get('animation')
-          ? setClosedHeight(item)
-          : this.simpleHide(item);
-      }
-    },
-
-    /**
-     * Action to toggle accordion items.
-     *
-     * @param {Object} item
-     * @public
-     */
-    toggleItem(item) {
-      if (
-        !isPresent(item) ||
-        item.get('isDisabled') ||
-        item.get('isExpanded')
-      ) {
-        return;
-      }
-
-      // If no items have expandOnInit, then there isn't an active one yet.
-      if (this.activeItem) {
-        // Hide active item
-        this.get('animation')
-          ? this.animatedHide(this.activeItem)
-          : this.simpleHide(this.activeItem);
-      }
-
-      // Show this one
-      if (this.get('animation')) {
-        this.animatedShow(item)
-        this.triggerEvent('onShow', item);
-      } else {
-        this.simpleShow(item);
-        this.triggerEvent('onShow', item);
-        this.triggerEvent('onAfterShow', item);
-      }
-
-      this.activeItem = item;
-    },
-  },
-});
+  }
+}

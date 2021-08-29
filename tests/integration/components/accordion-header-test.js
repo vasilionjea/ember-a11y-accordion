@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { CLASS_NAMES } from 'ember-a11y-accordion/utils/dom';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -15,12 +15,12 @@ module('Integration | Component | accordion-header', function (hooks) {
     assert.expect(1);
 
     await render(hbs`
-      {{#accordion-list as |accordion|}}
-        {{#accordion.item expandOnInit=true as |item|}}
-          {{#item.header}}header here...{{/item.header}}
-          {{#item.panel}}panel here...{{/item.panel}}
-        {{/accordion.item}}
-      {{/accordion-list}}
+      <AccordionList as |accordion|>
+        <accordion.item @expandOnInit={{true}} as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </accordion.item>
+      </AccordionList>
     `);
 
     assert.dom(SELECTORS.header).exists({ count: 1 });

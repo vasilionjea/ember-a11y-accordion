@@ -1,8 +1,9 @@
-import Component from '@ember/component';
-import EmberObject, { computed } from '@ember/object';
+import { CLASS_NAMES } from 'ember-a11y-accordion/utils/dom';
+import Component from '@glimmer/component';
+import SharedState from 'ember-a11y-accordion/utils/shared-state';
+import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import layout from '../templates/components/accordion-item';
-import { CLASS_NAMES } from '../utils/dom';
+import { tracked } from '@glimmer/tracking';
 
 /**
  * The accordion-item component is responsible for creating state and sharing it with the
@@ -14,55 +15,53 @@ import { CLASS_NAMES } from '../utils/dom';
  * @param {String} [class] Any CSS classes to be added to the component's element
  * @param {String} [name] A canonical name to refer to an accordion-item (e.g. "item-1")
  */
-export default Component.extend({
-  layout,
-  tagName: 'section',
-  classNames: [CLASS_NAMES.item],
-  classNameBindings: [
-    `isExpanded:${CLASS_NAMES.itemExpanded}`,
-    `isDisabled:${CLASS_NAMES.itemDisabled}`,
-  ],
-  isExpanded: computed.oneWay('sharedState.isExpanded'),
-  expandOnInit: false,
-  isDisabled: false,
+export default class AccordionItem extends Component {
+  get classNames() {
+    const classNames = [CLASS_NAMES.item];
+    if (this.isDisabled) {
+      classNames.push(CLASS_NAMES.itemDisabled);
+    }
+    if (this.isExpanded) {
+      classNames.push(CLASS_NAMES.itemExpanded);
+    }
+    return classNames.join(' ');
+  }
 
-  /**
-   * @override
-   */
-  init() {
-    this._super(...arguments);
+  @tracked
+  sharedState;
 
-    const sharedState = EmberObject.create({
+  get isDisabled() {
+    return this.args.isDisabled;
+  }
+
+  get isExpanded() {
+    return this.sharedState.isExpanded;
+  }
+
+  constructor() {
+    super(...arguments);
+    this.sharedState = new SharedState({
       headerId: guidFor({}),
       triggerId: guidFor({}),
       panelId: guidFor({}),
-      isExpanded: this.get('expandOnInit'),
-      isDisabled: this.get('isDisabled'),
-      name: this.get('name'),
+      isExpanded: this.args.expandOnInit,
+      isDisabled: this.args.isDisabled,
+      name: this.args.name,
     });
+  }
 
-    this.set('sharedState', sharedState);
-  },
+  @action
+  didInsert(element) {
+    const sharedState = this.sharedState;
+    const panelWrapper = element.querySelector(`.${CLASS_NAMES.panelWrapper}`);
+    sharedState.panelWrapper = panelWrapper;
+    sharedState.panelContent = panelWrapper.querySelector(`.${CLASS_NAMES.panelContent}`);
 
-  /**
-   * @override
-   */
-  didInsertElement() {
-    const sharedState = this.get('sharedState');
-    const panelWrapper = this.element.querySelector(`.${CLASS_NAMES.panelWrapper}`);
+    this.args.register(sharedState);
+  }
 
-    sharedState.setProperties({
-      panelWrapper,
-      panelContent: panelWrapper.querySelector(`.${CLASS_NAMES.panelContent}`),
-    });
-
-    this.get('register')(sharedState);
-  },
-
-  /**
-   * @override
-   */
-  willDestroyElement() {
-    this.set('sharedState', null);
-  },
-});
+  @action
+  willDestroy() {
+    this.sharedState = null;
+  }
+}

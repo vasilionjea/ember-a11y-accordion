@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { CLASS_NAMES } from 'ember-a11y-accordion/utils/dom';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -17,12 +17,12 @@ module('Integration | Component | accordion-item', function (hooks) {
     assert.expect(9);
 
     await render(hbs`
-      {{#accordion-list as |accordion|}}
-        {{#accordion.item expandOnInit=true as |item|}}
-          {{#item.header}}First header{{/item.header}}
-          {{#item.panel}}First panel{{/item.panel}}
-        {{/accordion.item}}
-      {{/accordion-list}}
+      <AccordionList as |accordion|>
+        <accordion.item @expandOnInit={{true}} as |item|>
+          <item.header>First header</item.header>
+          <item.panel>First panel</item.panel>
+        </accordion.item>
+      </AccordionList>
     `);
 
     // Item header

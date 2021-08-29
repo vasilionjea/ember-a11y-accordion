@@ -2,82 +2,82 @@
 
 <div class="container">
   {{! Collapsible with animation }}
-  {{#collapsible-list
-    class="my-accordion"
-    onShow=(action "onCollapsibleShow")
-    onAfterShow=(action "onCollapsibleAfterShow")
-    onHide=(action "onCollapsibleHide") as |collapsible|}}
-    {{#collapsible.item as |item|}}
-      {{#item.header}}Lorem ipsum <span class="pull-right">(animated)</span>{{/item.header}}
-      {{#item.panel}}
+  <CollapsibleList
+    @onShow={{fn this.onCollapsibleShow}}
+    @onAfterShow={{fn this.onCollapsibleAfterShow}}
+    @onHide={{fn this.onCollapsibleHide}}
+    class="my-accordion" as |collapsible|>
+    <collapsible.item as |item|>
+      <item.header>Lorem ipsum <span class="pull-right">(animated)</span></item.header>
+      <item.panel>
         <h4>Lorem ipsum</h4>
         <p>Lorem <a href="#">ipsum</a> dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      {{/item.panel}}
-    {{/collapsible.item}}
+      </item.panel>
+    </collapsible.item>
 
-    {{#collapsible.item as |item|}}
-      {{#item.header}}Dolor Sit{{/item.header}}
-      {{#item.panel}}
+    <collapsible.item as |item|>
+      <item.header>Dolor Sit</item.header>
+      <item.panel>
         <h4>Dolor Sit</h4>
         <p>Lorem <a href="#">ipsum</a> dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      {{/item.panel}}
-    {{/collapsible.item}}
+      </item.panel>
+    </collapsible.item>
 
-    {{#collapsible.item as |item|}}
-      {{#item.header}}Amet{{/item.header}}
-      {{#item.panel}}
+    <collapsible.item as |item|>
+      <item.header>Amet</item.header>
+      <item.panel>
         <h4>Amet</h4>
         <p>Lorem <a href="#">ipsum</a> dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      {{/item.panel}}
-    {{/collapsible.item}}
+      </item.panel>
+    </collapsible.item>
 
-    {{#collapsible.item isDisabled=true as |item|}}
-      {{#item.header}}This is disabled{{/item.header}}
-      {{#item.panel}}
+    <collapsible.item @isDisabled={{true}} as |item|>
+      <item.header>This is disabled</item.header>
+      <item.panel>
         <p>Lorem <a href="#">ipsum</a> dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      {{/item.panel}}
-    {{/collapsible.item}}
-  {{/collapsible-list}}
+      </item.panel>
+    </collapsible.item>
+  </CollapsibleList>
 
   <div class="space-between"></div>
 
   {{! Collapsible with animation }}
-  {{#collapsible-list
-    class="my-accordion"
-    animation=false
-    onShow=(action "onCollapsibleShow")
-    onHide=(action "onCollapsibleHide") as |collapsible|}}
-    {{#collapsible.item as |item|}}
-      {{#item.header}}Lorem ipsum <span class="pull-right">(static)</span>{{/item.header}}
-      {{#item.panel}}
+  <CollapsibleList
+    @animation={{false}}
+    @onShow={{fn this.onCollapsibleShow}}
+    @onHide={{fn this.onCollapsibleHide}}
+    class="my-accordion" as |collapsible|>
+    <collapsible.item as |item|>
+      <item.header>Lorem ipsum <span class="pull-right">(static)</span></item.header>
+      <item.panel>
         <h4>Lorem ipsum</h4>
         <p>Lorem <a href="#">ipsum</a> dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      {{/item.panel}}
-    {{/collapsible.item}}
+      </item.panel>
+    </collapsible.item>
 
-    {{#collapsible.item as |item|}}
-      {{#item.header}}Dolor Sit{{/item.header}}
-      {{#item.panel}}
+    <collapsible.item as |item|>
+      <item.header>Dolor Sit</item.header>
+      <item.panel>
         <h4>Dolor Sit</h4>
         <p>Lorem <a href="#">ipsum</a> dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      {{/item.panel}}
-    {{/collapsible.item}}
+      </item.panel>
+    </collapsible.item>
 
-    {{#collapsible.item as |item|}}
-      {{#item.header}}Amet{{/item.header}}
-      {{#item.panel}}
+    <collapsible.item as |item|>
+      <item.header>Amet</item.header>
+      <item.panel>
         <h4>Amet</h4>
         <p>Lorem <a href="#">ipsum</a> dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      {{/item.panel}}
-    {{/collapsible.item}}
+      </item.panel>
+    </collapsible.item>
 
-    {{#collapsible.item isDisabled=true as |item|}}
-      {{#item.header}}This is disabled{{/item.header}}
-      {{#item.panel}}
+    <collapsible.item @isDisabled={{true}} as |item|>
+      <item.header>This is disabled</item.header>
+      <item.panel>
         <p>Lorem <a href="#">ipsum</a> dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      {{/item.panel}}
-    {{/collapsible.item}}
-  {{/collapsible-list}}
+      </item.panel>
+    </collapsible.item>
+  </CollapsibleList>
 </div>
 
 {{outlet}}

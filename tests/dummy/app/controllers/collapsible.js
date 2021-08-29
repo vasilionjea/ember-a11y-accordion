@@ -1,15 +1,19 @@
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
 
-export default Controller.extend({
-  actions: {
-    onCollapsibleShow() {
-      // console.log('onCollapsibleShow');
-    },
-    onCollapsibleAfterShow() {
-      // console.log('onCollapsibleAfterShow');
-    },
-    onCollapsibleHide() {
-      // console.log('onCollapsibleHide');
-    },
-  },
-});
+export default class CollapsibleController extends Controller {
+  @action
+  onCollapsibleShow() {
+    // console.log('onCollapsibleShow');
+  }
+
+  @action
+  onCollapsibleAfterShow() {
+    // console.log('onCollapsibleAfterShow');
+  }
+
+  @action
+  onCollapsibleHide() {
+    // console.log('onCollapsibleHide');
+  }
+}

@@ -1,7 +1,7 @@
 import { click, render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { CLASS_NAMES } from 'ember-a11y-accordion/utils/dom';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { setupRenderingTest } from 'ember-qunit';
 
 const SELECTORS = {
@@ -20,12 +20,12 @@ module('Integration | Component | collapsible-list', function (hooks) {
     assert.expect(4);
 
     await render(hbs`
-      {{#collapsible-list as |collapsible|}}
-        {{#collapsible.item as |item|}}
-          {{#item.header}}Header title{{/item.header}}
-          {{#item.panel}}Panel contents{{/item.panel}}
-        {{/collapsible.item}}
-      {{/collapsible-list}}
+      <CollapsibleList as |collapsible|>
+        <collapsible.item as |item|>
+          <item.header>Header title</item.header>
+          <item.panel>Panel contents</item.panel>
+        </collapsible.item>
+      </CollapsibleList>
     `);
 
     assert.dom(SELECTORS.list).exists({ count: 1 });
@@ -38,12 +38,12 @@ module('Integration | Component | collapsible-list', function (hooks) {
     assert.expect(2);
 
     await render(hbs`
-      {{#collapsible-list as |collapsible|}}
-        {{#collapsible.item expandOnInit=true as |item|}}
-          {{#item.header}}First header{{/item.header}}
-          {{#item.panel}}First panel{{/item.panel}}
-        {{/collapsible.item}}
-      {{/collapsible-list}}
+      <CollapsibleList as |collapsible|>
+        <collapsible.item @expandOnInit={{true}} as |item|>
+          <item.header>First header</item.header>
+          <item.panel>First panel</item.panel>
+        </collapsible.item>
+      </CollapsibleList>
     `);
 
     assert.dom(SELECTORS.itemExpanded).exists({ count: 1 });
@@ -54,12 +54,12 @@ module('Integration | Component | collapsible-list', function (hooks) {
     assert.expect(2);
 
     await render(hbs`
-      {{#collapsible-list animation=false as |collapsible|}}
-        {{#collapsible.item expandOnInit=true as |item|}}
-          {{#item.header}}First header{{/item.header}}
-          {{#item.panel}}First panel{{/item.panel}}
-        {{/collapsible.item}}
-      {{/collapsible-list}}
+      <CollapsibleList @animation={{false}} as |collapsible|>
+        <collapsible.item @expandOnInit={{true}} as |item|>
+          <item.header>First header</item.header>
+          <item.panel>First panel</item.panel>
+        </collapsible.item>
+      </CollapsibleList>
     `);
 
     assert.dom(SELECTORS.itemExpanded).exists({ count: 1 });
@@ -70,22 +70,22 @@ module('Integration | Component | collapsible-list', function (hooks) {
     assert.expect(2);
 
     await render(hbs`
-      {{#collapsible-list as |collapsible|}}
-        {{#collapsible.item isDisabled=true as |item|}}
-          {{#item.header}}First header{{/item.header}}
-          {{#item.panel}}First panel{{/item.panel}}
-        {{/collapsible.item}}
+      <CollapsibleList as |collapsible|>
+        <collapsible.item @isDisabled={{true}} as |item|>
+          <item.header>First header</item.header>
+          <item.panel>First panel</item.panel>
+        </collapsible.item>
 
-        {{#collapsible.item as |item|}}
-          {{#item.header}}First header{{/item.header}}
-          {{#item.panel}}First panel{{/item.panel}}
-        {{/collapsible.item}}
+        <collapsible.item as |item|>
+          <item.header>First header</item.header>
+          <item.panel>First panel</item.panel>
+        </collapsible.item>
 
-        {{#collapsible.item isDisabled=true as |item|}}
-          {{#item.header}}First header{{/item.header}}
-          {{#item.panel}}First panel{{/item.panel}}
-        {{/collapsible.item}}
-      {{/collapsible-list}}
+        <collapsible.item @isDisabled={{true}} as |item|>
+          <item.header>First header</item.header>
+          <item.panel>First panel</item.panel>
+        </collapsible.item>
+      </CollapsibleList>
     `);
 
     assert.dom(SELECTORS.itemDisabled).exists({ count: 2 });
@@ -96,22 +96,22 @@ module('Integration | Component | collapsible-list', function (hooks) {
     assert.expect(2);
 
     await render(hbs`
-      {{#collapsible-list as |collapsible|}}
-        {{#collapsible.item as |item|}}
-          {{#item.header}}header here...{{/item.header}}
-          {{#item.panel}}panel here...{{/item.panel}}
-        {{/collapsible.item}}
+      <CollapsibleList as |collapsible|>
+        <collapsible.item as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </collapsible.item>
 
-        {{#collapsible.item expandOnInit=true as |item|}}
-          {{#item.header}}header here...{{/item.header}}
-          {{#item.panel}}panel here...{{/item.panel}}
-        {{/collapsible.item}}
+        <collapsible.item @expandOnInit={{true}} as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </collapsible.item>
 
-        {{#collapsible.item as |item|}}
-          {{#item.header}}header here...{{/item.header}}
-          {{#item.panel}}panel here...{{/item.panel}}
-        {{/collapsible.item}}
-      {{/collapsible-list}}
+        <collapsible.item as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </collapsible.item>
+      </CollapsibleList>
     `);
 
     // Click the first item's header
@@ -128,22 +128,22 @@ module('Integration | Component | collapsible-list', function (hooks) {
     assert.expect(2);
 
     await render(hbs`
-      {{#collapsible-list animation=false as |collapsible|}}
-        {{#collapsible.item as |item|}}
-          {{#item.header}}header here...{{/item.header}}
-          {{#item.panel}}panel here...{{/item.panel}}
-        {{/collapsible.item}}
+      <CollapsibleList @animation={{false}} as |collapsible|>
+        <collapsible.item as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </collapsible.item>
 
-        {{#collapsible.item expandOnInit=true as |item|}}
-          {{#item.header}}header here...{{/item.header}}
-          {{#item.panel}}panel here...{{/item.panel}}
-        {{/collapsible.item}}
+        <collapsible.item @expandOnInit={{true}} as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </collapsible.item>
 
-        {{#collapsible.item as |item|}}
-          {{#item.header}}header here...{{/item.header}}
-          {{#item.panel}}panel here...{{/item.panel}}
-        {{/collapsible.item}}
-      {{/collapsible-list}}
+        <collapsible.item as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </collapsible.item>
+      </CollapsibleList>
     `);
 
     // Click the first item's header
@@ -165,12 +165,12 @@ module('Integration | Component | collapsible-list', function (hooks) {
     });
 
     await render(hbs`
-      {{#collapsible-list onShow=(action doSomethingOnShow) as |collapsible|}}
-        {{#collapsible.item name="item1" as |item|}}
-          {{#item.header}}header here...{{/item.header}}
-          {{#item.panel}}panel here...{{/item.panel}}
-        {{/collapsible.item}}
-      {{/collapsible-list}}
+      <CollapsibleList @onShow={{fn doSomethingOnShow}} as |collapsible|>
+        <collapsible.item @name="item1" as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </collapsible.item>
+      </CollapsibleList>
     `);
 
     await click(SELECTORS.header);
@@ -185,12 +185,12 @@ module('Integration | Component | collapsible-list', function (hooks) {
     });
 
     await render(hbs`
-      {{#collapsible-list animation=false onShow=(action doSomethingOnShow) as |collapsible|}}
-        {{#collapsible.item name="item1" as |item|}}
-          {{#item.header}}header here...{{/item.header}}
-          {{#item.panel}}panel here...{{/item.panel}}
-        {{/collapsible.item}}
-      {{/collapsible-list}}
+      <CollapsibleList @animation={{false}} @onShow={{fn doSomethingOnShow}} as |collapsible|>
+        <collapsible.item @name="item1" as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </collapsible.item>
+      </CollapsibleList>
     `);
 
     await click(SELECTORS.header);
@@ -208,12 +208,12 @@ module('Integration | Component | collapsible-list', function (hooks) {
     });
 
     await render(hbs`
-      {{#collapsible-list onAfterShow=(action doSomethingOnAfterShow) as |collapsible|}}
-        {{#collapsible.item name="item1" as |item|}}
-          {{#item.header}}header here...{{/item.header}}
-          {{#item.panel}}panel here...{{/item.panel}}
-        {{/collapsible.item}}
-      {{/collapsible-list}}
+      <CollapsibleList @onAfterShow={{fn doSomethingOnAfterShow}} as |collapsible|>
+        <collapsible.item @name="item1" as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </collapsible.item>
+      </CollapsibleList>
     `);
 
     await click(SELECTORS.header);
@@ -228,12 +228,12 @@ module('Integration | Component | collapsible-list', function (hooks) {
     });
 
     await render(hbs`
-      {{#collapsible-list animation=false onAfterShow=(action doSomethingOnAfterShow) as |collapsible|}}
-        {{#collapsible.item name="item1" as |item|}}
-          {{#item.header}}header here...{{/item.header}}
-          {{#item.panel}}panel here...{{/item.panel}}
-        {{/collapsible.item}}
-      {{/collapsible-list}}
+      <CollapsibleList @animation={{false}} @onAfterShow={{fn doSomethingOnAfterShow}} as |collapsible|>
+        <collapsible.item @name="item1" as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </collapsible.item>
+      </CollapsibleList>
     `);
 
     await click(SELECTORS.header);
@@ -262,12 +262,12 @@ module('Integration | Component | collapsible-list', function (hooks) {
     });
 
     await render(hbs`
-      {{#collapsible-list onShow=(action doSomethingOnShow) onAfterShow=(action doSomethingOnAfterShow) as |collapsible|}}
-        {{#collapsible.item name="item1" as |item|}}
-          {{#item.header}}header here...{{/item.header}}
-          {{#item.panel}}panel here...{{/item.panel}}
-        {{/collapsible.item}}
-      {{/collapsible-list}}
+      <CollapsibleList @onShow={{fn doSomethingOnShow}} @onAfterShow={{fn doSomethingOnAfterShow}} as |collapsible|>
+        <collapsible.item @name="item1" as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </collapsible.item>
+      </CollapsibleList>
     `);
 
     await click(SELECTORS.header);
@@ -297,12 +297,12 @@ module('Integration | Component | collapsible-list', function (hooks) {
     });
 
     await render(hbs`
-      {{#collapsible-list action=false onShow=(action doSomethingOnShow) onAfterShow=(action doSomethingOnAfterShow) as |collapsible|}}
-        {{#collapsible.item name="item1" as |item|}}
-          {{#item.header}}header here...{{/item.header}}
-          {{#item.panel}}panel here...{{/item.panel}}
-        {{/collapsible.item}}
-      {{/collapsible-list}}
+      <CollapsibleList @animation={{false}} @onShow={{fn doSomethingOnShow}} @onAfterShow={{fn doSomethingOnAfterShow}} as |collapsible|>
+        <collapsible.item @name="item1" as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </collapsible.item>
+      </CollapsibleList>
     `);
 
     await click(SELECTORS.header);
@@ -317,12 +317,12 @@ module('Integration | Component | collapsible-list', function (hooks) {
     });
 
     await render(hbs`
-      {{#collapsible-list onHide=(action doSomethingOnHide) as |collapsible|}}
-        {{#collapsible.item name="item1" expandOnInit=true as |item|}}
-          {{#item.header}}header here...{{/item.header}}
-          {{#item.panel}}panel here...{{/item.panel}}
-        {{/collapsible.item}}
-      {{/collapsible-list}}
+      <CollapsibleList @onHide={{fn doSomethingOnHide}} as |collapsible|>
+        <collapsible.item @name="item1" @expandOnInit={{true}} as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </collapsible.item>
+      </CollapsibleList>
     `);
 
     await click(SELECTORS.header);
@@ -337,12 +337,12 @@ module('Integration | Component | collapsible-list', function (hooks) {
     });
 
     await render(hbs`
-      {{#collapsible-list animation=false onHide=(action doSomethingOnHide) as |collapsible|}}
-        {{#collapsible.item name="item1" expandOnInit=true as |item|}}
-          {{#item.header}}header here...{{/item.header}}
-          {{#item.panel}}panel here...{{/item.panel}}
-        {{/collapsible.item}}
-      {{/collapsible-list}}
+      <CollapsibleList @animation={{false}} @onHide={{fn doSomethingOnHide}} as |collapsible|>
+        <collapsible.item @name="item1" @expandOnInit={{true}} as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </collapsible.item>
+      </CollapsibleList>
     `);
 
     await click(SELECTORS.header);
