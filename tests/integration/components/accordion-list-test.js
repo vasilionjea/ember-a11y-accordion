@@ -1,7 +1,8 @@
-import { moduleForComponent, test } from 'ember-qunit';
-import hbs from 'htmlbars-inline-precompile';
-import { find, click } from 'ember-native-dom-helpers';
+import { click, render } from '@ember/test-helpers';
+import { module, test } from 'qunit';
 import { CLASS_NAMES } from 'ember-a11y-accordion/utils/dom';
+import { hbs } from 'ember-cli-htmlbars';
+import { setupRenderingTest } from 'ember-qunit';
 
 const SELECTORS = {
   list: `.${CLASS_NAMES.list}`,
@@ -12,298 +13,297 @@ const SELECTORS = {
   panelWrapper: `.${CLASS_NAMES.panelWrapper}`,
 };
 
-moduleForComponent('accordion-list', 'Integration | Component | accordion list', {
-  integration: true,
-});
+module('Integration | Component | accordion-list', function (hooks) {
+  setupRenderingTest(hooks);
 
-test('it should render', function(assert) {
-  assert.expect(4);
+  test('it should render', async function (assert) {
+    assert.expect(4);
 
-  this.render(hbs`
-    {{#accordion-list as |accordion|}}
-      {{#accordion.item as |item|}}
-        {{#item.header}}header here...{{/item.header}}
-        {{#item.panel}}panel here...{{/item.panel}}
-      {{/accordion.item}}
-    {{/accordion-list}}
-  `);
+    await render(hbs`
+      <AccordionList as |accordion|>
+        <accordion.item as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </accordion.item>
+      </AccordionList>
+    `);
 
-  assert.dom(SELECTORS.list).exists({ count: 1 });
-  assert.dom(SELECTORS.item).exists({ count: 1 });
-  assert.dom(SELECTORS.header).exists({ count: 1 });
-  assert.dom(SELECTORS.panelWrapper).exists({ count: 1 });
-});
+    assert.dom(SELECTORS.list).exists({ count: 1 });
+    assert.dom(SELECTORS.item).exists({ count: 1 });
+    assert.dom(SELECTORS.header).exists({ count: 1 });
+    assert.dom(SELECTORS.panelWrapper).exists({ count: 1 });
+  });
 
-test('it should render items in the expanded state when "expandOnInit" is set to true', function(assert) {
-  assert.expect(2);
+  test('it should render items in the expanded state when "expandOnInit" is set to true', async function (assert) {
+    assert.expect(2);
 
-  this.render(hbs`
-    {{#accordion-list as |accordion|}}
-      {{#accordion.item expandOnInit=true as |item|}}
-        {{#item.header}}First header{{/item.header}}
-        {{#item.panel}}First panel{{/item.panel}}
-      {{/accordion.item}}
-    {{/accordion-list}}
-  `);
+    await render(hbs`
+      <AccordionList as |accordion|>
+        <accordion.item @expandOnInit={{true}} as |item|>
+          <item.header>First header</item.header>
+          <item.panel>First panel</item.panel>
+        </accordion.item>
+      </AccordionList>
+    `);
 
-  assert.dom(SELECTORS.itemExpanded).exists({ count: 1 });
-  assert.dom(SELECTORS.item).hasClass(CLASS_NAMES.itemExpanded);
-});
+    assert.dom(SELECTORS.itemExpanded).exists({ count: 1 });
+    assert.dom(SELECTORS.item).hasClass(CLASS_NAMES.itemExpanded);
+  });
 
-test('it should render items in the expanded state when "expandOnInit" is set to true and animation is set to false', function(assert) {
-  assert.expect(2);
+  test('it should render items in the expanded state when "expandOnInit" is set to true and animation is set to false', async function (assert) {
+    assert.expect(2);
 
-  this.render(hbs`
-    {{#accordion-list animation=false as |accordion|}}
-      {{#accordion.item expandOnInit=true as |item|}}
-        {{#item.header}}First header{{/item.header}}
-        {{#item.panel}}First panel{{/item.panel}}
-      {{/accordion.item}}
-    {{/accordion-list}}
-  `);
+    await render(hbs`
+      <AccordionList @animation={{false}} as |accordion|>
+        <accordion.item @expandOnInit={{true}} as |item|>
+          <item.header>First header</item.header>
+          <item.panel>First panel</item.panel>
+        </accordion.item>
+      </AccordionList>
+    `);
 
-  assert.dom(SELECTORS.itemExpanded).exists({ count: 1 });
-  assert.dom(SELECTORS.item).hasClass(CLASS_NAMES.itemExpanded);
-});
+    assert.dom(SELECTORS.itemExpanded).exists({ count: 1 });
+    assert.dom(SELECTORS.item).hasClass(CLASS_NAMES.itemExpanded);
+  });
 
-test('it should render items in the disabled state when "isDisabled" is set to true', function(assert) {
-  assert.expect(2);
+  test('it should render items in the disabled state when "isDisabled" is set to true', async function (assert) {
+    assert.expect(2);
 
-  this.render(hbs`
-    {{#accordion-list as |accordion|}}
-      {{#accordion.item isDisabled=true as |item|}}
-        {{#item.header}}First header{{/item.header}}
-        {{#item.panel}}First panel{{/item.panel}}
-      {{/accordion.item}}
+    await render(hbs`
+      <AccordionList as |accordion|>
+        <accordion.item @isDisabled={{true}} as |item|>
+          <item.header>First header</item.header>
+          <item.panel>First panel</item.panel>
+        </accordion.item>
 
-      {{#accordion.item as |item|}}
-        {{#item.header}}First header{{/item.header}}
-        {{#item.panel}}First panel{{/item.panel}}
-      {{/accordion.item}}
+        <accordion.item as |item|>
+          <item.header>First header</item.header>
+          <item.panel>First panel</item.panel>
+        </accordion.item>
 
-      {{#accordion.item isDisabled=true as |item|}}
-        {{#item.header}}First header{{/item.header}}
-        {{#item.panel}}First panel{{/item.panel}}
-      {{/accordion.item}}
-    {{/accordion-list}}
-  `);
+        <accordion.item @isDisabled={{true}} as |item|>
+          <item.header>First header</item.header>
+          <item.panel>First panel</item.panel>
+        </accordion.item>
+      </AccordionList>
+    `);
 
-  assert.dom(SELECTORS.itemDisabled).exists({ count: 2 });
-  assert.dom(SELECTORS.item).hasClass(CLASS_NAMES.itemDisabled);
-});
+    assert.dom(SELECTORS.itemDisabled).exists({ count: 2 });
+    assert.dom(SELECTORS.item).hasClass(CLASS_NAMES.itemDisabled);
+  });
 
-test('it should expand the item when its header is clicked', function(assert) {
-  assert.expect(2);
+  test('it should expand the item when its header is clicked', async function (assert) {
+    assert.expect(2);
 
-  this.render(hbs`
-    {{#accordion-list as |accordion|}}
-      {{#accordion.item as |item|}}
-        {{#item.header}}header here...{{/item.header}}
-        {{#item.panel}}panel here...{{/item.panel}}
-      {{/accordion.item}}
+    await render(hbs`
+      <AccordionList as |accordion|>
+        <accordion.item as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </accordion.item>
 
-      {{#accordion.item expandOnInit=true as |item|}}
-        {{#item.header}}header here...{{/item.header}}
-        {{#item.panel}}panel here...{{/item.panel}}
-      {{/accordion.item}}
+        <accordion.item @expandOnInit={{true}} as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </accordion.item>
 
-      {{#accordion.item as |item|}}
-        {{#item.header}}header here...{{/item.header}}
-        {{#item.panel}}panel here...{{/item.panel}}
-      {{/accordion.item}}
-    {{/accordion-list}}
-  `);
+        <accordion.item as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </accordion.item>
+      </AccordionList>
+    `);
 
-  // Click the first item's header
-  return click(find(SELECTORS.header)).then(() => {
+    // Click the first item's header
+    await click(this.element.querySelector(SELECTORS.header));
     // Item is expanded
     assert.dom(SELECTORS.item).hasClass(CLASS_NAMES.itemExpanded);
 
     // Only one is expanded
     assert.dom(SELECTORS.itemExpanded).exists({ count: 1 });
   });
-});
 
-test('it should expand the item when its header is clicked and animation is set to false', function(assert) {
-  assert.expect(2);
+  test('it should expand the item when its header is clicked and animation is set to false', async function (assert) {
+    assert.expect(2);
 
-  this.render(hbs`
-    {{#accordion-list animation=false as |accordion|}}
-      {{#accordion.item as |item|}}
-        {{#item.header}}header here...{{/item.header}}
-        {{#item.panel}}panel here...{{/item.panel}}
-      {{/accordion.item}}
+    await render(hbs`
+      <AccordionList @animation={{false}} as |accordion|>
+        <accordion.item as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </accordion.item>
 
-      {{#accordion.item expandOnInit=true as |item|}}
-        {{#item.header}}header here...{{/item.header}}
-        {{#item.panel}}panel here...{{/item.panel}}
-      {{/accordion.item}}
+        <accordion.item @expandOnInit={{true}} as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </accordion.item>
 
-      {{#accordion.item as |item|}}
-        {{#item.header}}header here...{{/item.header}}
-        {{#item.panel}}panel here...{{/item.panel}}
-      {{/accordion.item}}
-    {{/accordion-list}}
-  `);
+        <accordion.item as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </accordion.item>
+      </AccordionList>
+    `);
 
-  // Click the first item's header
-  click(find(SELECTORS.header));
+    // Click the first item's header
+    await click(this.element.querySelector(SELECTORS.header));
 
-  // Item is expanded
-  assert.dom(SELECTORS.item).hasClass(CLASS_NAMES.itemExpanded);
+    // Item is expanded
+    assert.dom(SELECTORS.item).hasClass(CLASS_NAMES.itemExpanded);
 
-  // Only one is expanded
-  assert.dom(SELECTORS.itemExpanded).exists({ count: 1 });
-});
-
-test('it should execute the onShow action when one is provided', function(assert) {
-  assert.expect(2);
-
-  this.set('doSomething', (item) => {
-    assert.ok(true);
-    assert.equal(item.name, 'item1');
+    // Only one is expanded
+    assert.dom(SELECTORS.itemExpanded).exists({ count: 1 });
   });
 
-  this.render(hbs`
-    {{#accordion-list onShow=(action doSomething) as |accordion|}}
-      {{#accordion.item name="item1" as |item|}}
-        {{#item.header}}header here...{{/item.header}}
-        {{#item.panel}}panel here...{{/item.panel}}
-      {{/accordion.item}}
-    {{/accordion-list}}
-  `);
+  test('it should execute the onShow action when one is provided', async function (assert) {
+    assert.expect(2);
 
-  click(SELECTORS.header);
-});
+    this.set('doSomething', (item) => {
+      assert.ok(true);
+      assert.equal(item.name, 'item1');
+    });
 
-test('it should execute the onShow action when one is provided and animation is set to false', function(assert) {
-  assert.expect(2);
+    await render(hbs`
+      <AccordionList @onShow={{this.doSomething}} as |accordion|>
+        <accordion.item @name="item1" as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </accordion.item>
+      </AccordionList>
+    `);
 
-  this.set('doSomething', (item) => {
-    assert.ok(true);
-    assert.equal(item.name, 'item1');
+    await click(SELECTORS.header);
   });
 
-  this.render(hbs`
-    {{#accordion-list animation=false onShow=(action doSomething) as |accordion|}}
-      {{#accordion.item name="item1" as |item|}}
-        {{#item.header}}header here...{{/item.header}}
-        {{#item.panel}}panel here...{{/item.panel}}
-      {{/accordion.item}}
-    {{/accordion-list}}
-  `);
+  test('it should execute the onShow action when one is provided and animation is set to false', async function (assert) {
+    assert.expect(2);
 
-  click(SELECTORS.header);
-});
+    this.set('doSomething', (item) => {
+      assert.ok(true);
+      assert.equal(item.name, 'item1');
+    });
 
-test('it should execute the onAfterShow action when one is provided', function(assert) {
-  assert.expect(2);
+    await render(hbs`
+      <AccordionList @animation={{false}} @onShow={{this.doSomething}} as |accordion|>
+        <accordion.item @name="item1" as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </accordion.item>
+      </AccordionList>
+    `);
 
-  const done = assert.async();
-
-  this.set('doSomething', (item) => {
-    assert.ok(true);
-    assert.equal(item.name, 'item1');
-    done();
+    await click(SELECTORS.header);
   });
 
-  this.render(hbs`
-    {{#accordion-list onAfterShow=(action doSomething) as |accordion|}}
-      {{#accordion.item name="item1" as |item|}}
-        {{#item.header}}header here...{{/item.header}}
-        {{#item.panel}}panel here...{{/item.panel}}
-      {{/accordion.item}}
-    {{/accordion-list}}
-  `);
+  test('it should execute the onAfterShow action when one is provided', async function (assert) {
+    assert.expect(2);
 
-  click(SELECTORS.header);
-});
+    const done = assert.async();
 
-test('it should execute the onAfterShow action when one is provided and animation is set to false', function(assert) {
-  assert.expect(2);
+    this.set('doSomething', (item) => {
+      assert.ok(true);
+      assert.equal(item.name, 'item1');
+      done();
+    });
 
-  this.set('doSomething', (item) => {
-    assert.ok(true);
-    assert.equal(item.name, 'item1');
+    await render(hbs`
+      <AccordionList @onAfterShow={{this.doSomething}} as |accordion|>
+        <accordion.item @name="item1" as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </accordion.item>
+      </AccordionList>
+    `);
+
+    await click(SELECTORS.header);
   });
 
-  this.render(hbs`
-    {{#accordion-list animation=false onAfterShow=(action doSomething) as |accordion|}}
-      {{#accordion.item name='item1' as |item|}}
-        {{#item.header}}header here...{{/item.header}}
-        {{#item.panel}}panel here...{{/item.panel}}
-      {{/accordion.item}}
-    {{/accordion-list}}
-  `);
+  test('it should execute the onAfterShow action when one is provided and animation is set to false', async function (assert) {
+    assert.expect(2);
 
-  click(SELECTORS.header);
-});
+    this.set('doSomething', (item) => {
+      assert.ok(true);
+      assert.equal(item.name, 'item1');
+    });
 
-test('it should execute the onShow and onAfterShow actions in the right order', function(assert) {
-  assert.expect(6);
+    await render(hbs`
+      <AccordionList @animation={{false}} @onAfterShow={{this.doSomething}} as |accordion|>
+        <accordion.item @name="item1" as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </accordion.item>
+      </AccordionList>
+    `);
 
-  const done = assert.async();
-  let doSomethingOnShowCalled = false;
-  let doSomethingOnAfterShowCalled = false;
-
-  this.set('doSomethingOnShow', (item) => {
-    doSomethingOnShowCalled = true;
-    assert.ok(true);
-    assert.notOk(doSomethingOnAfterShowCalled);
-    assert.equal(item.name, 'item1');
+    await click(SELECTORS.header);
   });
 
-  this.set('doSomethingOnAfterShow', (item) => {
-    doSomethingOnAfterShowCalled = true;
-    assert.ok(true);
-    assert.ok(doSomethingOnShowCalled);
-    assert.equal(item.name, 'item1');
-    done();
+  test('it should execute the onShow and onAfterShow actions in the right order', async function (assert) {
+    assert.expect(6);
+
+    const done = assert.async();
+    let doSomethingOnShowCalled = false;
+    let doSomethingOnAfterShowCalled = false;
+
+    this.set('doSomethingOnShow', (item) => {
+      doSomethingOnShowCalled = true;
+      assert.ok(true);
+      assert.notOk(doSomethingOnAfterShowCalled);
+      assert.equal(item.name, 'item1');
+    });
+
+    this.set('doSomethingOnAfterShow', (item) => {
+      doSomethingOnAfterShowCalled = true;
+      assert.ok(true);
+      assert.ok(doSomethingOnShowCalled);
+      assert.equal(item.name, 'item1');
+      done();
+    });
+
+    await render(hbs`
+      <AccordionList @onShow={{this.doSomethingOnShow}} @onAfterShow={{this.doSomethingOnAfterShow}} as |accordion|>
+        <accordion.item @name="item1" as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </accordion.item>
+      </AccordionList>
+    `);
+
+    await click(SELECTORS.header);
   });
 
-  this.render(hbs`
-    {{#accordion-list onShow=(action doSomethingOnShow) onAfterShow=(action doSomethingOnAfterShow) as |accordion|}}
-      {{#accordion.item name="item1" as |item|}}
-        {{#item.header}}header here...{{/item.header}}
-        {{#item.panel}}panel here...{{/item.panel}}
-      {{/accordion.item}}
-    {{/accordion-list}}
-  `);
+  test('it should execute the onShow and onAfterShow actions in the right order when animation is set to false', async function (assert) {
+    assert.expect(6);
 
-  return click(SELECTORS.header);
-});
+    const done = assert.async();
 
-test('it should execute the onShow and onAfterShow actions in the right order when animation is set to false', function(assert) {
-  assert.expect(6);
+    let doSomethingOnShowCalled = false;
+    let doSomethingOnAfterShowCalled = false;
 
-  const done = assert.async();
+    this.set('doSomethingOnShow', (item) => {
+      doSomethingOnShowCalled = true;
+      assert.ok(true);
+      assert.notOk(doSomethingOnAfterShowCalled);
+      assert.equal(item.name, 'item1');
+    });
 
-  let doSomethingOnShowCalled = false;
-  let doSomethingOnAfterShowCalled = false;
+    this.set('doSomethingOnAfterShow', (item) => {
+      doSomethingOnAfterShowCalled = true;
+      assert.ok(true);
+      assert.ok(doSomethingOnShowCalled);
+      assert.equal(item.name, 'item1');
+      done();
+    });
 
-  this.set('doSomethingOnShow', (item) => {
-    doSomethingOnShowCalled = true;
-    assert.ok(true);
-    assert.notOk(doSomethingOnAfterShowCalled);
-    assert.equal(item.name, 'item1');
+    await render(hbs`
+      <AccordionList @animation={{false}} @onShow={{this.doSomethingOnShow}} @onAfterShow={{this.doSomethingOnAfterShow}} as |accordion|>
+        <accordion.item @name="item1" as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </accordion.item>
+      </AccordionList>
+    `);
+
+    await click(SELECTORS.header);
   });
-
-  this.set('doSomethingOnAfterShow', (item) => {
-    doSomethingOnAfterShowCalled = true;
-    assert.ok(true);
-    assert.ok(doSomethingOnShowCalled);
-    assert.equal(item.name, 'item1');
-    done();
-  });
-
-  this.render(hbs`
-    {{#accordion-list animation=false onShow=(action doSomethingOnShow) onAfterShow=(action doSomethingOnAfterShow) as |accordion|}}
-      {{#accordion.item name="item1" as |item|}}
-        {{#item.header}}header here...{{/item.header}}
-        {{#item.panel}}panel here...{{/item.panel}}
-      {{/accordion.item}}
-    {{/accordion-list}}
-  `);
-
-  return click(SELECTORS.header);
 });

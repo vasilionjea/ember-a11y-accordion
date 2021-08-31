@@ -1,0 +1,23 @@
+<header role="heading" class={{this.className}} aria-level={{this.ariaLevel}} ...attributes>
+  {{#if @isCollapsible}}
+    <button
+      type="button"
+      id={{@triggerId}}
+      class="a11y-accordion-header__trigger"
+      aria-controls={{@panelId}}
+      aria-expanded={{this.ariaExpanded}}
+      aria-disabled={{this.ariaDisabled}}>
+      {{yield}}
+    </button>
+  {{else}}
+    <button
+      type="button"
+      id={{@triggerId}}
+      class="a11y-accordion-header__trigger"
+      aria-controls={{@panelId}}
+      aria-expanded={{this.ariaExpanded}}
+      aria-disabled={{if @isDisabled this.ariaDisabled this.ariaExpanded}}>
+      {{yield}}
+    </button>
+  {{/if}}
+</header>

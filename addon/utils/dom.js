@@ -53,9 +53,4 @@ function addEventListenerOnce(element, eventName, callback) {
   });
 }
 
-export {
-  CLASS_NAMES,
-  setOpenHeight,
-  setClosedHeight,
-  addEventListenerOnce,
-};
+export { CLASS_NAMES, setOpenHeight, setClosedHeight, addEventListenerOnce };

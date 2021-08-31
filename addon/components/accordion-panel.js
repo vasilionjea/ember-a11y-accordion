@@ -1,7 +1,5 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import layout from '../templates/components/accordion-panel';
-import { CLASS_NAMES } from '../utils/dom';
+import { CLASS_NAMES } from 'ember-a11y-accordion/utils/dom';
+import Component from '@glimmer/component';
 
 /**
  * The accordion-panel component contains the contents to be shown at any
@@ -9,27 +7,14 @@ import { CLASS_NAMES } from '../utils/dom';
  *
  * @param {String} [class] Any CSS classes to be added to the component's element
  */
-export default Component.extend({
-  layout,
-  tagName: 'section',
-  role: 'region',
-  classNames: [CLASS_NAMES.panelWrapper],
-  attributeBindings: ['role', 'aria-labelledby', 'aria-hidden'],
+export default class AccordionPanelComponent extends Component {
+  className = CLASS_NAMES.panelWrapper;
 
-  'aria-hidden': computed('isExpanded', function() {
-    return this.get('isExpanded') ? 'false' : 'true';
-  }),
+  get ariaHidden() {
+    return this.args.isExpanded ? 'false' : 'true';
+  }
 
-  /**
-   * @override
-   */
-  init() {
-    this._super(...arguments);
-
-    const triggerId = this.get('triggerId');
-
-    if (triggerId) {
-      this.set('aria-labelledby', triggerId);
-    }
-  },
-});
+  get ariaLabelledBy() {
+    return this.args.triggerId || '';
+  }
+}

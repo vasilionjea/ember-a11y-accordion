@@ -1,0 +1,27 @@
+<section class={{this.classNames}}
+  aria-disabled={{this.ariaDisabled}}
+  aria-expanded={{this.ariaExpanded}}
+  aria-level={{this.ariaLevel}}
+  role="button"
+  {{on "click" (fn @toggle this.sharedState)}}
+  {{did-insert this.didInsert}}
+  ...attributes>
+  {{yield (hash
+    isExpanded=this.isExpanded
+    header=(component "accordion-header"
+      id=this.sharedState.headerId
+      triggerId=this.sharedState.triggerId
+      panelId=this.sharedState.panelId
+      isCollapsible=@isCollapsible
+      isExpanded=this.isExpanded
+      isDisabled=this.isDisabled
+      toggle=(fn @toggle this.sharedState)
+    )
+    panel=(component "accordion-panel"
+      id=this.sharedState.panelId
+      triggerId=this.sharedState.triggerId
+      isCollapsible=@isCollapsible
+      isExpanded=this.isExpanded
+    )
+  )}}
+</section>

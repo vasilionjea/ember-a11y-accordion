@@ -1,8 +1,7 @@
-import Component from '@ember/component';
-import layout from '../templates/components/accordion-header';
-import { CLASS_NAMES } from '../utils/dom';
+import Component from '@glimmer/component';
+import { CLASS_NAMES } from 'ember-a11y-accordion/utils/dom';
 
-const DEFAULT_ARIAL_LEVEL = '3';
+const DEFAULT_ARIA_LEVEL = '3';
 
 /**
  * The accordion-header receives the toggle action and handles expanding
@@ -11,25 +10,19 @@ const DEFAULT_ARIAL_LEVEL = '3';
  * @param {String} [aria-level] The ARIA heading level (defaults to "3")
  * @param {String} [class] Any CSS classes to be added to the component's element
  */
-export default Component.extend({
-  layout,
-  tagName: 'header',
-  role: 'heading',
-  classNames: [CLASS_NAMES.header],
-  attributeBindings: ['role', 'aria-level'],
 
-  /**
-   * @override
-   */
-  init() {
-    this._super(...arguments);
-    this.set('aria-level', this.getWithDefault('aria-level', DEFAULT_ARIAL_LEVEL));
-  },
+export default class AccordionHeaderComponent extends Component {
+  className = CLASS_NAMES.header;
 
-  /**
-   * @override
-   */
-  click() {
-    this.get('toggle')();
-  },
-});
+  get ariaDisabled() {
+    return this.args.isDisabled ? 'true' : 'false';
+  }
+
+  get ariaExpanded() {
+    return this.args.isExpanded ? 'true' : 'false';
+  }
+
+  get ariaLevel() {
+    return this.args.ariaLevel ?? DEFAULT_ARIA_LEVEL;
+  }
+}

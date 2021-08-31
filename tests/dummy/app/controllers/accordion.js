@@ -1,12 +1,14 @@
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
 
-export default Controller.extend({
-  actions: {
-    onAccordionShow() {
-      // console.log('onAccordionShow');
-    },
-    onAccordionAfterShow() {
-      // console.log('onAccordionAfterShow');
-    },
-  },
-});
+export default class AccordionController extends Controller {
+  @action
+  onAccordionShow() {
+    // console.log('onAccordionShow');
+  }
+
+  @action
+  onAccordionAfterShow() {
+    // console.log('onAccordionAfterShow');
+  }
+}

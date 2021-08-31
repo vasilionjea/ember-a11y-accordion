@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
 
-export default Controller.extend({
-  appName: 'Ember A11Y Accordion',
-});
+export default class ApplicationController extends Controller {
+  appName = 'Ember A11Y Accordion';
+}
