@@ -16,12 +16,12 @@ module('Integration | Component | accordion-panel', function (hooks) {
     assert.expect(2);
 
     await render(hbs`
-      {{#accordion-list as |accordion|}}
-        {{#accordion.item expandOnInit=true as |item|}}
-          {{#item.header}}header here...{{/item.header}}
-          {{#item.panel}}panel here...{{/item.panel}}
-        {{/accordion.item}}
-      {{/accordion-list}}
+      <AccordionList as |accordion|>
+        <accordion.item @expandOnInit=true as |item|>
+          <item.header>header here...</item.header>
+          <item.panel>panel here...</item.panel>
+        </accordion.item>
+      </AccordionList>
     `);
 
     assert.dom(SELECTORS.panelWrapper).exists({ count: 1 });
