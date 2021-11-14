@@ -1,4 +1,4 @@
-<header role="heading" class={{this.className}} aria-level={{this.ariaLevel}} ...attributes>
+<header class={{this.className}} ...attributes>
   {{#if @isCollapsible}}
     <button
       type="button"
@@ -6,7 +6,8 @@
       class="a11y-accordion-header__trigger"
       aria-controls={{@panelId}}
       aria-expanded={{this.ariaExpanded}}
-      aria-disabled={{this.ariaDisabled}}>
+      aria-disabled={{this.ariaDisabled}}
+      {{on "click" @toggle}}>
       {{yield}}
     </button>
   {{else}}
@@ -16,7 +17,8 @@
       class="a11y-accordion-header__trigger"
       aria-controls={{@panelId}}
       aria-expanded={{this.ariaExpanded}}
-      aria-disabled={{if @isDisabled this.ariaDisabled this.ariaExpanded}}>
+      aria-disabled={{if @isDisabled this.ariaDisabled this.ariaExpanded}}
+      {{on "click" @toggle}}>
       {{yield}}
     </button>
   {{/if}}

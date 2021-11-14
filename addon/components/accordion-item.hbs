@@ -2,8 +2,6 @@
   aria-disabled={{this.ariaDisabled}}
   aria-expanded={{this.ariaExpanded}}
   aria-level={{this.ariaLevel}}
-  role="button"
-  {{on "click" (fn @toggle this.sharedState)}}
   {{did-insert this.didInsert}}
   ...attributes>
   {{yield (hash

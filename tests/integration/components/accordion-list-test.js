@@ -1,6 +1,7 @@
 import { click, render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { CLASS_NAMES } from 'ember-a11y-accordion/utils/dom';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -11,13 +12,14 @@ const SELECTORS = {
   itemDisabled: `.${CLASS_NAMES.itemDisabled}`,
   header: `.${CLASS_NAMES.header}`,
   panelWrapper: `.${CLASS_NAMES.panelWrapper}`,
+  trigger: `.${CLASS_NAMES.trigger}`,
 };
 
 module('Integration | Component | accordion-list', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it should render', async function (assert) {
-    assert.expect(4);
+    assert.expect(5);
 
     await render(hbs`
       <AccordionList as |accordion|>
@@ -32,10 +34,12 @@ module('Integration | Component | accordion-list', function (hooks) {
     assert.dom(SELECTORS.item).exists({ count: 1 });
     assert.dom(SELECTORS.header).exists({ count: 1 });
     assert.dom(SELECTORS.panelWrapper).exists({ count: 1 });
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it should render items in the expanded state when "expandOnInit" is set to true', async function (assert) {
-    assert.expect(2);
+    assert.expect(3);
 
     await render(hbs`
       <AccordionList as |accordion|>
@@ -48,10 +52,12 @@ module('Integration | Component | accordion-list', function (hooks) {
 
     assert.dom(SELECTORS.itemExpanded).exists({ count: 1 });
     assert.dom(SELECTORS.item).hasClass(CLASS_NAMES.itemExpanded);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it should render items in the expanded state when "expandOnInit" is set to true and animation is set to false', async function (assert) {
-    assert.expect(2);
+    assert.expect(3);
 
     await render(hbs`
       <AccordionList @animation={{false}} as |accordion|>
@@ -64,99 +70,109 @@ module('Integration | Component | accordion-list', function (hooks) {
 
     assert.dom(SELECTORS.itemExpanded).exists({ count: 1 });
     assert.dom(SELECTORS.item).hasClass(CLASS_NAMES.itemExpanded);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it should render items in the disabled state when "isDisabled" is set to true', async function (assert) {
-    assert.expect(2);
+    assert.expect(3);
 
     await render(hbs`
       <AccordionList as |accordion|>
         <accordion.item @isDisabled={{true}} as |item|>
-          <item.header>First header</item.header>
-          <item.panel>First panel</item.panel>
+          <item.header>first header</item.header>
+          <item.panel>first panel</item.panel>
         </accordion.item>
 
         <accordion.item as |item|>
-          <item.header>First header</item.header>
-          <item.panel>First panel</item.panel>
+          <item.header>second header</item.header>
+          <item.panel>second panel</item.panel>
         </accordion.item>
 
         <accordion.item @isDisabled={{true}} as |item|>
-          <item.header>First header</item.header>
-          <item.panel>First panel</item.panel>
+          <item.header>third header</item.header>
+          <item.panel>third panel</item.panel>
         </accordion.item>
       </AccordionList>
     `);
 
     assert.dom(SELECTORS.itemDisabled).exists({ count: 2 });
     assert.dom(SELECTORS.item).hasClass(CLASS_NAMES.itemDisabled);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
-  test('it should expand the item when its header is clicked', async function (assert) {
-    assert.expect(2);
+  test('it should expand the item when its trigger is clicked', async function (assert) {
+    assert.expect(3);
 
     await render(hbs`
       <AccordionList as |accordion|>
         <accordion.item as |item|>
-          <item.header>header here...</item.header>
-          <item.panel>panel here...</item.panel>
+          <item.header>first header here...</item.header>
+          <item.panel>second panel here...</item.panel>
         </accordion.item>
 
         <accordion.item @expandOnInit={{true}} as |item|>
-          <item.header>header here...</item.header>
-          <item.panel>panel here...</item.panel>
+          <item.header>second header here...</item.header>
+          <item.panel>second panel here...</item.panel>
         </accordion.item>
 
         <accordion.item as |item|>
-          <item.header>header here...</item.header>
-          <item.panel>panel here...</item.panel>
+          <item.header>third header here...</item.header>
+          <item.panel>third panel here...</item.panel>
         </accordion.item>
       </AccordionList>
     `);
 
-    // Click the first item's header
-    await click(this.element.querySelector(SELECTORS.header));
+    // Click the first item's trigger
+    await click(this.element.querySelector(SELECTORS.trigger));
     // Item is expanded
     assert.dom(SELECTORS.item).hasClass(CLASS_NAMES.itemExpanded);
 
     // Only one is expanded
     assert.dom(SELECTORS.itemExpanded).exists({ count: 1 });
+
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
-  test('it should expand the item when its header is clicked and animation is set to false', async function (assert) {
-    assert.expect(2);
+  test('it should expand the item when its trigger is clicked and animation is set to false', async function (assert) {
+    assert.expect(3);
 
     await render(hbs`
       <AccordionList @animation={{false}} as |accordion|>
         <accordion.item as |item|>
-          <item.header>header here...</item.header>
-          <item.panel>panel here...</item.panel>
+          <item.header>first header here...</item.header>
+          <item.panel>first panel here...</item.panel>
         </accordion.item>
 
         <accordion.item @expandOnInit={{true}} as |item|>
-          <item.header>header here...</item.header>
-          <item.panel>panel here...</item.panel>
+          <item.header>second header here...</item.header>
+          <item.panel>second panel here...</item.panel>
         </accordion.item>
 
         <accordion.item as |item|>
-          <item.header>header here...</item.header>
-          <item.panel>panel here...</item.panel>
+          <item.header>third header here...</item.header>
+          <item.panel>third panel here...</item.panel>
         </accordion.item>
       </AccordionList>
     `);
 
     // Click the first item's header
-    await click(this.element.querySelector(SELECTORS.header));
+    await click(this.element.querySelector(SELECTORS.trigger));
 
     // Item is expanded
     assert.dom(SELECTORS.item).hasClass(CLASS_NAMES.itemExpanded);
 
     // Only one is expanded
     assert.dom(SELECTORS.itemExpanded).exists({ count: 1 });
+
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it should execute the onShow action when one is provided', async function (assert) {
-    assert.expect(2);
+    assert.expect(3);
 
     this.set('doSomething', (item) => {
       assert.ok(true);
@@ -172,11 +188,13 @@ module('Integration | Component | accordion-list', function (hooks) {
       </AccordionList>
     `);
 
-    await click(SELECTORS.header);
+    await click(SELECTORS.trigger);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it should execute the onShow action when one is provided and animation is set to false', async function (assert) {
-    assert.expect(2);
+    assert.expect(3);
 
     this.set('doSomething', (item) => {
       assert.ok(true);
@@ -192,11 +210,13 @@ module('Integration | Component | accordion-list', function (hooks) {
       </AccordionList>
     `);
 
-    await click(SELECTORS.header);
+    await click(SELECTORS.trigger);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it should execute the onAfterShow action when one is provided', async function (assert) {
-    assert.expect(2);
+    assert.expect(3);
 
     const done = assert.async();
 
@@ -215,11 +235,13 @@ module('Integration | Component | accordion-list', function (hooks) {
       </AccordionList>
     `);
 
-    await click(SELECTORS.header);
+    await click(SELECTORS.trigger);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it should execute the onAfterShow action when one is provided and animation is set to false', async function (assert) {
-    assert.expect(2);
+    assert.expect(3);
 
     this.set('doSomething', (item) => {
       assert.ok(true);
@@ -235,11 +257,13 @@ module('Integration | Component | accordion-list', function (hooks) {
       </AccordionList>
     `);
 
-    await click(SELECTORS.header);
+    await click(SELECTORS.trigger);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it should execute the onShow and onAfterShow actions in the right order', async function (assert) {
-    assert.expect(6);
+    assert.expect(7);
 
     const done = assert.async();
     let doSomethingOnShowCalled = false;
@@ -269,11 +293,13 @@ module('Integration | Component | accordion-list', function (hooks) {
       </AccordionList>
     `);
 
-    await click(SELECTORS.header);
+    await click(SELECTORS.trigger);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it should execute the onShow and onAfterShow actions in the right order when animation is set to false', async function (assert) {
-    assert.expect(6);
+    assert.expect(7);
 
     const done = assert.async();
 
@@ -304,6 +330,8 @@ module('Integration | Component | accordion-list', function (hooks) {
       </AccordionList>
     `);
 
-    await click(SELECTORS.header);
+    await click(SELECTORS.trigger);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 });

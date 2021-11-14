@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { CLASS_NAMES } from 'ember-a11y-accordion/utils/dom';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { hbs } from 'ember-cli-htmlbars';
 import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
@@ -14,7 +15,7 @@ module('Integration | Component | accordion-item', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it has ARIA and DOM attributes on init', async function (assert) {
-    assert.expect(9);
+    assert.expect(7);
 
     await render(hbs`
       <AccordionList as |accordion|>
@@ -24,19 +25,6 @@ module('Integration | Component | accordion-item', function (hooks) {
         </accordion.item>
       </AccordionList>
     `);
-
-    // Item header
-    const assertHeader = assert.dom(SELECTORS.header);
-    assertHeader.hasAttribute(
-      'role',
-      'heading',
-      'The item header has an ARIA role of "heading"'
-    );
-    assertHeader.hasAttribute(
-      'aria-level',
-      '3',
-      'The item header has an aria-level of "3" by default'
-    );
 
     // Header trigger
     const assertTrigger = assert.dom(SELECTORS.trigger);
@@ -64,11 +52,6 @@ module('Integration | Component | accordion-item', function (hooks) {
     // Item panel
     const assertPanel = assert.dom(SELECTORS.panelWrapper);
     assertPanel.hasAttribute(
-      'role',
-      'region',
-      'The panel has an ARIA role of "region"'
-    );
-    assertPanel.hasAttribute(
       'aria-hidden',
       'false',
       'The panel aria-hidden value is "false" when expandOnInit is set to true'
@@ -78,5 +61,8 @@ module('Integration | Component | accordion-item', function (hooks) {
       this.element.querySelector(SELECTORS.trigger).getAttribute('id'),
       'The panel is labelled by the correct trigger via aria-labelledby'
     );
+
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 });
