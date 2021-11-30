@@ -8,8 +8,11 @@ import { next, cancel } from '@ember/runloop';
 import { A } from '@ember/array';
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { buildWaiter } from '@ember/test-waiters';
 import { isPresent } from '@ember/utils';
 import { tracked } from '@glimmer/tracking';
+
+const waiter = buildWaiter('ember-a11y-accordion:accordion-list');
 
 /**
  * The accordion-list component is the top-most component and is responsible
@@ -34,6 +37,10 @@ export default class AccordionListClass extends Component {
   }
 
   className = CLASS_NAMES.list;
+
+  animatedHideWaitToken;
+
+  animatedShowWaitToken;
 
   @tracked
   _activeItem;
@@ -115,6 +122,7 @@ export default class AccordionListClass extends Component {
    * @private
    */
   _animatedHide(item) {
+    this.animatedHideWaitToken = waiter.beginAsync();
     if (this._activeItem) {
       // From open height
       setOpenHeight(this._activeItem);
@@ -126,6 +134,7 @@ export default class AccordionListClass extends Component {
     this._currentHideTimeout = next(() => {
       setClosedHeight(item);
       item.isExpanded = false;
+      waiter.endAsync(this.animatedHideWaitToken);
     });
   }
 
@@ -139,6 +148,7 @@ export default class AccordionListClass extends Component {
    * @private
    */
   _animatedShow(item) {
+    this.animatedShowWaitToken = waiter.beginAsync();
     setOpenHeight(item);
     item.isExpanded = true;
 
@@ -149,6 +159,7 @@ export default class AccordionListClass extends Component {
         item.panelWrapper.style.height = null;
         this._triggerEvent('onAfterShow', item);
       }
+      waiter.endAsync(this.animatedShowWaitToken);
     });
   }
 

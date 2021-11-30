@@ -8,6 +8,7 @@ import { cancel, later } from '@ember/runloop';
 import { A } from '@ember/array';
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { buildWaiter } from '@ember/test-waiters';
 import { isPresent } from '@ember/utils';
 import { tracked } from '@glimmer/tracking';
 
@@ -18,6 +19,8 @@ import { tracked } from '@glimmer/tracking';
  * to 0px so the CSS transition will kick off.
  */
 const INLINE_HEIGHT_DELAY = 50;
+
+const waiter = buildWaiter('ember-a11y-accordion:collapsible-list');
 
 /**
  * The collapsible-list component is the top-most component and is responsible
@@ -43,6 +46,10 @@ export default class CollapsibleListComponent extends Component {
   }
 
   className = CLASS_NAMES.list;
+
+  animatedHideWaitToken;
+
+  animatedShowWaitToken;
 
   @tracked
   _currentHideTimeout = null;
@@ -103,6 +110,7 @@ export default class CollapsibleListComponent extends Component {
    * @private
    */
   _animatedHide(item) {
+    this.animatedHideWaitToken = waiter.beginAsync();
     this._isHiding = true;
 
     // From open height
@@ -117,6 +125,7 @@ export default class CollapsibleListComponent extends Component {
       this._isHiding = false;
 
       this._triggerEvent('onHide', item);
+      waiter.endAsync(this.animatedHideWaitToken);
     }, INLINE_HEIGHT_DELAY);
   }
 
@@ -130,6 +139,7 @@ export default class CollapsibleListComponent extends Component {
    * @private
    */
   _animatedShow(item) {
+    this.animatedShowWaitToken = waiter.beginAsync();
     setOpenHeight(item);
     item.isExpanded = true;
 
@@ -140,6 +150,7 @@ export default class CollapsibleListComponent extends Component {
         item.panelWrapper.style.height = null;
         this._triggerEvent('onAfterShow', item);
       }
+      waiter.endAsync(this.animatedShowWaitToken);
     });
   }
 
