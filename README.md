@@ -1,7 +1,5 @@
 # ember-a11y-accordion
-[![Build Status](https://github.com/vasilionjea
-/ember-a11y-accordion/workflows/CI/badge.svg)](https://github.com/vasilionjea
-/ember-a11y-accordion/actions?query=workflow%3ACI)
+[![Build Status](https://github.com/vasilionjea/ember-a11y-accordion/workflows/CI/badge.svg)](https://github.com/vasilionjea/ember-a11y-accordion/actions?query=workflow%3ACI)
 
 This Ember addon is based on the [W3C's ARIA](https://www.w3.org/TR/wai-aria-practices/#accordion) best practices for accordions and treats accessibility as a first class citizen. Live demo: https://vasilionjea.github.io/ember-a11y-accordion/
 
