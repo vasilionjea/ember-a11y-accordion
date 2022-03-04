@@ -1,0 +1,15 @@
+version: 2
+updates:
+- package-ecosystem: "npm"
+  directory: "/"
+  schedule:
+    interval: "weekly"
+  open-pull-requests-limit: 5
+  versioning-strategy: "increase"
+  ignore:
+  - dependency-name: "ember-cli"
+    update-types: ["version-update:semver-major", "version-update:semver-minor"]
+  - dependency-name: "ember-source"
+    update-types: ["version-update:semver-major", "version-update:semver-minor"]
+  - dependency-name: "*"
+    update-types: ["version-update:semver-major"]
