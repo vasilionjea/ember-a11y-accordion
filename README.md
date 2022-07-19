@@ -26,13 +26,13 @@ ember install ember-a11y-accordion
     <item.header @ariaLevel="4">Dolor Sit</item.header>
     <item.panel>
       <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-    </item.header>
+    </item.panel>
   </accordion.item>
   <accordion.item @isDisabled={{true}} as |item|>
     <item.header @ariaLevel="4">This is disabled</item.header>
     <item.panel>
       <p>User cannot interact with this item.</p>
-    </item.header>
+    </item.panel>
   </accordion.item>
 </AccordionList>
 ```
