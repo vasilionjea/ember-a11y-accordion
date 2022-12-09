@@ -176,7 +176,7 @@ module('Integration | Component | accordion-list', function (hooks) {
 
     this.set('doSomething', (item) => {
       assert.ok(true);
-      assert.equal(item.name, 'item1');
+      assert.strictEqual(item.name, 'item1');
     });
 
     await render(hbs`
@@ -198,7 +198,7 @@ module('Integration | Component | accordion-list', function (hooks) {
 
     this.set('doSomething', (item) => {
       assert.ok(true);
-      assert.equal(item.name, 'item1');
+      assert.strictEqual(item.name, 'item1');
     });
 
     await render(hbs`
@@ -222,7 +222,7 @@ module('Integration | Component | accordion-list', function (hooks) {
 
     this.set('doSomething', (item) => {
       assert.ok(true);
-      assert.equal(item.name, 'item1');
+      assert.strictEqual(item.name, 'item1');
       done();
     });
 
@@ -245,7 +245,7 @@ module('Integration | Component | accordion-list', function (hooks) {
 
     this.set('doSomething', (item) => {
       assert.ok(true);
-      assert.equal(item.name, 'item1');
+      assert.strictEqual(item.name, 'item1');
     });
 
     await render(hbs`
@@ -273,14 +273,14 @@ module('Integration | Component | accordion-list', function (hooks) {
       doSomethingOnShowCalled = true;
       assert.ok(true);
       assert.notOk(doSomethingOnAfterShowCalled);
-      assert.equal(item.name, 'item1');
+      assert.strictEqual(item.name, 'item1');
     });
 
     this.set('doSomethingOnAfterShow', (item) => {
       doSomethingOnAfterShowCalled = true;
       assert.ok(true);
       assert.ok(doSomethingOnShowCalled);
-      assert.equal(item.name, 'item1');
+      assert.strictEqual(item.name, 'item1');
       done();
     });
 
@@ -310,14 +310,14 @@ module('Integration | Component | accordion-list', function (hooks) {
       doSomethingOnShowCalled = true;
       assert.ok(true);
       assert.notOk(doSomethingOnAfterShowCalled);
-      assert.equal(item.name, 'item1');
+      assert.strictEqual(item.name, 'item1');
     });
 
     this.set('doSomethingOnAfterShow', (item) => {
       doSomethingOnAfterShowCalled = true;
       assert.ok(true);
       assert.ok(doSomethingOnShowCalled);
-      assert.equal(item.name, 'item1');
+      assert.strictEqual(item.name, 'item1');
       done();
     });
 
