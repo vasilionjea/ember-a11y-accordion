@@ -177,7 +177,7 @@ module('Integration | Component | collapsible-list', function (hooks) {
 
     this.set('doSomethingOnShow', (item) => {
       assert.ok(true);
-      assert.equal(item.name, 'item1');
+      assert.strictEqual(item.name, 'item1');
     });
 
     await render(hbs`
@@ -199,7 +199,7 @@ module('Integration | Component | collapsible-list', function (hooks) {
 
     this.set('doSomethingOnShow', (item) => {
       assert.ok(true);
-      assert.equal(item.name, 'item1');
+      assert.strictEqual(item.name, 'item1');
     });
 
     await render(hbs`
@@ -223,7 +223,7 @@ module('Integration | Component | collapsible-list', function (hooks) {
 
     this.set('doSomethingOnAfterShow', (item) => {
       assert.ok(true);
-      assert.equal(item.name, 'item1');
+      assert.strictEqual(item.name, 'item1');
       done();
     });
 
@@ -246,7 +246,7 @@ module('Integration | Component | collapsible-list', function (hooks) {
 
     this.set('doSomethingOnAfterShow', (item) => {
       assert.ok(true);
-      assert.equal(item.name, 'item1');
+      assert.strictEqual(item.name, 'item1');
     });
 
     await render(hbs`
@@ -274,14 +274,14 @@ module('Integration | Component | collapsible-list', function (hooks) {
       doSomethingOnShowCalled = true;
       assert.ok(true);
       assert.notOk(doSomethingOnAfterShowCalled);
-      assert.equal(item.name, 'item1');
+      assert.strictEqual(item.name, 'item1');
     });
 
     this.set('doSomethingOnAfterShow', (item) => {
       doSomethingOnAfterShowCalled = true;
       assert.ok(true);
       assert.ok(doSomethingOnShowCalled);
-      assert.equal(item.name, 'item1');
+      assert.strictEqual(item.name, 'item1');
       done();
     });
 
@@ -311,14 +311,14 @@ module('Integration | Component | collapsible-list', function (hooks) {
       doSomethingOnShowCalled = true;
       assert.ok(true);
       assert.notOk(doSomethingOnAfterShowCalled);
-      assert.equal(item.name, 'item1');
+      assert.strictEqual(item.name, 'item1');
     });
 
     this.set('doSomethingOnAfterShow', (item) => {
       doSomethingOnAfterShowCalled = true;
       assert.ok(true);
       assert.ok(doSomethingOnShowCalled);
-      assert.equal(item.name, 'item1');
+      assert.strictEqual(item.name, 'item1');
       done();
     });
 
@@ -341,7 +341,7 @@ module('Integration | Component | collapsible-list', function (hooks) {
 
     this.set('doSomethingOnHide', (item) => {
       assert.ok(true);
-      assert.equal(item.name, 'item1');
+      assert.strictEqual(item.name, 'item1');
     });
 
     await render(hbs`
@@ -363,7 +363,7 @@ module('Integration | Component | collapsible-list', function (hooks) {
 
     this.set('doSomethingOnHide', (item) => {
       assert.ok(true);
-      assert.equal(item.name, 'item1');
+      assert.strictEqual(item.name, 'item1');
     });
 
     await render(hbs`
