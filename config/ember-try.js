@@ -38,14 +38,14 @@ module.exports = async function () {
           },
         },
       },
-      {
-        name: 'ember-canary',
-        npm: {
-          devDependencies: {
-            'ember-source': await getChannelURL('canary'),
-          },
-        },
-      },
+      // {
+      //   name: 'ember-canary',
+      //   npm: {
+      //     devDependencies: {
+      //       'ember-source': await getChannelURL('canary'),
+      //     },
+      //   },
+      // },
       {
         name: 'ember-classic',
         env: {
